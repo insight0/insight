@@ -1,0 +1,58 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.apeiron.insight",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.2.0",
+    "applicationType": "monolith",
+    "baseName": "insight",
+    "packageName": "com.apeiron.insight",
+    "packageFolder": "com/apeiron/insight",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": false,
+    "websocket": "spring-websocket",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZTNlNGFkNGI0NmJkZjYxMTkxMzRkYTgzMmQyYjY5Y2Q5Y2NlNjNjOWIzYmJmMmQzNzVkZWRhZDExMzliNjM2ZWNhYjQzYWI4NWVmZTI1Mzc3ZDEwODUzOGY3ODA2MmU5NzM4NjExNDA0YTJmNjI4MjM5N2Y3MjEyYzViMDg5ODc=",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [
+      {
+        "name": "generator-jhipster-electron",
+        "version": "1.0.0"
+      },
+      {
+        "name": "generator-jhipster-primeng-charts",
+        "version": "1.2.0"
+      },
+      {
+        "name": "generator-jhipster-kutilang",
+        "version": "0.0.7"
+      },
+      {
+        "name": "generator-jhipster-angular-material-integration",
+        "version": "1.0.17"
+      }
+    ],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en", "ar-ly", "fr"],
+    "blueprints": []
+  }
+}

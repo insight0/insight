@@ -13,13 +13,6 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-eureka:
-  client:
-    enabled: false
-  instance:
-    appname: insight
-    instanceId: insight:${spring.application.instance-id:${random.value}}
-
 spring:
   application:
     name: insight
@@ -84,7 +77,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: ZTNlNGFkNGI0NmJkZjYxMTkxMzRkYTgzMmQyYjY5Y2Q5Y2NlNjNjOWIzYmJmMmQzNzVkZWRhZDExMzliNjM2ZWNhYjQzYWI4NWVmZTI1Mzc3ZDEwODUzOGY3ODA2MmU5NzM4NjExNDA0YTJmNjI4MjM5N2Y3MjEyYzViMDg5ODc=
+        base64-secret: MmVlYWNjNTU4NmI3YWNlOTBjNDUxZDdlMzFlZjU5Yzc5ZDQzNjdiODJlZGVmNjZjODY4OTdjNzI3ZTk4MWE3ZDY1ZDg0YTNhYjlkZjY5YjBhMjFkY2M0NzVlMGExODVmN2QwMDk0MzBmNjI0ODYxOWVmYWY1MjVlYzNmNDAwYjc=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
   metrics:

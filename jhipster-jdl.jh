@@ -1,0 +1,104 @@
+entity DayOff {
+    startDate Instant required,
+    endDate Instant required,
+    object String required,
+    status RequestStatus required,
+    forced Boolean required,
+    employeId String required,
+    validatorId String required,
+    days Float required
+}
+
+entity ChangeLog {
+	userId String required,
+    date Instant required,
+    changeTrigger ChangeTrigger required,
+    changeType ChangeType required,
+    description String
+}
+
+enum ChangeTrigger {
+	USER, SYSTEM
+}
+
+enum ChangeType {
+	CREATE, UPDATE, DESACTIVATE, DELETE
+}
+
+entity Holiday{
+    name String required, 
+    description String required,
+    year Integer required,
+    dayOfYear Integer required,
+    weekOfYear Integer required,
+    dayOfWeek Integer required
+    paid Boolean required
+}
+
+entity Contact {
+    /** TODO: private Address address; */
+	firstName String required,
+    lastName String required,
+    role String,
+    phoneNumber String,
+    email String,
+    organisationId String required,
+    type ContractType
+}
+
+enum ContractType {
+	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
+}
+
+entity FunctionalRole {
+  	name String required,
+  	description String required,
+  	maxHolidays Integer required,
+  	workingHours Integer required
+}
+
+entity Address {
+	line1 String required,
+    line2 String,
+	city String required,
+    postalCode String required,
+    country String required,
+    ltd Integer,
+    lgt Integer
+}
+
+entity SalaryPackage {
+    /** TODO: private List<ChangeLog> changeLogs; */
+	netSalaryPerMonth Float required,
+    nationalInsurancePerMonth Float required,
+    taxPerMonth Float required,
+    privateInsurancePerMonth Float required,
+    mealVoucherPerMonth Float required,
+	bonusPerYear Float required
+}
+
+entity Organisation {
+    /** TODO: private Address address;TODO: private List<Contact> contacts; */
+	name String required,
+    phoneNumber String,
+    siteUrl String,
+    logoUrl String,
+    email String
+}
+
+enum ContractType {
+	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
+}
+
+enum RequestStatus {
+	NEW, DECLINED, APPROVED
+}
+
+// Set pagination options
+paginate all with infinite-scroll
+
+// Use Data Transfert Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except

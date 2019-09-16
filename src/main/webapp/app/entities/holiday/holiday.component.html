@@ -1,0 +1,82 @@
+<div class="div-padding">
+    <h2 id="page-heading">
+        <span>Jours fériés</span>
+        <button mat-button aria-label="Example icon-button with a heart icon"
+                class="float-right jh-create-entity create-holiday" [routerLink]="['/holiday/new']">
+            <mat-icon>add</mat-icon>
+            Nouveau
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <br>
+            <mat-checkbox [(ngModel)]="currentYear" (change)="filterCurrent()">Jours fériés de l'année en cours</mat-checkbox>
+        </div>
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                        <span
+                            style="padding-top: 20px;">Total jours fériées : <strong>{{holidays.length}}</strong></span>
+
+                        <mat-form-field class="search-input">
+                            <input type="tel" matInput placeholder="Filtrer" (keyup)="applyFilter($event.target.value)"
+                                   id="currentSearch" name="currentSearch">
+                            <mat-icon matSuffix class="pointer">search</mat-icon>
+                        </mat-form-field>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <br/>
+    <div class="alert alert-warning" *ngIf="holidays?.length === 0">
+        <span jhiTranslate="insightApp.holiday.home.notFound">Aucun jour férié trouvé</span>
+    </div>
+    <div class="table-responsive">
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+                    <td mat-cell *matCellDef="let row"><a
+                        [routerLink]="['/holiday', row.id, 'view' ]"> {{row.name}} </a></td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
+                    <td mat-cell *matCellDef="let row">{{row.date | date:'dd/MM/yyyy'}}</td>
+                </ng-container>
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Durée</th>
+                    <td mat-cell *matCellDef="let row">{{row.duration}} Jour(s)</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="paid">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payée</th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-chip-list>
+                            <mat-chip color="primary" selected *ngIf="row.paid">Oui</mat-chip>
+                            <mat-chip color="accent" selected *ngIf="!row.paid">non</mat-chip>
+                        </mat-chip-list>
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "insightApp": {
+    "changeLog": {
+      "home": {
+        "title": "ChangeLogs",
+        "createLabel": "Créer un nouveau Change Log",
+        "createOrEditLabel": "Créer ou éditer un Change Log",
+        "search": "Recherche pour Change Log",
+        "notFound": "Aucun Change Log trouvé"
+      },
+      "created": "Un nouveau Change Log a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Change Log avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Change Log avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Change Log {{ id }} ?"
+      },
+      "detail": {
+        "title": "Change Log"
+      },
+      "userId": "User Id",
+      "date": "Date",
+      "changeTrigger": "Change Trigger",
+      "changeType": "Change Type",
+      "description": "Description"
+    }
+  }
+}

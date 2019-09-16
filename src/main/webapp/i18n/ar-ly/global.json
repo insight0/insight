@@ -7,6 +7,16 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "الكيانات",
+        "dayOff": "Day Off",
+        "changeLog": "Change Log",
+        "holiday": "Holiday",
+        "contact": "Contact",
+        "functionalRole": "Functional Role",
+        "address": "Address",
+        "salaryPackage": "Salary Package",
+        "organisation": "Organisation",
+        "contract": "Contract",
+        "documentPlaceholder": "Document Placeholder",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

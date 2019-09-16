@@ -1,0 +1,30 @@
+{
+  "insightApp": {
+    "organisation": {
+      "home": {
+        "title": "Organisations",
+        "createLabel": "Créer un nouveau Organisation",
+        "createOrEditLabel": "Créer ou éditer un Organisation",
+        "search": "Recherche pour Organisation",
+        "notFound": "Aucun Organisation trouvé"
+      },
+      "created": "Un nouveau Organisation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Organisation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Organisation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Organisation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Organisation"
+      },
+      "name": "Name",
+      "phoneNumber": "Phone Number",
+      "siteUrl": "Site Url",
+      "logoUrl": "Logo Url",
+      "email": "Email",
+      "help": {
+        "name": "TODO: private Address address;TODO: private List&lt;Contact&gt; contacts;"
+      }
+    }
+  }
+}

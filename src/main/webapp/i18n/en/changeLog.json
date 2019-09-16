@@ -1,0 +1,27 @@
+{
+  "insightApp": {
+    "changeLog": {
+      "home": {
+        "title": "Change Logs",
+        "createLabel": "Create a new Change Log",
+        "createOrEditLabel": "Create or edit a Change Log",
+        "search": "Search for Change Log",
+        "notFound": "No Change Logs found"
+      },
+      "created": "A new Change Log is created with identifier {{ param }}",
+      "updated": "A Change Log is updated with identifier {{ param }}",
+      "deleted": "A Change Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Change Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Change Log"
+      },
+      "userId": "User Id",
+      "date": "Date",
+      "changeTrigger": "Change Trigger",
+      "changeType": "Change Type",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="changeLog">
+            <h2><span jhiTranslate="insightApp.changeLog.detail.title">Change Log</span> {{changeLog.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.changeLog.userId">User Id</span></dt>
+                <dd>
+                    <span>{{changeLog.userId}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.changeLog.date">Date</span></dt>
+                <dd>
+                    <span>{{changeLog.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.changeLog.changeTrigger">Change Trigger</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'insightApp.ChangeTrigger.' + changeLog.changeTrigger}}">{{changeLog.changeTrigger}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.changeLog.changeType">Change Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'insightApp.ChangeType.' + changeLog.changeType}}">{{changeLog.changeType}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.changeLog.description">Description</span></dt>
+                <dd>
+                    <span>{{changeLog.description}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/change-log', changeLog.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

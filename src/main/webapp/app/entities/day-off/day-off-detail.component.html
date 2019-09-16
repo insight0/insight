@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="dayOff">
+            <h2><span jhiTranslate="insightApp.dayOff.detail.title">Day Off</span> {{dayOff.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.dayOff.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{dayOff.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{dayOff.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.dayOffObject">Day Off Object</span></dt>
+                <dd>
+                    <span>{{dayOff.dayOffObject}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'insightApp.DayOffStatus.' + dayOff.status}}">{{dayOff.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.forced">Forced</span></dt>
+                <dd>
+                    <span>{{dayOff.forced}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.employeId">Employe Id</span></dt>
+                <dd>
+                    <span>{{dayOff.employeId}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.validatorId">Validator Id</span></dt>
+                <dd>
+                    <span>{{dayOff.validatorId}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.dayOff.days">Days</span></dt>
+                <dd>
+                    <span>{{dayOff.days}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/day-off', dayOff.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

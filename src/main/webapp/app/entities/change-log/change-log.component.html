@@ -1,0 +1,80 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="insightApp.changeLog.home.title">Change Logs</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-change-log" [routerLink]="['/change-log/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="insightApp.changeLog.home.createLabel">
+            Create a new Change Log
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'insightApp.changeLog.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="alert alert-warning" *ngIf="changeLogs?.length === 0">
+        <span jhiTranslate="insightApp.changeLog.home.notFound">No changeLogs found</span>
+    </div>
+    <div class="table-responsive" *ngIf="changeLogs?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userId"><span jhiTranslate="insightApp.changeLog.userId">User Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="insightApp.changeLog.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="changeTrigger"><span jhiTranslate="insightApp.changeLog.changeTrigger">Change Trigger</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="changeType"><span jhiTranslate="insightApp.changeLog.changeType">Change Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="insightApp.changeLog.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let changeLog of changeLogs ;trackBy: trackId">
+                <td><a [routerLink]="['/change-log', changeLog.id, 'view' ]">{{changeLog.id}}</a></td>
+                <td>{{changeLog.userId}}</td>
+                <td>{{changeLog.date | date:'medium'}}</td>
+                <td jhiTranslate="{{'insightApp.ChangeTrigger.' + changeLog.changeTrigger}}">{{changeLog.changeTrigger}}</td>
+                <td jhiTranslate="{{'insightApp.ChangeType.' + changeLog.changeType}}">{{changeLog.changeType}}</td>
+                <td>{{changeLog.description}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/change-log', changeLog.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/change-log', changeLog.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/change-log', { outlets: { popup: changeLog.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

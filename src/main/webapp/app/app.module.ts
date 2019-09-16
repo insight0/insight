@@ -20,10 +20,20 @@ import { InsightEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { MaterialModule } from 'app/material-module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TemplateSharedModule } from 'app/template/shared/shared.module';
+import { AuthenticationLayoutComponent } from 'app/template/common/authentication-layout.component';
+import { TemplateModule } from 'app/template/template/template.module';
+import * as $ from 'jquery';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    TemplateSharedModule,
+    TemplateModule,
+    MaterialModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-' }),
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
@@ -40,7 +50,21 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
     InsightEntityModule,
     InsightAppRoutingModule
   ],
-  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    JhiMainComponent,
+    AuthenticationLayoutComponent,
+    AuthenticationLayoutComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

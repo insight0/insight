@@ -1,0 +1,123 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-day-off-heading" jhiTranslate="insightApp.dayOff.home.createOrEditLabel">Create or edit a Day Off</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.startDate" for="field_startDate">Start Date</label>
+                    <div class="d-flex">
+                        <input id="field_startDate" type="datetime-local" class="form-control" name="startDate" formControlName="startDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('startDate').invalid && (editForm.get('startDate').dirty || editForm.get('startDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('startDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('startDate').errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.endDate" for="field_endDate">End Date</label>
+                    <div class="d-flex">
+                        <input id="field_endDate" type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('endDate').invalid && (editForm.get('endDate').dirty || editForm.get('endDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('endDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('endDate').errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.dayOffObject" for="field_dayOffObject">Day Off Object</label>
+                    <input type="text" class="form-control" name="dayOffObject" id="field_dayOffObject"
+                           formControlName="dayOffObject"/>
+                    <div *ngIf="editForm.get('dayOffObject').invalid && (editForm.get('dayOffObject').dirty || editForm.get('dayOffObject').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOffObject').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="NEW">{{'insightApp.DayOffStatus.NEW' | translate}}</option>
+                        <option value="DECLINED">{{'insightApp.DayOffStatus.DECLINED' | translate}}</option>
+                        <option value="APPROVED">{{'insightApp.DayOffStatus.APPROVED' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.forced" for="field_forced">Forced</label>
+                    <input type="checkbox" class="form-control" name="forced" id="field_forced"
+                           formControlName="forced"/>
+                    <div *ngIf="editForm.get('forced').invalid && (editForm.get('forced').dirty || editForm.get('forced').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('forced').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.employeId" for="field_employeId">Employe Id</label>
+                    <input type="text" class="form-control" name="employeId" id="field_employeId"
+                           formControlName="employeId"/>
+                    <div *ngIf="editForm.get('employeId').invalid && (editForm.get('employeId').dirty || editForm.get('employeId').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('employeId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.validatorId" for="field_validatorId">Validator Id</label>
+                    <input type="text" class="form-control" name="validatorId" id="field_validatorId"
+                           formControlName="validatorId"/>
+                    <div *ngIf="editForm.get('validatorId').invalid && (editForm.get('validatorId').dirty || editForm.get('validatorId').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('validatorId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.days" for="field_days">Days</label>
+                    <input type="number" class="form-control" name="days" id="field_days"
+                           formControlName="days"/>
+                    <div *ngIf="editForm.get('days').invalid && (editForm.get('days').dirty || editForm.get('days').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('days').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('days')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

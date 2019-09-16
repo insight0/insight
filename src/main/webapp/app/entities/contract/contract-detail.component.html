@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="contract">
+            <h2><span jhiTranslate="insightApp.contract.detail.title">Contract</span> {{contract.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.contract.type" [ngbTooltip]="'insightApp.contract.help.type' | translate">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'insightApp.ContractType.' + contract.type}}">{{contract.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{contract.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{contract.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.employeeSignatureDate">Employee Signature Date</span></dt>
+                <dd>
+                    <span>{{contract.employeeSignatureDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.directionSignatureDate">Direction Signature Date</span></dt>
+                <dd>
+                    <span>{{contract.directionSignatureDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.description">Description</span></dt>
+                <dd>
+                    <span>{{contract.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.contract.dayOffNamber">Day Off Namber</span></dt>
+                <dd>
+                    <span>{{contract.dayOffNamber}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/contract', contract.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

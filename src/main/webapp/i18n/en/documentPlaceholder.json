@@ -1,0 +1,31 @@
+{
+  "insightApp": {
+    "documentPlaceholder": {
+      "home": {
+        "title": "Document Placeholders",
+        "createLabel": "Create a new Document Placeholder",
+        "createOrEditLabel": "Create or edit a Document Placeholder",
+        "search": "Search for Document Placeholder",
+        "notFound": "No Document Placeholders found"
+      },
+      "created": "A new Document Placeholder is created with identifier {{ param }}",
+      "updated": "A Document Placeholder is updated with identifier {{ param }}",
+      "deleted": "A Document Placeholder is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Document Placeholder {{ id }}?"
+      },
+      "detail": {
+        "title": "Document Placeholder"
+      },
+      "name": "Name",
+      "description": "Description",
+      "version": "Version",
+      "url": "Url",
+      "type": "Type",
+      "size": "Size",
+      "help": {
+        "name": "TODO: private List&lt;DocumentHistory&gt; versions; TODO: private List&lt;ChangeLog&gt; changeLogs;"
+      }
+    }
+  }
+}

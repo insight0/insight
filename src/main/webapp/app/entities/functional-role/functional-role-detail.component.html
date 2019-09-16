@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="functionalRole">
+            <h2><span jhiTranslate="insightApp.functionalRole.detail.title">Functional Role</span> {{functionalRole.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.functionalRole.name">Name</span></dt>
+                <dd>
+                    <span>{{functionalRole.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.functionalRole.description">Description</span></dt>
+                <dd>
+                    <span>{{functionalRole.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.functionalRole.maxHolidays">Max Holidays</span></dt>
+                <dd>
+                    <span>{{functionalRole.maxHolidays}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.functionalRole.workingHours">Working Hours</span></dt>
+                <dd>
+                    <span>{{functionalRole.workingHours}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/functional-role', functionalRole.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

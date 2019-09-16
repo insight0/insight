@@ -51,7 +51,7 @@ Generic styles
 }
 
 .ng-invalid:not(form) {
-  border-left: 5px solid red;
+  /* border-left: 5px solid red; */
 }
 
 /* other generic styles */
@@ -180,3 +180,25 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+@import 'app';
+
+.search-input {
+  min-width: 250px;
+  margin-left: auto;
+  width: 20%;
+}
+
+.div-padding {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.div-form-padding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.mat-row:hover {
+  background-color: #eaeaea;
+}

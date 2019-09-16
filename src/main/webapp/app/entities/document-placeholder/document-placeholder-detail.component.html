@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="documentPlaceholder">
+            <h2><span jhiTranslate="insightApp.documentPlaceholder.detail.title">Document Placeholder</span> {{documentPlaceholder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.name" [ngbTooltip]="'insightApp.documentPlaceholder.help.name' | translate">Name</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.description">Description</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.version">Version</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.version}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.url">Url</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.type">Type</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.documentPlaceholder.size">Size</span></dt>
+                <dd>
+                    <span>{{documentPlaceholder.size}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/document-placeholder', documentPlaceholder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

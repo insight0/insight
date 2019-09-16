@@ -1,0 +1,114 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-salary-package-heading" jhiTranslate="insightApp.salaryPackage.home.createOrEditLabel">Create or edit a Salary Package</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.netSalaryPerMonth" for="field_netSalaryPerMonth" [ngbTooltip]="'insightApp.salaryPackage.help.netSalaryPerMonth' | translate">Net Salary Per Month</label>
+                    <input type="number" class="form-control" name="netSalaryPerMonth" id="field_netSalaryPerMonth"
+                           formControlName="netSalaryPerMonth"/>
+                    <div *ngIf="editForm.get('netSalaryPerMonth').invalid && (editForm.get('netSalaryPerMonth').dirty || editForm.get('netSalaryPerMonth').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('netSalaryPerMonth').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('netSalaryPerMonth')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.nationalInsurancePerMonth" for="field_nationalInsurancePerMonth">National Insurance Per Month</label>
+                    <input type="number" class="form-control" name="nationalInsurancePerMonth" id="field_nationalInsurancePerMonth"
+                           formControlName="nationalInsurancePerMonth"/>
+                    <div *ngIf="editForm.get('nationalInsurancePerMonth').invalid && (editForm.get('nationalInsurancePerMonth').dirty || editForm.get('nationalInsurancePerMonth').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('nationalInsurancePerMonth').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('nationalInsurancePerMonth')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.taxPerMonth" for="field_taxPerMonth">Tax Per Month</label>
+                    <input type="number" class="form-control" name="taxPerMonth" id="field_taxPerMonth"
+                           formControlName="taxPerMonth"/>
+                    <div *ngIf="editForm.get('taxPerMonth').invalid && (editForm.get('taxPerMonth').dirty || editForm.get('taxPerMonth').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('taxPerMonth').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('taxPerMonth')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.privateInsurancePerMonth" for="field_privateInsurancePerMonth">Private Insurance Per Month</label>
+                    <input type="number" class="form-control" name="privateInsurancePerMonth" id="field_privateInsurancePerMonth"
+                           formControlName="privateInsurancePerMonth"/>
+                    <div *ngIf="editForm.get('privateInsurancePerMonth').invalid && (editForm.get('privateInsurancePerMonth').dirty || editForm.get('privateInsurancePerMonth').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('privateInsurancePerMonth').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('privateInsurancePerMonth')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.mealVoucherPerMonth" for="field_mealVoucherPerMonth">Meal Voucher Per Month</label>
+                    <input type="number" class="form-control" name="mealVoucherPerMonth" id="field_mealVoucherPerMonth"
+                           formControlName="mealVoucherPerMonth"/>
+                    <div *ngIf="editForm.get('mealVoucherPerMonth').invalid && (editForm.get('mealVoucherPerMonth').dirty || editForm.get('mealVoucherPerMonth').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('mealVoucherPerMonth').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('mealVoucherPerMonth')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.salaryPackage.bonusPerYear" for="field_bonusPerYear">Bonus Per Year</label>
+                    <input type="number" class="form-control" name="bonusPerYear" id="field_bonusPerYear"
+                           formControlName="bonusPerYear"/>
+                    <div *ngIf="editForm.get('bonusPerYear').invalid && (editForm.get('bonusPerYear').dirty || editForm.get('bonusPerYear').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bonusPerYear').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('bonusPerYear')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

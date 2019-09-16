@@ -1,0 +1,46 @@
+<div class="row div-padding">
+    <div class="col-8">
+        <div *ngIf="holiday">
+            <h2><span jhiTranslate="insightApp.holiday.detail.title">Jour Fériée</span> {{holiday.name}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details div-form-padding">
+                <dt><span>Nom</span></dt>
+                <dd>
+                    <span>{{holiday.name}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{holiday.description}}</span>
+                </dd>
+                <dt><span>Date</span></dt>
+                <dd>
+                    <span>{{holiday.date | date:'EEEE, MMMM, dd/MM/yyyy'}}</span>
+                </dd>
+
+                <dt><span>Durée</span></dt>
+                <dd>
+                    <span>{{holiday.duration}} Jours</span>
+                </dd>
+
+                <dt><span>Payée</span></dt>
+                <dd>
+                    <mat-chip-list>
+                        <mat-chip color="primary" selected *ngIf="holiday.paid">Oui</mat-chip>
+                        <mat-chip color="accent" selected *ngIf="!holiday.paid">non</mat-chip>
+                    </mat-chip-list>
+                </dd>
+            </dl>
+
+            <button mat-raised-button type="submit"
+                    (click)="previousState()">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button mat-raised-button  type="button"
+                    [routerLink]="['/holiday', holiday.id, 'edit']">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="organisation">
+            <h2><span jhiTranslate="insightApp.organisation.detail.title">Organisation</span> {{organisation.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.organisation.name" [ngbTooltip]="'insightApp.organisation.help.name' | translate">Name</span></dt>
+                <dd>
+                    <span>{{organisation.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.organisation.phoneNumber">Phone Number</span></dt>
+                <dd>
+                    <span>{{organisation.phoneNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.organisation.siteUrl">Site Url</span></dt>
+                <dd>
+                    <span>{{organisation.siteUrl}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.organisation.logoUrl">Logo Url</span></dt>
+                <dd>
+                    <span>{{organisation.logoUrl}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.organisation.email">Email</span></dt>
+                <dd>
+                    <span>{{organisation.email}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/organisation', organisation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

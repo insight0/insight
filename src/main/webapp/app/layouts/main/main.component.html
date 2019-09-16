@@ -1,11 +1,30 @@
-<jhi-page-ribbon></jhi-page-ribbon>
 <div>
     <router-outlet name="navbar"></router-outlet>
 </div>
-<div class="container-fluid">
-    <div class="card jh-card">
-        <router-outlet></router-outlet>
-        <router-outlet name="popup"></router-outlet>
+<div class="app" [ngClass]="{'is-collapsed': isCollapse, 'rtl': rtlActived}">
+    <div class="layout" [ngClass]="headerSelected">
+        <div [ngClass]="sidenavSelected">
+            <!-- Side Nav START -->
+            <app-side-nav></app-side-nav>
+            <!-- Side Nav END -->
+            <!-- Page Container START -->
+            <div class="page-container">
+                <!-- Top Nav START -->
+                <app-header></app-header>
+                <!-- Top Nav END -->
+                <!-- Side Panel START -->
+                <app-side-panel></app-side-panel>
+                <!-- Side Panel END -->
+                <!-- Content Wrapper START -->
+                <div class="main-content">
+                    <router-outlet></router-outlet>
+                </div>
+                <!-- Content Wrapper END -->
+                <!-- Footer START -->
+                <jhi-footer></jhi-footer>
+                <!-- Footer END -->
+            </div>
+            <!-- Page Container END -->
+        </div>
     </div>
-    <jhi-footer></jhi-footer>
 </div>

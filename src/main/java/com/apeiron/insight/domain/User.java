@@ -2,6 +2,7 @@ package com.apeiron.insight.domain;
 
 import com.apeiron.insight.config.Constants;
 
+import com.apeiron.insight.domain.enumeration.ContractType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
@@ -65,6 +66,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(max = 256)
     @Field("image_url")
     private String imageUrl;
+
+    @Field("functional_role")
+    private String functionalRoleId;
+
+    @Field("contract")
+    private Contract contract;
+
+    @Field("address")
+    private Address address;
+
+    @Field("salary_package")
+    private SalaryPackage salaryPackage;
 
     @Size(max = 20)
     @Field("activation_key")
@@ -185,6 +198,42 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public String getFunctionalRoleId() {
+        return functionalRoleId;
+    }
+
+    public void setFunctionalRoleId(String functionalRoleId) {
+        this.functionalRoleId = functionalRoleId;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public SalaryPackage getSalaryPackage() {
+        return salaryPackage;
+    }
+
+    public void setSalaryPackage(SalaryPackage salaryPackage) {
+        this.salaryPackage = salaryPackage;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

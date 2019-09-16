@@ -1,0 +1,31 @@
+{
+  "insightApp": {
+    "salaryPackage": {
+      "home": {
+        "title": "Salary Packages",
+        "createLabel": "Create a new Salary Package",
+        "createOrEditLabel": "Create or edit a Salary Package",
+        "search": "Search for Salary Package",
+        "notFound": "No Salary Packages found"
+      },
+      "created": "A new Salary Package is created with identifier {{ param }}",
+      "updated": "A Salary Package is updated with identifier {{ param }}",
+      "deleted": "A Salary Package is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Salary Package {{ id }}?"
+      },
+      "detail": {
+        "title": "Salary Package"
+      },
+      "netSalaryPerMonth": "Net Salary Per Month",
+      "nationalInsurancePerMonth": "National Insurance Per Month",
+      "taxPerMonth": "Tax Per Month",
+      "privateInsurancePerMonth": "Private Insurance Per Month",
+      "mealVoucherPerMonth": "Meal Voucher Per Month",
+      "bonusPerYear": "Bonus Per Year",
+      "help": {
+        "netSalaryPerMonth": "TODO: private List&lt;ChangeLog&gt; changeLogs;"
+      }
+    }
+  }
+}

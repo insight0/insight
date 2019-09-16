@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="salaryPackage">
+            <h2><span jhiTranslate="insightApp.salaryPackage.detail.title">Salary Package</span> {{salaryPackage.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.salaryPackage.netSalaryPerMonth" [ngbTooltip]="'insightApp.salaryPackage.help.netSalaryPerMonth' | translate">Net Salary Per Month</span></dt>
+                <dd>
+                    <span>{{salaryPackage.netSalaryPerMonth}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.salaryPackage.nationalInsurancePerMonth">National Insurance Per Month</span></dt>
+                <dd>
+                    <span>{{salaryPackage.nationalInsurancePerMonth}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.salaryPackage.taxPerMonth">Tax Per Month</span></dt>
+                <dd>
+                    <span>{{salaryPackage.taxPerMonth}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.salaryPackage.privateInsurancePerMonth">Private Insurance Per Month</span></dt>
+                <dd>
+                    <span>{{salaryPackage.privateInsurancePerMonth}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.salaryPackage.mealVoucherPerMonth">Meal Voucher Per Month</span></dt>
+                <dd>
+                    <span>{{salaryPackage.mealVoucherPerMonth}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.salaryPackage.bonusPerYear">Bonus Per Year</span></dt>
+                <dd>
+                    <span>{{salaryPackage.bonusPerYear}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/salary-package', salaryPackage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

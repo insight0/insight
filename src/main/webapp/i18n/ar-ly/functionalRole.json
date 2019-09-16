@@ -1,0 +1,26 @@
+{
+  "insightApp": {
+    "functionalRole": {
+      "home": {
+        "title": "Functional Roles",
+        "createLabel": "Create a new Functional Role",
+        "createOrEditLabel": "Create or edit a Functional Role",
+        "search": "Search for Functional Role",
+        "notFound": "No Functional Roles found"
+      },
+      "created": "A new Functional Role is created with identifier {{ param }}",
+      "updated": "A Functional Role is updated with identifier {{ param }}",
+      "deleted": "A Functional Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Functional Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Functional Role"
+      },
+      "name": "Name",
+      "description": "Description",
+      "maxHolidays": "Max Holidays",
+      "workingHours": "Working Hours"
+    }
+  }
+}

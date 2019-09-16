@@ -1,0 +1,10 @@
+{
+  "insightApp": {
+    "DayOffStatus": {
+      "null": "",
+      "NEW": "NEW",
+      "DECLINED": "DECLINED",
+      "APPROVED": "APPROVED"
+    }
+  }
+}

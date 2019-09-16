@@ -1,0 +1,54 @@
+{
+    "name": "Contract",
+    "fields": [
+        {
+            "fieldName": "type",
+            "javadoc": "TODO: private DocumentPlaceholder digitalCopy;",
+            "fieldType": "ContractType",
+            "fieldValues": "SIVP,KARAMA,CDD,CDI,SUMMER_TRAINEESHIP,FINAL_YEAR_TRAINEESHIP,FREELANCER",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "employeeSignatureDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "directionSignatureDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dayOffNamber",
+            "fieldType": "Float",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190824223203",
+    "entityTableName": "contract",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

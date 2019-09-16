@@ -1,0 +1,39 @@
+{
+    "name": "Organisation",
+    "fields": [
+        {
+            "fieldName": "name",
+            "javadoc": "TODO: private Address address;TODO: private List<Contact> contacts;",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "siteUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "logoUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190824222452",
+    "entityTableName": "organisation",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

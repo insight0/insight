@@ -1,0 +1,54 @@
+{
+    "name": "Contact",
+    "fields": [
+        {
+            "fieldName": "firstName",
+            "javadoc": "TODO: private Address address;",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "role",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "organisationId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "ContractType",
+            "fieldValues": "SIVP,KARAMA,CDD,CDI,SUMMER_TRAINEESHIP,FINAL_YEAR_TRAINEESHIP,FREELANCER"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190824222448",
+    "entityTableName": "contact",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,11 @@
+{
+  "insightApp": {
+    "ChangeType": {
+      "null": "",
+      "CREATE": "CREATE",
+      "UPDATE": "UPDATE",
+      "DESACTIVATE": "DESACTIVATE",
+      "DELETE": "DELETE"
+    }
+  }
+}

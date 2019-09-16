@@ -1,8 +1,29 @@
+
+enum ChangeTrigger {
+	USER, SYSTEM
+}
+
+enum ChangeType {
+	CREATE, UPDATE, DESACTIVATE, DELETE
+}
+
+enum ContractType {
+	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
+}
+
+enum DayOffStatus {
+	NEW, DECLINED, APPROVED
+}
+enum ContractType {
+	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
+}
+
+
 entity DayOff {
     startDate Instant required,
     endDate Instant required,
-    object String required,
-    status RequestStatus required,
+    dayOffObject String required,
+    status DayOffStatus,
     forced Boolean required,
     employeId String required,
     validatorId String required,
@@ -17,13 +38,7 @@ entity ChangeLog {
     description String
 }
 
-enum ChangeTrigger {
-	USER, SYSTEM
-}
 
-enum ChangeType {
-	CREATE, UPDATE, DESACTIVATE, DELETE
-}
 
 entity Holiday{
     name String required, 
@@ -46,15 +61,35 @@ entity Contact {
     type ContractType
 }
 
-enum ContractType {
-	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
+entity DocumentPlaceholder {
+
+    /** TODO: private List<DocumentHistory> versions; TODO: private List<ChangeLog> changeLogs; */
+	name String required,
+    description String required,
+    version String required,
+    url String required,
+    type String required,
+    size String required
 }
+
 
 entity FunctionalRole {
   	name String required,
   	description String required,
   	maxHolidays Integer required,
   	workingHours Integer required
+}
+
+entity Contract {
+    /** TODO: private DocumentPlaceholder digitalCopy; */
+
+	type ContractType required,
+    startDate Instant required,
+    endDate Instant,
+    employeeSignatureDate Instant,
+    directionSignatureDate Instant,
+    description String,
+	dayOffNamber Float required
 }
 
 entity Address {
@@ -86,13 +121,6 @@ entity Organisation {
     email String
 }
 
-enum ContractType {
-	SIVP, KARAMA, CDD, CDI, SUMMER_TRAINEESHIP, FINAL_YEAR_TRAINEESHIP, FREELANCER
-}
-
-enum RequestStatus {
-	NEW, DECLINED, APPROVED
-}
 
 // Set pagination options
 paginate all with infinite-scroll
@@ -101,4 +129,4 @@ paginate all with infinite-scroll
 dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceImpl except
+service all with serviceImpl

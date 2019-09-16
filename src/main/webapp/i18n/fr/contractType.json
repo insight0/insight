@@ -1,0 +1,14 @@
+{
+  "insightApp": {
+    "ContractType": {
+      "null": "",
+      "SIVP": "SIVP",
+      "KARAMA": "KARAMA",
+      "CDD": "CDD",
+      "CDI": "CDI",
+      "SUMMER_TRAINEESHIP": "SUMMER_TRAINEESHIP",
+      "FINAL_YEAR_TRAINEESHIP": "FINAL_YEAR_TRAINEESHIP",
+      "FREELANCER": "FREELANCER"
+    }
+  }
+}

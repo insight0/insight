@@ -1,0 +1,32 @@
+{
+  "insightApp": {
+    "contact": {
+      "home": {
+        "title": "Contacts",
+        "createLabel": "Créer un nouveau Contact",
+        "createOrEditLabel": "Créer ou éditer un Contact",
+        "search": "Recherche pour Contact",
+        "notFound": "Aucun Contact trouvé"
+      },
+      "created": "Un nouveau Contact a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Contact avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Contact avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Contact {{ id }} ?"
+      },
+      "detail": {
+        "title": "Contact"
+      },
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "role": "Role",
+      "phoneNumber": "Phone Number",
+      "email": "Email",
+      "organisationId": "Organisation Id",
+      "type": "Type",
+      "help": {
+        "firstName": "TODO: private Address address;"
+      }
+    }
+  }
+}

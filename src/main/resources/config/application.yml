@@ -87,6 +87,20 @@ spring:
         size: 2
   thymeleaf:
     mode: HTML
+  mail:
+    host: SSL0.OVH.NET
+    port: 465
+    username: noreply@apeiron-tech.com
+    password: apeiron0610
+    test-connection: false
+    protocol: smtp
+    tls: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          ssl.trust: SSL0.OVH.NET
 
 server:
   servlet:

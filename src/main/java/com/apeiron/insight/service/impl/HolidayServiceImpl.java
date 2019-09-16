@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -73,6 +75,14 @@ public class HolidayServiceImpl implements HolidayService {
         log.debug("Request to get all Holidays");
         return holidayRepository.findAll(pageable)
             .map(holidayMapper::toDto);
+    }
+
+
+    @Override
+    public List<HolidayDTO> findNextHoliday() {
+        log.debug("Request to get all Holidays");
+        List<Holiday> holidays = holidayRepository.findByDateGreaterThanOrderByDateAsc(new Date().toInstant());
+        return holidayMapper.toDto(holidays);
     }
 
 

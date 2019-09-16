@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.util.List;
+
 
 /**
  * Spring Data MongoDB repository for the Holiday entity.
@@ -12,5 +15,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface HolidayRepository extends MongoRepository<Holiday, String> {
+
+    List<Holiday> findByDateGreaterThanOrderByDateAsc(Instant date);
 
 }

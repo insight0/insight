@@ -4,33 +4,15 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
 import { InsightSharedModule } from 'app/shared';
-import {
-  EmailTemplateComponent,
-  EmailTemplateDetailComponent,
-  EmailTemplateUpdateComponent,
-  EmailTemplateDeletePopupComponent,
-  EmailTemplateDeleteDialogComponent,
-  emailTemplateRoute,
-  emailTemplatePopupRoute
-} from './';
+import { EmailTemplateUpdateComponent, emailTemplateRoute, emailTemplatePopupRoute } from './';
+import { MaterialModule } from 'app/material-module';
 
 const ENTITY_STATES = [...emailTemplateRoute, ...emailTemplatePopupRoute];
 
 @NgModule({
-  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    EmailTemplateComponent,
-    EmailTemplateDetailComponent,
-    EmailTemplateUpdateComponent,
-    EmailTemplateDeleteDialogComponent,
-    EmailTemplateDeletePopupComponent
-  ],
-  entryComponents: [
-    EmailTemplateComponent,
-    EmailTemplateUpdateComponent,
-    EmailTemplateDeleteDialogComponent,
-    EmailTemplateDeletePopupComponent
-  ],
+  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES), MaterialModule],
+  declarations: [EmailTemplateUpdateComponent],
+  entryComponents: [EmailTemplateUpdateComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

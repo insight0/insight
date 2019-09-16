@@ -1,7 +1,7 @@
 <div class="row div-padding">
     <div class="col-8">
         <div *ngIf="holiday">
-            <h2><span jhiTranslate="insightApp.holiday.detail.title">Jour Fériée</span> {{holiday.name}}</h2>
+            <h2><span>Jour Férié</span> {{holiday.name}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details div-form-padding">
@@ -17,12 +17,10 @@
                 <dd>
                     <span>{{holiday.date | date:'EEEE, MMMM, dd/MM/yyyy'}}</span>
                 </dd>
-
                 <dt><span>Durée</span></dt>
                 <dd>
                     <span>{{holiday.duration}} Jours</span>
                 </dd>
-
                 <dt><span>Payée</span></dt>
                 <dd>
                     <mat-chip-list>
@@ -31,15 +29,13 @@
                     </mat-chip-list>
                 </dd>
             </dl>
-
             <button mat-raised-button type="submit"
                     (click)="previousState()">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span>Retour</span>
             </button>
-
             <button mat-raised-button  type="button"
                     [routerLink]="['/holiday', holiday.id, 'edit']">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span>Modifier</span>
             </button>
         </div>
     </div>

@@ -1,59 +1,48 @@
-<div class="row justify-content-center">
+<div class="row div-padding">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-config-heading" jhiTranslate="insightApp.config.home.createOrEditLabel">Create or edit a Config</h2>
-            <div>
+            <h2 id="jhi-config-heading">Configuration des notifications</h2>
+            <div class="div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailSendDate" for="field_holidayEmailSendDate">Holiday Email Send Date</label>
-                    <input type="number" class="form-control" name="holidayEmailSendDate" id="field_holidayEmailSendDate"
-                           formControlName="holidayEmailSendDate"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailNotification" for="field_holidayEmailNotification">Holiday Email Notification</label>
-                    <input type="checkbox" class="form-control" name="holidayEmailNotification" id="field_holidayEmailNotification"
-                           formControlName="holidayEmailNotification"/>
-                    <div *ngIf="editForm.get('holidayEmailNotification').invalid && (editForm.get('holidayEmailNotification').dirty || editForm.get('holidayEmailNotification').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('holidayEmailNotification').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.welcomingEmailNotification" for="field_welcomingEmailNotification">Welcoming Email Notification</label>
-                    <input type="checkbox" class="form-control" name="welcomingEmailNotification" id="field_welcomingEmailNotification"
-                           formControlName="welcomingEmailNotification"/>
-                    <div *ngIf="editForm.get('welcomingEmailNotification').invalid && (editForm.get('welcomingEmailNotification').dirty || editForm.get('welcomingEmailNotification').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('welcomingEmailNotification').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.birthdayEmailNotification" for="field_birthdayEmailNotification">Birthday Email Notification</label>
-                    <input type="checkbox" class="form-control" name="birthdayEmailNotification" id="field_birthdayEmailNotification"
-                           formControlName="birthdayEmailNotification"/>
-                    <div *ngIf="editForm.get('birthdayEmailNotification').invalid && (editForm.get('birthdayEmailNotification').dirty || editForm.get('birthdayEmailNotification').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('birthdayEmailNotification').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
 
+                <h3>Jours Fériés</h3>
+                <hr>
+
+                <div class="form-group">
+                    <mat-slide-toggle name="holidayEmailNotification" id="field_holidayEmailNotification" [(ngModel)]="activeHolidayNotif"
+                                      formControlName="holidayEmailNotification">Email rappel jours fériés</mat-slide-toggle>
+                </div>
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="number" name="holidayEmailSendDate" id="field_holidayEmailSendDate"
+                               formControlName="holidayEmailSendDate" placeholder="Rappel avant combien de jours ?" [readonly]="!activeHolidayNotif">
+                        <mat-error *ngIf="editForm.get('holidayEmailSendDate').invalid && (editForm.get('holidayEmailSendDate').dirty || editForm.get('holidayEmailSendDate').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <br>
+                <h3>Equipe</h3>
+                <hr>
+                <div class="form-group">
+
+                    <mat-slide-toggle name="welcomingEmailNotification" id="field_welcomingEmailNotification"
+                                      formControlName="welcomingEmailNotification">Email de bienvenue</mat-slide-toggle>
+
+                </div>
+                <div class="form-group">
+
+
+                    <mat-slide-toggle name="birthdayEmailNotification" id="field_birthdayEmailNotification"
+                                      formControlName="birthdayEmailNotification">Email d'anniversaire</mat-slide-toggle>
+
+                </div>
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button mat-raised-button type="button" id="cancel-save"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button mat-raised-button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" >
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

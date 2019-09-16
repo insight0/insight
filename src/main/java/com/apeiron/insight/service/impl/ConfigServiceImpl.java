@@ -49,36 +49,32 @@ public class ConfigServiceImpl implements ConfigService {
     public ConfigDTO save(ConfigDTO configDTO) {
         log.debug("Request to save Config : {}", configDTO);
         Config config = configMapper.toEntity(configDTO);
+        config.setId("DEFAULT_CONFIG");
         config = configRepository.save(config);
         ConfigDTO result = configMapper.toDto(config);
-        configSearchRepository.save(config);
         return result;
     }
 
-    /**
-     * Get all the configs.
-     *
-     * @return the list of entities.
-     */
-    @Override
-    public List<ConfigDTO> findAll() {
-        log.debug("Request to get all Configs");
-        return configRepository.findAll().stream()
-            .map(configMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 
 
     /**
      * Get one config by id.
      *
-     * @param id the id of the entity.
      * @return the entity.
      */
     @Override
-    public Optional<ConfigDTO> findOne(String id) {
-        log.debug("Request to get Config : {}", id);
-        return configRepository.findById(id)
+    public Optional<ConfigDTO> findOne() {
+        log.debug("Request to get Config : {}", "DEFAULT_CONFIG");
+
+        Optional<Config> default_config = configRepository.findById("DEFAULT_CONFIG");
+
+        if(!default_config.isPresent()){
+            Config config = new Config();
+            config.setId("DEFAULT_CONFIG");
+            configRepository.save(config);
+        }
+
+        return configRepository.findById("DEFAULT_CONFIG")
             .map(configMapper::toDto);
     }
 
@@ -87,25 +83,10 @@ public class ConfigServiceImpl implements ConfigService {
      *
      * @param id the id of the entity.
      */
-    @Override
     public void delete(String id) {
         log.debug("Request to delete Config : {}", id);
         configRepository.deleteById(id);
         configSearchRepository.deleteById(id);
     }
 
-    /**
-     * Search for the config corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @return the list of entities.
-     */
-    @Override
-    public List<ConfigDTO> search(String query) {
-        log.debug("Request to search Configs for query {}", query);
-        return StreamSupport
-            .stream(configSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(configMapper::toDto)
-            .collect(Collectors.toList());
-    }
 }

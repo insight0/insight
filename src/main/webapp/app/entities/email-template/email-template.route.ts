@@ -6,10 +6,7 @@ import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { EmailTemplate } from 'app/shared/model/email-template.model';
 import { EmailTemplateService } from './email-template.service';
-import { EmailTemplateComponent } from './email-template.component';
-import { EmailTemplateDetailComponent } from './email-template-detail.component';
 import { EmailTemplateUpdateComponent } from './email-template-update.component';
-import { EmailTemplateDeletePopupComponent } from './email-template-delete-dialog.component';
 import { IEmailTemplate } from 'app/shared/model/email-template.model';
 
 @Injectable({ providedIn: 'root' })
@@ -17,53 +14,16 @@ export class EmailTemplateResolve implements Resolve<IEmailTemplate> {
   constructor(private service: EmailTemplateService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEmailTemplate> {
-    const id = route.params['id'];
-    if (id) {
-      return this.service.find(id).pipe(
-        filter((response: HttpResponse<EmailTemplate>) => response.ok),
-        map((emailTemplate: HttpResponse<EmailTemplate>) => emailTemplate.body)
-      );
-    }
-    return of(new EmailTemplate());
+    return this.service.find().pipe(
+      filter((response: HttpResponse<EmailTemplate>) => response.ok),
+      map((emailTemplate: HttpResponse<EmailTemplate>) => emailTemplate.body)
+    );
   }
 }
 
 export const emailTemplateRoute: Routes = [
   {
-    path: '',
-    component: EmailTemplateComponent,
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'insightApp.emailTemplate.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/view',
-    component: EmailTemplateDetailComponent,
-    resolve: {
-      emailTemplate: EmailTemplateResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'insightApp.emailTemplate.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: 'new',
-    component: EmailTemplateUpdateComponent,
-    resolve: {
-      emailTemplate: EmailTemplateResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'insightApp.emailTemplate.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/edit',
+    path: 'view',
     component: EmailTemplateUpdateComponent,
     resolve: {
       emailTemplate: EmailTemplateResolve
@@ -76,18 +36,4 @@ export const emailTemplateRoute: Routes = [
   }
 ];
 
-export const emailTemplatePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: EmailTemplateDeletePopupComponent,
-    resolve: {
-      emailTemplate: EmailTemplateResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'insightApp.emailTemplate.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
-];
+export const emailTemplatePopupRoute: Routes = [];

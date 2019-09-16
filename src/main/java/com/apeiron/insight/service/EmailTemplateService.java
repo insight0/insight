@@ -18,35 +18,13 @@ public interface EmailTemplateService {
      */
     EmailTemplateDTO save(EmailTemplateDTO emailTemplateDTO);
 
-    /**
-     * Get all the emailTemplates.
-     *
-     * @return the list of entities.
-     */
-    List<EmailTemplateDTO> findAll();
 
 
     /**
      * Get the "id" emailTemplate.
      *
-     * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<EmailTemplateDTO> findOne(String id);
+    Optional<EmailTemplateDTO> findOne();
 
-    /**
-     * Delete the "id" emailTemplate.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(String id);
-
-    /**
-     * Search for the emailTemplate corresponding to the query.
-     *
-     * @param query the query of the search.
-     * 
-     * @return the list of entities.
-     */
-    List<EmailTemplateDTO> search(String query);
 }

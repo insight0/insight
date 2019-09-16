@@ -5,6 +5,7 @@ import com.apeiron.insight.service.dto.HolidayDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,4 +54,7 @@ public interface HolidayService {
      * @return the list of entities.
      */
     Page<HolidayDTO> search(String query, Pageable pageable);
+
+
+    List<HolidayDTO> findNextHoliday();
 }

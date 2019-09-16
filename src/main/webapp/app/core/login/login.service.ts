@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { AccountService } from 'app/core/auth/account.service';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
 import { JhiTrackerService } from 'app/core/tracker/tracker.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
+  accountService: AccountService;
+
   constructor(
-    private accountService: AccountService,
     private trackerService: JhiTrackerService,
-    private authServerProvider: AuthServerProvider
+    private authServerProvider: AuthServerProvider,
+    accountService: AccountService,
+    private injector: Injector
   ) {}
 
   login(credentials, callback?) {
@@ -17,6 +20,10 @@ export class LoginService {
     return new Promise((resolve, reject) => {
       this.authServerProvider.login(credentials).subscribe(
         data => {
+          if (!this.accountService) {
+            this.accountService = this.injector.get(AccountService);
+          }
+
           this.accountService.identity(true).then(account => {
             this.trackerService.sendActivity();
             resolve(data);
@@ -37,6 +44,9 @@ export class LoginService {
   }
 
   logout() {
+    if (!this.accountService) {
+      this.accountService = this.injector.get(AccountService);
+    }
     this.authServerProvider.logout().subscribe(null, null, () => this.accountService.authenticate(null));
   }
 }

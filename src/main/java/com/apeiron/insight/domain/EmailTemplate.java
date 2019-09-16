@@ -1,9 +1,11 @@
 package com.apeiron.insight.domain;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import java.io.Serializable;
 
 /**
@@ -32,6 +34,9 @@ public class EmailTemplate implements Serializable {
     }
 
     public String getHolidayEmailTemplate() {
+        if (holidayEmailTemplate == null) {
+            return "";
+        }
         return holidayEmailTemplate;
     }
 

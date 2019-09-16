@@ -16,29 +16,11 @@ export class ConfigService {
 
   constructor(protected http: HttpClient) {}
 
-  create(config: IConfig): Observable<EntityResponseType> {
-    return this.http.post<IConfig>(this.resourceUrl, config, { observe: 'response' });
-  }
-
   update(config: IConfig): Observable<EntityResponseType> {
     return this.http.put<IConfig>(this.resourceUrl, config, { observe: 'response' });
   }
 
-  find(id: string): Observable<EntityResponseType> {
-    return this.http.get<IConfig>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-  }
-
-  query(req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http.get<IConfig[]>(this.resourceUrl, { params: options, observe: 'response' });
-  }
-
-  delete(id: string): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-  }
-
-  search(req?: any): Observable<EntityArrayResponseType> {
-    const options = createRequestOption(req);
-    return this.http.get<IConfig[]>(this.resourceSearchUrl, { params: options, observe: 'response' });
+  find(): Observable<EntityResponseType> {
+    return this.http.get<IConfig>(`${this.resourceUrl}`, { observe: 'response' });
   }
 }

@@ -58,6 +58,27 @@
                     <td mat-cell *matCellDef="let row">{{row.duration}} Jour(s)</td>
                 </ng-container>
 
+                <ng-container matColumnDef="options">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
+
+                    <td mat-cell style="min-width: 180px;" *matCellDef="let row">
+                        <button mat-icon-button
+                                [routerLink]="['/holiday', row.id, 'view' ]">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                [routerLink]="['/holiday', row.id, 'edit']">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                [routerLink]="['/holiday', { outlets: { popup: row.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
                 <!-- Name Column -->
                 <ng-container matColumnDef="paid">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Payée</th>
@@ -68,13 +89,10 @@
                         </mat-chip-list>
                     </td>
                 </ng-container>
-
-
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                 </tr>
             </table>
-
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
 

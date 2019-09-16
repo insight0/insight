@@ -131,7 +131,7 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: insight@localhost
+    from: noreply@apeiron-tech.com
   swagger:
     default-include-pattern: /api/.*
     title: insight API

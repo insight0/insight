@@ -13,6 +13,7 @@ import { HolidayService } from './holiday.service';
 })
 export class HolidayUpdateComponent implements OnInit {
   isSaving: boolean;
+  holiday: IHoliday;
 
   editForm = this.fb.group({
     id: [],
@@ -49,6 +50,7 @@ export class HolidayUpdateComponent implements OnInit {
       date: holiday.date,
       duration: holiday.duration
     });
+    this.holiday = holiday;
   }
 
   previousState() {

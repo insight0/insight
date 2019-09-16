@@ -4,22 +4,15 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
 import { InsightSharedModule } from 'app/shared';
-import {
-  ConfigComponent,
-  ConfigDetailComponent,
-  ConfigUpdateComponent,
-  ConfigDeletePopupComponent,
-  ConfigDeleteDialogComponent,
-  configRoute,
-  configPopupRoute
-} from './';
+import { ConfigUpdateComponent, configRoute, configPopupRoute } from './';
+import { MaterialModule } from 'app/material-module';
 
 const ENTITY_STATES = [...configRoute, ...configPopupRoute];
 
 @NgModule({
-  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [ConfigComponent, ConfigDetailComponent, ConfigUpdateComponent, ConfigDeleteDialogComponent, ConfigDeletePopupComponent],
-  entryComponents: [ConfigComponent, ConfigUpdateComponent, ConfigDeleteDialogComponent, ConfigDeletePopupComponent],
+  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES), MaterialModule],
+  declarations: [ConfigUpdateComponent],
+  entryComponents: [ConfigUpdateComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

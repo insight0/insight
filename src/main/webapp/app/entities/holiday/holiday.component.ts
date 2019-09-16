@@ -33,7 +33,7 @@ export class HolidayComponent implements OnInit, OnDestroy {
 
   currentYear: boolean;
 
-  displayedColumns: string[] = ['name', 'date', 'duration', 'paid'];
+  displayedColumns: string[] = ['name', 'date', 'duration', 'paid', 'options'];
   dataSource: MatTableDataSource<IHoliday>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

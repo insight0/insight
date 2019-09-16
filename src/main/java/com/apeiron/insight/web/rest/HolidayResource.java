@@ -91,9 +91,7 @@ public class HolidayResource {
     /**
      * {@code GET  /holidays} : get all the holidays.
      *
-
      * @param pageable the pagination information.
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of holidays in body.
      */
     @GetMapping("/holidays")
@@ -102,6 +100,13 @@ public class HolidayResource {
         Page<HolidayDTO> page = holidayService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/holidays/next")
+    public ResponseEntity<List<HolidayDTO>> getNextHolidays() {
+        log.debug("REST request to get a page of Holidays");
+        List<HolidayDTO> holidayDTOS = holidayService.findNextHoliday();
+        return ResponseEntity.ok().body(holidayDTOS);
     }
 
     /**
@@ -134,7 +139,7 @@ public class HolidayResource {
      * {@code SEARCH  /_search/holidays?query=:query} : search for the holiday corresponding
      * to the query.
      *
-     * @param query the query of the holiday search.
+     * @param query    the query of the holiday search.
      * @param pageable the pagination information.
      * @return the result of the search.
      */

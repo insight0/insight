@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { HttpResponse } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IEmailTemplate, EmailTemplate } from 'app/shared/model/email-template.model';
@@ -18,6 +18,8 @@ export class EmailTemplateUpdateComponent implements OnInit {
     holidayEmailTemplate: []
   });
 
+  holidayEmail: string;
+
   constructor(protected emailTemplateService: EmailTemplateService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class EmailTemplateUpdateComponent implements OnInit {
       id: emailTemplate.id,
       holidayEmailTemplate: emailTemplate.holidayEmailTemplate
     });
+    this.holidayEmail = emailTemplate.holidayEmailTemplate;
   }
 
   previousState() {
@@ -44,7 +47,7 @@ export class EmailTemplateUpdateComponent implements OnInit {
     if (emailTemplate.id !== undefined) {
       this.subscribeToSaveResponse(this.emailTemplateService.update(emailTemplate));
     } else {
-      this.subscribeToSaveResponse(this.emailTemplateService.create(emailTemplate));
+      this.subscribeToSaveResponse(this.emailTemplateService.update(emailTemplate));
     }
   }
 
@@ -54,6 +57,15 @@ export class EmailTemplateUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       holidayEmailTemplate: this.editForm.get(['holidayEmailTemplate']).value
     };
+  }
+
+  insertVariable(text: string, oField: any) {
+    if (oField.selectionStart || oField.selectionStart == '0') {
+      oField.selectionStart;
+
+      this.holidayEmail =
+        this.holidayEmail.substr(0, oField.selectionStart) + '##' + text + '##' + this.holidayEmail.substr(oField.selectionStart);
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmailTemplate>>) {

@@ -261,6 +261,28 @@ public class UserService {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
+    public List<User> getAllAdminUsers() {
+
+        List<User> admins = new ArrayList<>();
+
+        List<User> users = userRepository.findAll();
+
+        Authority adminAuthority = new Authority();
+        adminAuthority.setName(AuthoritiesConstants.ADMIN);
+
+        for (User user: users
+             ) {
+
+            if(user.getAuthorities().contains(adminAuthority)){
+                admins.add(user);
+            }
+
+        }
+
+        return admins;
+    }
+
+
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }

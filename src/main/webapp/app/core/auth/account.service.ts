@@ -19,7 +19,15 @@ export class AccountService {
     private sessionStorage: SessionStorageService,
     private http: HttpClient,
     private trackerService: JhiTrackerService
-  ) {}
+  ) {
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+    console.log('ACCOUNT SERVICE');
+  }
 
   fetch(): Observable<HttpResponse<Account>> {
     return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });

@@ -1,4 +1,6 @@
 import { Directive, HostListener, ElementRef, OnInit } from '@angular/core';
+import '../../../../content/js/jquery.sparkline/jquery.js';
+
 declare var $: any; // JQuery
 
 @Directive({

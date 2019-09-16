@@ -21,19 +21,19 @@ public class Config implements Serializable {
     private String id;
 
     @Field("holiday_email_send_date")
-    private Integer holidayEmailSendDate;
+    private int holidayEmailSendDate;
 
     @NotNull
     @Field("holiday_email_notification")
-    private Boolean holidayEmailNotification;
+    private boolean holidayEmailNotification;
 
     @NotNull
     @Field("welcoming_email_notification")
-    private Boolean welcomingEmailNotification;
+    private boolean welcomingEmailNotification;
 
     @NotNull
     @Field("birthday_email_notification")
-    private Boolean birthdayEmailNotification;
+    private boolean birthdayEmailNotification;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {

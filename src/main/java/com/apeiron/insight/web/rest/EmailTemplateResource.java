@@ -41,24 +41,6 @@ public class EmailTemplateResource {
         this.emailTemplateService = emailTemplateService;
     }
 
-    /**
-     * {@code POST  /email-templates} : Create a new emailTemplate.
-     *
-     * @param emailTemplateDTO the emailTemplateDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new emailTemplateDTO, or with status {@code 400 (Bad Request)} if the emailTemplate has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("/email-templates")
-    public ResponseEntity<EmailTemplateDTO> createEmailTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO) throws URISyntaxException {
-        log.debug("REST request to save EmailTemplate : {}", emailTemplateDTO);
-        if (emailTemplateDTO.getId() != null) {
-            throw new BadRequestAlertException("A new emailTemplate cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        EmailTemplateDTO result = emailTemplateService.save(emailTemplateDTO);
-        return ResponseEntity.created(new URI("/api/email-templates/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
 
     /**
      * {@code PUT  /email-templates} : Updates an existing emailTemplate.
@@ -72,64 +54,27 @@ public class EmailTemplateResource {
     @PutMapping("/email-templates")
     public ResponseEntity<EmailTemplateDTO> updateEmailTemplate(@RequestBody EmailTemplateDTO emailTemplateDTO) throws URISyntaxException {
         log.debug("REST request to update EmailTemplate : {}", emailTemplateDTO);
-        if (emailTemplateDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
+
+        emailTemplateDTO.setId("DEFAULT_CONFIG");
         EmailTemplateDTO result = emailTemplateService.save(emailTemplateDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, emailTemplateDTO.getId().toString()))
             .body(result);
     }
 
-    /**
-     * {@code GET  /email-templates} : get all the emailTemplates.
-     *
 
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of emailTemplates in body.
-     */
-    @GetMapping("/email-templates")
-    public List<EmailTemplateDTO> getAllEmailTemplates() {
-        log.debug("REST request to get all EmailTemplates");
-        return emailTemplateService.findAll();
-    }
 
     /**
      * {@code GET  /email-templates/:id} : get the "id" emailTemplate.
      *
-     * @param id the id of the emailTemplateDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the emailTemplateDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/email-templates/{id}")
-    public ResponseEntity<EmailTemplateDTO> getEmailTemplate(@PathVariable String id) {
-        log.debug("REST request to get EmailTemplate : {}", id);
-        Optional<EmailTemplateDTO> emailTemplateDTO = emailTemplateService.findOne(id);
+    @GetMapping("/email-templates")
+    public ResponseEntity<EmailTemplateDTO> getEmailTemplate() {
+        log.debug("REST request to get EmailTemplate : {}", "DEFAULT_CONFIG");
+        Optional<EmailTemplateDTO> emailTemplateDTO = emailTemplateService.findOne();
         return ResponseUtil.wrapOrNotFound(emailTemplateDTO);
     }
 
-    /**
-     * {@code DELETE  /email-templates/:id} : delete the "id" emailTemplate.
-     *
-     * @param id the id of the emailTemplateDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/email-templates/{id}")
-    public ResponseEntity<Void> deleteEmailTemplate(@PathVariable String id) {
-        log.debug("REST request to delete EmailTemplate : {}", id);
-        emailTemplateService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * {@code SEARCH  /_search/email-templates?query=:query} : search for the emailTemplate corresponding
-     * to the query.
-     *
-     * @param query the query of the emailTemplate search.
-     * @return the result of the search.
-     */
-    @GetMapping("/_search/email-templates")
-    public List<EmailTemplateDTO> searchEmailTemplates(@RequestParam String query) {
-        log.debug("REST request to search EmailTemplates for query {}", query);
-        return emailTemplateService.search(query);
-    }
 
 }

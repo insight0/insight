@@ -42,24 +42,6 @@ public class ConfigResource {
         this.configService = configService;
     }
 
-    /**
-     * {@code POST  /configs} : Create a new config.
-     *
-     * @param configDTO the configDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new configDTO, or with status {@code 400 (Bad Request)} if the config has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("/configs")
-    public ResponseEntity<ConfigDTO> createConfig(@Valid @RequestBody ConfigDTO configDTO) throws URISyntaxException {
-        log.debug("REST request to save Config : {}", configDTO);
-        if (configDTO.getId() != null) {
-            throw new BadRequestAlertException("A new config cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        ConfigDTO result = configService.save(configDTO);
-        return ResponseEntity.created(new URI("/api/configs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
 
     /**
      * {@code PUT  /configs} : Updates an existing config.
@@ -74,7 +56,7 @@ public class ConfigResource {
     public ResponseEntity<ConfigDTO> updateConfig(@Valid @RequestBody ConfigDTO configDTO) throws URISyntaxException {
         log.debug("REST request to update Config : {}", configDTO);
         if (configDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            configDTO.setId("DEFAULT_CONFIG");
         }
         ConfigDTO result = configService.save(configDTO);
         return ResponseEntity.ok()
@@ -82,55 +64,18 @@ public class ConfigResource {
             .body(result);
     }
 
-    /**
-     * {@code GET  /configs} : get all the configs.
-     *
-
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of configs in body.
-     */
-    @GetMapping("/configs")
-    public List<ConfigDTO> getAllConfigs() {
-        log.debug("REST request to get all Configs");
-        return configService.findAll();
-    }
 
     /**
      * {@code GET  /configs/:id} : get the "id" config.
      *
-     * @param id the id of the configDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the configDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/configs/{id}")
-    public ResponseEntity<ConfigDTO> getConfig(@PathVariable String id) {
-        log.debug("REST request to get Config : {}", id);
-        Optional<ConfigDTO> configDTO = configService.findOne(id);
+    @GetMapping("/configs")
+    public ResponseEntity<ConfigDTO> getConfig() {
+        log.debug("REST request to get Config : {}", "DEFAULT_CONFIG");
+        Optional<ConfigDTO> configDTO = configService.findOne();
         return ResponseUtil.wrapOrNotFound(configDTO);
     }
 
-    /**
-     * {@code DELETE  /configs/:id} : delete the "id" config.
-     *
-     * @param id the id of the configDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/configs/{id}")
-    public ResponseEntity<Void> deleteConfig(@PathVariable String id) {
-        log.debug("REST request to delete Config : {}", id);
-        configService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * {@code SEARCH  /_search/configs?query=:query} : search for the config corresponding
-     * to the query.
-     *
-     * @param query the query of the config search.
-     * @return the result of the search.
-     */
-    @GetMapping("/_search/configs")
-    public List<ConfigDTO> searchConfigs(@RequestParam String query) {
-        log.debug("REST request to search Configs for query {}", query);
-        return configService.search(query);
-    }
 
 }

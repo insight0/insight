@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class ConfigUpdateComponent implements OnInit {
     welcomingEmailNotification: [null, [Validators.required]],
     birthdayEmailNotification: [null, [Validators.required]]
   });
+  activeHolidayNotif: boolean;
 
   constructor(protected configService: ConfigService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
@@ -38,6 +39,7 @@ export class ConfigUpdateComponent implements OnInit {
       welcomingEmailNotification: config.welcomingEmailNotification,
       birthdayEmailNotification: config.birthdayEmailNotification
     });
+    this.activeHolidayNotif = config.holidayEmailNotification;
   }
 
   previousState() {
@@ -50,7 +52,8 @@ export class ConfigUpdateComponent implements OnInit {
     if (config.id !== undefined) {
       this.subscribeToSaveResponse(this.configService.update(config));
     } else {
-      this.subscribeToSaveResponse(this.configService.create(config));
+      config.id = 'DEFAULT_CONFIG';
+      this.subscribeToSaveResponse(this.configService.update(config));
     }
   }
 

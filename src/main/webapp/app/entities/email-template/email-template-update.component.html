@@ -1,26 +1,34 @@
-<div class="row justify-content-center">
+<div class="row div-padding">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-email-template-heading" jhiTranslate="insightApp.emailTemplate.home.createOrEditLabel">Create or edit a Email Template</h2>
-            <div>
+            <h2 id="jhi-email-template-heading">Configuration Email Template</h2>
+            <div class="div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
-                </div>
+                <h3>Jours Fériés Email Template</h3>
+                <hr>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.emailTemplate.holidayEmailTemplate" for="field_holidayEmailTemplate">Holiday Email Template</label>
-                    <input type="text" class="form-control" name="holidayEmailTemplate" id="field_holidayEmailTemplate"
-                           formControlName="holidayEmailTemplate"/>
+                    <mat-form-field class="example-full-text">
+                        <textarea matInput name="holidayEmailTemplate" #holidayEmailTemplateField [(ngModel)]="holidayEmail"
+                                  formControlName="holidayEmailTemplate" placeholder="Email Jour Férié"></textarea>
+                        <mat-error *ngIf="editForm.get('holidayEmailTemplate').invalid && (editForm.get('holidayEmailTemplate').dirty || editForm.get('holidayEmailTemplate').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                    <p>Cliquez pour inserer une variable dynamque :</p>
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip (click)="insertVariable('name', holidayEmailTemplateField)">Nom</mat-chip>
+                        <mat-chip (click)="insertVariable('description', holidayEmailTemplateField)">Description</mat-chip>
+                        <mat-chip (click)="insertVariable('date', holidayEmailTemplateField)">Date</mat-chip>
+                        <mat-chip (click)="insertVariable('duration', holidayEmailTemplateField)">Durée</mat-chip>
+                        <mat-chip (click)="insertVariable('paid', holidayEmailTemplateField)">Payé</mat-chip>
+                    </mat-chip-list>
                 </div>
-
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button type="button" mat-raised-button id="cancel-save"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" mat-raised-button id="save-entity" [disabled]="editForm.invalid || isSaving">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

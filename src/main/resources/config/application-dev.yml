@@ -51,6 +51,20 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
+  mail:
+    host: SSL0.OVH.NET
+    port: 587
+    username: noreply@apeiron-tech.com
+    password: Apeiron&2019
+    test-connection: false
+    protocol: smtp
+    tls: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          ssl.trust: SSL0.OVH.NET
 
 server:
   port: 8080

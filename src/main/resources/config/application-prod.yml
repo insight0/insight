@@ -42,10 +42,19 @@ spring:
     rest:
       uris: http://localhost:9200
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: SSL0.OVH.NET
+    port: 587
+    username: noreply@apeiron-tech.com
+    password: Apeiron&2019
+    test-connection: false
+    protocol: smtp
+    tls: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          ssl.trust: SSL0.OVH.NET
   thymeleaf:
     cache: true
 

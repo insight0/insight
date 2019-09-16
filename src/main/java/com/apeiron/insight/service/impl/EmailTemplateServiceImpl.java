@@ -1,5 +1,6 @@
 package com.apeiron.insight.service.impl;
 
+import com.apeiron.insight.domain.Config;
 import com.apeiron.insight.service.EmailTemplateService;
 import com.apeiron.insight.domain.EmailTemplate;
 import com.apeiron.insight.repository.EmailTemplateRepository;
@@ -51,61 +52,29 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
         EmailTemplate emailTemplate = emailTemplateMapper.toEntity(emailTemplateDTO);
         emailTemplate = emailTemplateRepository.save(emailTemplate);
         EmailTemplateDTO result = emailTemplateMapper.toDto(emailTemplate);
-        emailTemplateSearchRepository.save(emailTemplate);
         return result;
     }
 
-    /**
-     * Get all the emailTemplates.
-     *
-     * @return the list of entities.
-     */
-    @Override
-    public List<EmailTemplateDTO> findAll() {
-        log.debug("Request to get all EmailTemplates");
-        return emailTemplateRepository.findAll().stream()
-            .map(emailTemplateMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 
 
     /**
      * Get one emailTemplate by id.
      *
-     * @param id the id of the entity.
      * @return the entity.
      */
     @Override
-    public Optional<EmailTemplateDTO> findOne(String id) {
-        log.debug("Request to get EmailTemplate : {}", id);
-        return emailTemplateRepository.findById(id)
+    public Optional<EmailTemplateDTO> findOne() {
+        log.debug("Request to get EmailTemplate : {}", "DEFAULT_CONFIG");
+
+        Optional<EmailTemplate> default_config = emailTemplateRepository.findById("DEFAULT_CONFIG");
+        if(!default_config.isPresent()){
+            EmailTemplate config = new EmailTemplate();
+            config.setId("DEFAULT_CONFIG");
+            emailTemplateRepository.save(config);
+        }
+
+        return emailTemplateRepository.findById("DEFAULT_CONFIG")
             .map(emailTemplateMapper::toDto);
     }
 
-    /**
-     * Delete the emailTemplate by id.
-     *
-     * @param id the id of the entity.
-     */
-    @Override
-    public void delete(String id) {
-        log.debug("Request to delete EmailTemplate : {}", id);
-        emailTemplateRepository.deleteById(id);
-        emailTemplateSearchRepository.deleteById(id);
-    }
-
-    /**
-     * Search for the emailTemplate corresponding to the query.
-     *
-     * @param query the query of the search.
-     * @return the list of entities.
-     */
-    @Override
-    public List<EmailTemplateDTO> search(String query) {
-        log.debug("Request to search EmailTemplates for query {}", query);
-        return StreamSupport
-            .stream(emailTemplateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(emailTemplateMapper::toDto)
-            .collect(Collectors.toList());
-    }
 }

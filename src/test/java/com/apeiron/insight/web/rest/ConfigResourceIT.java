@@ -39,12 +39,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = InsightApp.class)
 public class ConfigResourceIT {
 
-    private static final Integer DEFAULT_HOLIDAY_EMAIL_SEND = 1;
-    private static final Integer UPDATED_HOLIDAY_EMAIL_SEND = 2;
-    private static final Integer SMALLER_HOLIDAY_EMAIL_SEND = 1 - 1;
+    private static final Integer DEFAULT_HOLIDAY_EMAIL_SEND_DATE = 1;
+    private static final Integer UPDATED_HOLIDAY_EMAIL_SEND_DATE = 2;
+    private static final Integer SMALLER_HOLIDAY_EMAIL_SEND_DATE = 1 - 1;
 
-    private static final Boolean DEFAULT_NEW_USER_WELCOMMING_EMAIL = false;
-    private static final Boolean UPDATED_NEW_USER_WELCOMMING_EMAIL = true;
+    private static final Boolean DEFAULT_HOLIDAY_EMAIL_NOTIFICATION = false;
+    private static final Boolean UPDATED_HOLIDAY_EMAIL_NOTIFICATION = true;
+
+    private static final Boolean DEFAULT_WELCOMING_EMAIL_NOTIFICATION = false;
+    private static final Boolean UPDATED_WELCOMING_EMAIL_NOTIFICATION = true;
+
+    private static final Boolean DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION = false;
+    private static final Boolean UPDATED_BIRTHDAY_EMAIL_NOTIFICATION = true;
 
     @Autowired
     private ConfigRepository configRepository;
@@ -99,8 +105,10 @@ public class ConfigResourceIT {
      */
     public static Config createEntity() {
         Config config = new Config()
-            .holidayEmailSend(DEFAULT_HOLIDAY_EMAIL_SEND)
-            .newUserWelcommingEmail(DEFAULT_NEW_USER_WELCOMMING_EMAIL);
+            .holidayEmailSendDate(DEFAULT_HOLIDAY_EMAIL_SEND_DATE)
+            .holidayEmailNotification(DEFAULT_HOLIDAY_EMAIL_NOTIFICATION)
+            .welcomingEmailNotification(DEFAULT_WELCOMING_EMAIL_NOTIFICATION)
+            .birthdayEmailNotification(DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION);
         return config;
     }
     /**
@@ -111,8 +119,10 @@ public class ConfigResourceIT {
      */
     public static Config createUpdatedEntity() {
         Config config = new Config()
-            .holidayEmailSend(UPDATED_HOLIDAY_EMAIL_SEND)
-            .newUserWelcommingEmail(UPDATED_NEW_USER_WELCOMMING_EMAIL);
+            .holidayEmailSendDate(UPDATED_HOLIDAY_EMAIL_SEND_DATE)
+            .holidayEmailNotification(UPDATED_HOLIDAY_EMAIL_NOTIFICATION)
+            .welcomingEmailNotification(UPDATED_WELCOMING_EMAIL_NOTIFICATION)
+            .birthdayEmailNotification(UPDATED_BIRTHDAY_EMAIL_NOTIFICATION);
         return config;
     }
 
@@ -137,8 +147,10 @@ public class ConfigResourceIT {
         List<Config> configList = configRepository.findAll();
         assertThat(configList).hasSize(databaseSizeBeforeCreate + 1);
         Config testConfig = configList.get(configList.size() - 1);
-        assertThat(testConfig.getHolidayEmailSend()).isEqualTo(DEFAULT_HOLIDAY_EMAIL_SEND);
-        assertThat(testConfig.isNewUserWelcommingEmail()).isEqualTo(DEFAULT_NEW_USER_WELCOMMING_EMAIL);
+        assertThat(testConfig.getHolidayEmailSendDate()).isEqualTo(DEFAULT_HOLIDAY_EMAIL_SEND_DATE);
+        assertThat(testConfig.isHolidayEmailNotification()).isEqualTo(DEFAULT_HOLIDAY_EMAIL_NOTIFICATION);
+        assertThat(testConfig.isWelcomingEmailNotification()).isEqualTo(DEFAULT_WELCOMING_EMAIL_NOTIFICATION);
+        assertThat(testConfig.isBirthdayEmailNotification()).isEqualTo(DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION);
 
         // Validate the Config in Elasticsearch
         verify(mockConfigSearchRepository, times(1)).save(testConfig);
@@ -168,10 +180,46 @@ public class ConfigResourceIT {
 
 
     @Test
-    public void checkNewUserWelcommingEmailIsRequired() throws Exception {
+    public void checkHolidayEmailNotificationIsRequired() throws Exception {
         int databaseSizeBeforeTest = configRepository.findAll().size();
         // set the field null
-        config.setNewUserWelcommingEmail(null);
+        config.setHolidayEmailNotification(null);
+
+        // Create the Config, which fails.
+        ConfigDTO configDTO = configMapper.toDto(config);
+
+        restConfigMockMvc.perform(post("/api/configs")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(configDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Config> configList = configRepository.findAll();
+        assertThat(configList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    public void checkWelcomingEmailNotificationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = configRepository.findAll().size();
+        // set the field null
+        config.setWelcomingEmailNotification(null);
+
+        // Create the Config, which fails.
+        ConfigDTO configDTO = configMapper.toDto(config);
+
+        restConfigMockMvc.perform(post("/api/configs")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(configDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Config> configList = configRepository.findAll();
+        assertThat(configList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    public void checkBirthdayEmailNotificationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = configRepository.findAll().size();
+        // set the field null
+        config.setBirthdayEmailNotification(null);
 
         // Create the Config, which fails.
         ConfigDTO configDTO = configMapper.toDto(config);
@@ -195,8 +243,10 @@ public class ConfigResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(config.getId())))
-            .andExpect(jsonPath("$.[*].holidayEmailSend").value(hasItem(DEFAULT_HOLIDAY_EMAIL_SEND)))
-            .andExpect(jsonPath("$.[*].newUserWelcommingEmail").value(hasItem(DEFAULT_NEW_USER_WELCOMMING_EMAIL.booleanValue())));
+            .andExpect(jsonPath("$.[*].holidayEmailSendDate").value(hasItem(DEFAULT_HOLIDAY_EMAIL_SEND_DATE)))
+            .andExpect(jsonPath("$.[*].holidayEmailNotification").value(hasItem(DEFAULT_HOLIDAY_EMAIL_NOTIFICATION.booleanValue())))
+            .andExpect(jsonPath("$.[*].welcomingEmailNotification").value(hasItem(DEFAULT_WELCOMING_EMAIL_NOTIFICATION.booleanValue())))
+            .andExpect(jsonPath("$.[*].birthdayEmailNotification").value(hasItem(DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION.booleanValue())));
     }
     
     @Test
@@ -209,8 +259,10 @@ public class ConfigResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(config.getId()))
-            .andExpect(jsonPath("$.holidayEmailSend").value(DEFAULT_HOLIDAY_EMAIL_SEND))
-            .andExpect(jsonPath("$.newUserWelcommingEmail").value(DEFAULT_NEW_USER_WELCOMMING_EMAIL.booleanValue()));
+            .andExpect(jsonPath("$.holidayEmailSendDate").value(DEFAULT_HOLIDAY_EMAIL_SEND_DATE))
+            .andExpect(jsonPath("$.holidayEmailNotification").value(DEFAULT_HOLIDAY_EMAIL_NOTIFICATION.booleanValue()))
+            .andExpect(jsonPath("$.welcomingEmailNotification").value(DEFAULT_WELCOMING_EMAIL_NOTIFICATION.booleanValue()))
+            .andExpect(jsonPath("$.birthdayEmailNotification").value(DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION.booleanValue()));
     }
 
     @Test
@@ -230,8 +282,10 @@ public class ConfigResourceIT {
         // Update the config
         Config updatedConfig = configRepository.findById(config.getId()).get();
         updatedConfig
-            .holidayEmailSend(UPDATED_HOLIDAY_EMAIL_SEND)
-            .newUserWelcommingEmail(UPDATED_NEW_USER_WELCOMMING_EMAIL);
+            .holidayEmailSendDate(UPDATED_HOLIDAY_EMAIL_SEND_DATE)
+            .holidayEmailNotification(UPDATED_HOLIDAY_EMAIL_NOTIFICATION)
+            .welcomingEmailNotification(UPDATED_WELCOMING_EMAIL_NOTIFICATION)
+            .birthdayEmailNotification(UPDATED_BIRTHDAY_EMAIL_NOTIFICATION);
         ConfigDTO configDTO = configMapper.toDto(updatedConfig);
 
         restConfigMockMvc.perform(put("/api/configs")
@@ -243,8 +297,10 @@ public class ConfigResourceIT {
         List<Config> configList = configRepository.findAll();
         assertThat(configList).hasSize(databaseSizeBeforeUpdate);
         Config testConfig = configList.get(configList.size() - 1);
-        assertThat(testConfig.getHolidayEmailSend()).isEqualTo(UPDATED_HOLIDAY_EMAIL_SEND);
-        assertThat(testConfig.isNewUserWelcommingEmail()).isEqualTo(UPDATED_NEW_USER_WELCOMMING_EMAIL);
+        assertThat(testConfig.getHolidayEmailSendDate()).isEqualTo(UPDATED_HOLIDAY_EMAIL_SEND_DATE);
+        assertThat(testConfig.isHolidayEmailNotification()).isEqualTo(UPDATED_HOLIDAY_EMAIL_NOTIFICATION);
+        assertThat(testConfig.isWelcomingEmailNotification()).isEqualTo(UPDATED_WELCOMING_EMAIL_NOTIFICATION);
+        assertThat(testConfig.isBirthdayEmailNotification()).isEqualTo(UPDATED_BIRTHDAY_EMAIL_NOTIFICATION);
 
         // Validate the Config in Elasticsearch
         verify(mockConfigSearchRepository, times(1)).save(testConfig);
@@ -302,8 +358,10 @@ public class ConfigResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(config.getId())))
-            .andExpect(jsonPath("$.[*].holidayEmailSend").value(hasItem(DEFAULT_HOLIDAY_EMAIL_SEND)))
-            .andExpect(jsonPath("$.[*].newUserWelcommingEmail").value(hasItem(DEFAULT_NEW_USER_WELCOMMING_EMAIL.booleanValue())));
+            .andExpect(jsonPath("$.[*].holidayEmailSendDate").value(hasItem(DEFAULT_HOLIDAY_EMAIL_SEND_DATE)))
+            .andExpect(jsonPath("$.[*].holidayEmailNotification").value(hasItem(DEFAULT_HOLIDAY_EMAIL_NOTIFICATION.booleanValue())))
+            .andExpect(jsonPath("$.[*].welcomingEmailNotification").value(hasItem(DEFAULT_WELCOMING_EMAIL_NOTIFICATION.booleanValue())))
+            .andExpect(jsonPath("$.[*].birthdayEmailNotification").value(hasItem(DEFAULT_BIRTHDAY_EMAIL_NOTIFICATION.booleanValue())));
     }
 
     @Test

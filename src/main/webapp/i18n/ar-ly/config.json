@@ -17,8 +17,10 @@
       "detail": {
         "title": "Config"
       },
-      "holidayEmailSend": "Holiday Email Send",
-      "newUserWelcommingEmail": "New User Welcomming Email"
+      "holidayEmailSendDate": "Holiday Email Send Date",
+      "holidayEmailNotification": "Holiday Email Notification",
+      "welcomingEmailNotification": "Welcoming Email Notification",
+      "birthdayEmailNotification": "Birthday Email Notification"
     }
   }
 }

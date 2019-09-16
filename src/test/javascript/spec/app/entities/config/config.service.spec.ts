@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(ConfigService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Config('ID', 0, false);
+      elemDefault = new Config('ID', 0, false, false, false);
     });
 
     describe('Service methods', () => {
@@ -59,8 +59,10 @@ describe('Service Tests', () => {
       it('should update a Config', async () => {
         const returnedFromService = Object.assign(
           {
-            holidayEmailSend: 1,
-            newUserWelcommingEmail: true
+            holidayEmailSendDate: 1,
+            holidayEmailNotification: true,
+            welcomingEmailNotification: true,
+            birthdayEmailNotification: true
           },
           elemDefault
         );
@@ -78,8 +80,10 @@ describe('Service Tests', () => {
       it('should return a list of Config', async () => {
         const returnedFromService = Object.assign(
           {
-            holidayEmailSend: 1,
-            newUserWelcommingEmail: true
+            holidayEmailSendDate: 1,
+            holidayEmailNotification: true,
+            welcomingEmailNotification: true,
+            birthdayEmailNotification: true
           },
           elemDefault
         );

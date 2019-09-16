@@ -15,8 +15,10 @@ export class ConfigUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    holidayEmailSend: [],
-    newUserWelcommingEmail: [null, [Validators.required]]
+    holidayEmailSendDate: [],
+    holidayEmailNotification: [null, [Validators.required]],
+    welcomingEmailNotification: [null, [Validators.required]],
+    birthdayEmailNotification: [null, [Validators.required]]
   });
 
   constructor(protected configService: ConfigService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -31,8 +33,10 @@ export class ConfigUpdateComponent implements OnInit {
   updateForm(config: IConfig) {
     this.editForm.patchValue({
       id: config.id,
-      holidayEmailSend: config.holidayEmailSend,
-      newUserWelcommingEmail: config.newUserWelcommingEmail
+      holidayEmailSendDate: config.holidayEmailSendDate,
+      holidayEmailNotification: config.holidayEmailNotification,
+      welcomingEmailNotification: config.welcomingEmailNotification,
+      birthdayEmailNotification: config.birthdayEmailNotification
     });
   }
 
@@ -54,8 +58,10 @@ export class ConfigUpdateComponent implements OnInit {
     return {
       ...new Config(),
       id: this.editForm.get(['id']).value,
-      holidayEmailSend: this.editForm.get(['holidayEmailSend']).value,
-      newUserWelcommingEmail: this.editForm.get(['newUserWelcommingEmail']).value
+      holidayEmailSendDate: this.editForm.get(['holidayEmailSendDate']).value,
+      holidayEmailNotification: this.editForm.get(['holidayEmailNotification']).value,
+      welcomingEmailNotification: this.editForm.get(['welcomingEmailNotification']).value,
+      birthdayEmailNotification: this.editForm.get(['birthdayEmailNotification']).value
     };
   }
 

@@ -10,10 +10,16 @@ public class ConfigDTO implements Serializable {
 
     private String id;
 
-    private Integer holidayEmailSend;
+    private Integer holidayEmailSendDate;
 
     @NotNull
-    private Boolean newUserWelcommingEmail;
+    private Boolean holidayEmailNotification;
+
+    @NotNull
+    private Boolean welcomingEmailNotification;
+
+    @NotNull
+    private Boolean birthdayEmailNotification;
 
 
     public String getId() {
@@ -24,20 +30,36 @@ public class ConfigDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getHolidayEmailSend() {
-        return holidayEmailSend;
+    public Integer getHolidayEmailSendDate() {
+        return holidayEmailSendDate;
     }
 
-    public void setHolidayEmailSend(Integer holidayEmailSend) {
-        this.holidayEmailSend = holidayEmailSend;
+    public void setHolidayEmailSendDate(Integer holidayEmailSendDate) {
+        this.holidayEmailSendDate = holidayEmailSendDate;
     }
 
-    public Boolean isNewUserWelcommingEmail() {
-        return newUserWelcommingEmail;
+    public Boolean isHolidayEmailNotification() {
+        return holidayEmailNotification;
     }
 
-    public void setNewUserWelcommingEmail(Boolean newUserWelcommingEmail) {
-        this.newUserWelcommingEmail = newUserWelcommingEmail;
+    public void setHolidayEmailNotification(Boolean holidayEmailNotification) {
+        this.holidayEmailNotification = holidayEmailNotification;
+    }
+
+    public Boolean isWelcomingEmailNotification() {
+        return welcomingEmailNotification;
+    }
+
+    public void setWelcomingEmailNotification(Boolean welcomingEmailNotification) {
+        this.welcomingEmailNotification = welcomingEmailNotification;
+    }
+
+    public Boolean isBirthdayEmailNotification() {
+        return birthdayEmailNotification;
+    }
+
+    public void setBirthdayEmailNotification(Boolean birthdayEmailNotification) {
+        this.birthdayEmailNotification = birthdayEmailNotification;
     }
 
     @Override
@@ -65,8 +87,10 @@ public class ConfigDTO implements Serializable {
     public String toString() {
         return "ConfigDTO{" +
             "id=" + getId() +
-            ", holidayEmailSend=" + getHolidayEmailSend() +
-            ", newUserWelcommingEmail='" + isNewUserWelcommingEmail() + "'" +
+            ", holidayEmailSendDate=" + getHolidayEmailSendDate() +
+            ", holidayEmailNotification='" + isHolidayEmailNotification() + "'" +
+            ", welcomingEmailNotification='" + isWelcomingEmailNotification() + "'" +
+            ", birthdayEmailNotification='" + isBirthdayEmailNotification() + "'" +
             "}";
     }
 }

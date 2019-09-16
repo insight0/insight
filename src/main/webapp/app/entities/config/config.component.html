@@ -33,16 +33,20 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="insightApp.config.holidayEmailSend">Holiday Email Send</span></th>
-            <th><span jhiTranslate="insightApp.config.newUserWelcommingEmail">New User Welcomming Email</span></th>
+            <th><span jhiTranslate="insightApp.config.holidayEmailSendDate">Holiday Email Send Date</span></th>
+            <th><span jhiTranslate="insightApp.config.holidayEmailNotification">Holiday Email Notification</span></th>
+            <th><span jhiTranslate="insightApp.config.welcomingEmailNotification">Welcoming Email Notification</span></th>
+            <th><span jhiTranslate="insightApp.config.birthdayEmailNotification">Birthday Email Notification</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let config of configs ;trackBy: trackId">
                 <td><a [routerLink]="['/config', config.id, 'view' ]">{{config.id}}</a></td>
-                <td>{{config.holidayEmailSend}}</td>
-                <td>{{config.newUserWelcommingEmail}}</td>
+                <td>{{config.holidayEmailSendDate}}</td>
+                <td>{{config.holidayEmailNotification}}</td>
+                <td>{{config.welcomingEmailNotification}}</td>
+                <td>{{config.birthdayEmailNotification}}</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

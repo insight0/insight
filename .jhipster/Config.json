@@ -1,26 +1,40 @@
 {
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "relationships": [],
-    "fields": [
-        {
-            "fieldName": "holidayEmailSend",
-            "fieldType": "Integer",
-            "fieldValidateRules": []
-        },
-        {
-            "fieldName": "newUserWelcommingEmail",
-            "fieldType": "Boolean",
-            "fieldValidateRules": [
-                "required"
-            ]
-        }
-    ],
-    "dto": "mapstruct",
-    "searchEngine": "elasticsearch",
-    "service": "serviceImpl",
-    "entityTableName": "config",
-    "databaseType": "mongodb",
-    "jpaMetamodelFiltering": false,
-    "pagination": "no"
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "holidayEmailSendDate",
+      "fieldType": "Integer",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "holidayEmailNotification",
+      "fieldType": "Boolean",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "welcomingEmailNotification",
+      "fieldType": "Boolean",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "birthdayEmailNotification",
+      "fieldType": "Boolean",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "dto": "mapstruct",
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl",
+  "entityTableName": "config",
+  "databaseType": "mongodb",
+  "jpaMetamodelFiltering": false,
+  "pagination": "no"
 }

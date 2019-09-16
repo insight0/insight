@@ -10,17 +10,39 @@
                         readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailSend" for="field_holidayEmailSend">Holiday Email Send</label>
-                    <input type="number" class="form-control" name="holidayEmailSend" id="field_holidayEmailSend"
-                           formControlName="holidayEmailSend"/>
+                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailSendDate" for="field_holidayEmailSendDate">Holiday Email Send Date</label>
+                    <input type="number" class="form-control" name="holidayEmailSendDate" id="field_holidayEmailSendDate"
+                           formControlName="holidayEmailSendDate"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.config.newUserWelcommingEmail" for="field_newUserWelcommingEmail">New User Welcomming Email</label>
-                    <input type="checkbox" class="form-control" name="newUserWelcommingEmail" id="field_newUserWelcommingEmail"
-                           formControlName="newUserWelcommingEmail"/>
-                    <div *ngIf="editForm.get('newUserWelcommingEmail').invalid && (editForm.get('newUserWelcommingEmail').dirty || editForm.get('newUserWelcommingEmail').touched)">
+                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailNotification" for="field_holidayEmailNotification">Holiday Email Notification</label>
+                    <input type="checkbox" class="form-control" name="holidayEmailNotification" id="field_holidayEmailNotification"
+                           formControlName="holidayEmailNotification"/>
+                    <div *ngIf="editForm.get('holidayEmailNotification').invalid && (editForm.get('holidayEmailNotification').dirty || editForm.get('holidayEmailNotification').touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('newUserWelcommingEmail').errors.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('holidayEmailNotification').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.config.welcomingEmailNotification" for="field_welcomingEmailNotification">Welcoming Email Notification</label>
+                    <input type="checkbox" class="form-control" name="welcomingEmailNotification" id="field_welcomingEmailNotification"
+                           formControlName="welcomingEmailNotification"/>
+                    <div *ngIf="editForm.get('welcomingEmailNotification').invalid && (editForm.get('welcomingEmailNotification').dirty || editForm.get('welcomingEmailNotification').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('welcomingEmailNotification').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.config.birthdayEmailNotification" for="field_birthdayEmailNotification">Birthday Email Notification</label>
+                    <input type="checkbox" class="form-control" name="birthdayEmailNotification" id="field_birthdayEmailNotification"
+                           formControlName="birthdayEmailNotification"/>
+                    <div *ngIf="editForm.get('birthdayEmailNotification').invalid && (editForm.get('birthdayEmailNotification').dirty || editForm.get('birthdayEmailNotification').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('birthdayEmailNotification').errors.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>

@@ -20,12 +20,20 @@ public class Config implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private String id;
 
-    @Field("holiday_email_send")
-    private Integer holidayEmailSend;
+    @Field("holiday_email_send_date")
+    private Integer holidayEmailSendDate;
 
     @NotNull
-    @Field("new_user_welcomming_email")
-    private Boolean newUserWelcommingEmail;
+    @Field("holiday_email_notification")
+    private Boolean holidayEmailNotification;
+
+    @NotNull
+    @Field("welcoming_email_notification")
+    private Boolean welcomingEmailNotification;
+
+    @NotNull
+    @Field("birthday_email_notification")
+    private Boolean birthdayEmailNotification;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -36,30 +44,56 @@ public class Config implements Serializable {
         this.id = id;
     }
 
-    public Integer getHolidayEmailSend() {
-        return holidayEmailSend;
+    public Integer getHolidayEmailSendDate() {
+        return holidayEmailSendDate;
     }
 
-    public Config holidayEmailSend(Integer holidayEmailSend) {
-        this.holidayEmailSend = holidayEmailSend;
+    public Config holidayEmailSendDate(Integer holidayEmailSendDate) {
+        this.holidayEmailSendDate = holidayEmailSendDate;
         return this;
     }
 
-    public void setHolidayEmailSend(Integer holidayEmailSend) {
-        this.holidayEmailSend = holidayEmailSend;
+    public void setHolidayEmailSendDate(Integer holidayEmailSendDate) {
+        this.holidayEmailSendDate = holidayEmailSendDate;
     }
 
-    public Boolean isNewUserWelcommingEmail() {
-        return newUserWelcommingEmail;
+    public Boolean isHolidayEmailNotification() {
+        return holidayEmailNotification;
     }
 
-    public Config newUserWelcommingEmail(Boolean newUserWelcommingEmail) {
-        this.newUserWelcommingEmail = newUserWelcommingEmail;
+    public Config holidayEmailNotification(Boolean holidayEmailNotification) {
+        this.holidayEmailNotification = holidayEmailNotification;
         return this;
     }
 
-    public void setNewUserWelcommingEmail(Boolean newUserWelcommingEmail) {
-        this.newUserWelcommingEmail = newUserWelcommingEmail;
+    public void setHolidayEmailNotification(Boolean holidayEmailNotification) {
+        this.holidayEmailNotification = holidayEmailNotification;
+    }
+
+    public Boolean isWelcomingEmailNotification() {
+        return welcomingEmailNotification;
+    }
+
+    public Config welcomingEmailNotification(Boolean welcomingEmailNotification) {
+        this.welcomingEmailNotification = welcomingEmailNotification;
+        return this;
+    }
+
+    public void setWelcomingEmailNotification(Boolean welcomingEmailNotification) {
+        this.welcomingEmailNotification = welcomingEmailNotification;
+    }
+
+    public Boolean isBirthdayEmailNotification() {
+        return birthdayEmailNotification;
+    }
+
+    public Config birthdayEmailNotification(Boolean birthdayEmailNotification) {
+        this.birthdayEmailNotification = birthdayEmailNotification;
+        return this;
+    }
+
+    public void setBirthdayEmailNotification(Boolean birthdayEmailNotification) {
+        this.birthdayEmailNotification = birthdayEmailNotification;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -83,8 +117,10 @@ public class Config implements Serializable {
     public String toString() {
         return "Config{" +
             "id=" + getId() +
-            ", holidayEmailSend=" + getHolidayEmailSend() +
-            ", newUserWelcommingEmail='" + isNewUserWelcommingEmail() + "'" +
+            ", holidayEmailSendDate=" + getHolidayEmailSendDate() +
+            ", holidayEmailNotification='" + isHolidayEmailNotification() + "'" +
+            ", welcomingEmailNotification='" + isWelcomingEmailNotification() + "'" +
+            ", birthdayEmailNotification='" + isBirthdayEmailNotification() + "'" +
             "}";
     }
 }

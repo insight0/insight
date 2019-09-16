@@ -17,6 +17,8 @@
         "organisation": "Organisation",
         "contract": "Contract",
         "documentPlaceholder": "Document Placeholder",
+        "config": "Config",
+        "emailTemplate": "Email Template",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

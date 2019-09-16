@@ -1,0 +1,24 @@
+{
+  "insightApp": {
+    "config": {
+      "home": {
+        "title": "Configs",
+        "createLabel": "Créer un nouveau Config",
+        "createOrEditLabel": "Créer ou éditer un Config",
+        "search": "Recherche pour Config",
+        "notFound": "Aucun Config trouvé"
+      },
+      "created": "Un nouveau Config a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Config avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Config avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Config {{ id }} ?"
+      },
+      "detail": {
+        "title": "Config"
+      },
+      "holidayEmailSend": "Holiday Email Send",
+      "newUserWelcommingEmail": "New User Welcomming Email"
+    }
+  }
+}

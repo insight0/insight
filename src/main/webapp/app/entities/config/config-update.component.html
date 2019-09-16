@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-config-heading" jhiTranslate="insightApp.config.home.createOrEditLabel">Create or edit a Config</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.config.holidayEmailSend" for="field_holidayEmailSend">Holiday Email Send</label>
+                    <input type="number" class="form-control" name="holidayEmailSend" id="field_holidayEmailSend"
+                           formControlName="holidayEmailSend"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="insightApp.config.newUserWelcommingEmail" for="field_newUserWelcommingEmail">New User Welcomming Email</label>
+                    <input type="checkbox" class="form-control" name="newUserWelcommingEmail" id="field_newUserWelcommingEmail"
+                           formControlName="newUserWelcommingEmail"/>
+                    <div *ngIf="editForm.get('newUserWelcommingEmail').invalid && (editForm.get('newUserWelcommingEmail').dirty || editForm.get('newUserWelcommingEmail').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('newUserWelcommingEmail').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

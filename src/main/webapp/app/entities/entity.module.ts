@@ -43,6 +43,14 @@ import { RouterModule } from '@angular/router';
       {
         path: 'document-placeholder',
         loadChildren: () => import('./document-placeholder/document-placeholder.module').then(m => m.InsightDocumentPlaceholderModule)
+      },
+      {
+        path: 'config',
+        loadChildren: () => import('./config/config.module').then(m => m.InsightConfigModule)
+      },
+      {
+        path: 'email-template',
+        loadChildren: () => import('./email-template/email-template.module').then(m => m.InsightEmailTemplateModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

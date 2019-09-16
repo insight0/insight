@@ -19,6 +19,7 @@
         "documentPlaceholder": "Document Placeholder",
         "config": "Config",
         "emailTemplate": "Email Template",
+        "notification": "Notification",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

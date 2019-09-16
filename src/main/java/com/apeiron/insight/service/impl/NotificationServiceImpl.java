@@ -6,6 +6,7 @@ import com.apeiron.insight.service.dto.ConfigDTO;
 import com.apeiron.insight.service.dto.EmailTemplateDTO;
 import com.apeiron.insight.service.dto.HolidayDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -30,6 +31,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private HolidayService holidayService;
+
+    @Autowired
+    private SimpMessageSendingOperations messagingTemplate;
 
     public void processHolidayNotification() {
 

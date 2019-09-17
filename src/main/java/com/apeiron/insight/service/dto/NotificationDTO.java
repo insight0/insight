@@ -1,8 +1,14 @@
 package com.apeiron.insight.service.dto;
+
+import com.apeiron.insight.security.SecurityUtils;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 /**
  * A DTO for the {@link com.apeiron.insight.domain.Notification} entity.
@@ -23,6 +29,8 @@ public class NotificationDTO implements Serializable {
     @NotNull
     private Instant date;
 
+    private Set<String> views = new HashSet<>();
+    
 
     public String getId() {
         return id;
@@ -70,6 +78,34 @@ public class NotificationDTO implements Serializable {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Set<String> getViews() {
+        return views;
+    }
+
+    public void setViews(Set<String> views) {
+        this.views = views;
+    }
+
+    public boolean isSeen() {
+
+        final Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
+
+        if(currentUserLogin.isPresent() && this.views.contains(currentUserLogin.get())) {
+            return true;
+        }
+        return false;
+    }
+    
+
+    public String getFrenchFormattedDate() {
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG)
+                .withLocale(Locale.FRANCE)
+                .withZone(ZoneId.systemDefault());
+
+        return formatter.format(date);
     }
 
     @Override

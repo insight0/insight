@@ -6,6 +6,7 @@ export interface INotification {
   userPictureUrl?: string;
   userProfileUrl?: string;
   text?: string;
+  seen?: boolean;
   date?: Moment;
 }
 
@@ -16,6 +17,7 @@ export class Notification implements INotification {
     public userPictureUrl?: string,
     public userProfileUrl?: string,
     public text?: string,
+    public seen?: boolean,
     public date?: Moment
   ) {}
 }

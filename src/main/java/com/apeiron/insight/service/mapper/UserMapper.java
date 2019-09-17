@@ -4,6 +4,7 @@ import com.apeiron.insight.domain.Authority;
 import com.apeiron.insight.domain.User;
 import com.apeiron.insight.service.dto.UserDTO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,6 +18,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserMapper {
+
+
+    @Autowired
+    private ContractMapper contractMapper;
+
+    @Autowired
+    private SalaryPackageMapper salaryPackageMapper;
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
         return users.stream()
@@ -49,6 +57,17 @@ public class UserMapper {
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
+
+            user.setContract(contractMapper.toEntity(userDTO.getContract()));
+
+            user.setSalaryPackage(salaryPackageMapper.toEntity(userDTO.getSalaryPackage()));
+
+            if(userDTO.getFunctionalRole() == null){
+                user.setFunctionalRoleId(null);
+            } else {
+                user.setFunctionalRoleId(userDTO.getFunctionalRole().getId());
+            }
+
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;

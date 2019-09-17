@@ -3,6 +3,7 @@ package com.apeiron.insight.service;
 import com.apeiron.insight.domain.Notification;
 import com.apeiron.insight.repository.NotificationRepository;
 import com.apeiron.insight.repository.search.NotificationSearchRepository;
+import com.apeiron.insight.security.SecurityUtils;
 import com.apeiron.insight.service.dto.NotificationDTO;
 import com.apeiron.insight.service.mapper.NotificationMapper;
 import org.slf4j.Logger;
@@ -53,6 +54,25 @@ public class NotificationService {
         return result;
     }
 
+
+    public void markAsSeen(List<NotificationDTO> notificationDTO) {
+
+        log.debug("Request to mark As seen Notification : {}", notificationDTO);
+        List<Notification> notifications = notificationMapper.toEntity(notificationDTO);
+
+        final Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
+
+        if(currentUserLogin.isPresent()) {
+            String login = currentUserLogin.get();
+            for (Notification notification1:
+                 notifications) {
+                notification1.getViews().add(login);
+                notification1 = notificationRepository.save(notification1);
+                notificationSearchRepository.save(notification1);
+            }
+        }
+    }
+
     /**
      * Get all the notifications.
      *
@@ -63,6 +83,15 @@ public class NotificationService {
         return notificationRepository.findAll().stream()
             .map(notificationMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
+    public List<NotificationDTO> findLatest() {
+        log.debug("Request to get all Notifications");
+
+        List<Notification> first8ByOrderByDateDesc = notificationRepository.findFirst5ByOrderByDateDesc();
+
+        return notificationMapper.toDto(first8ByOrderByDateDesc);
     }
 
 

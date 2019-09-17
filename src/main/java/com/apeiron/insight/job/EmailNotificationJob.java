@@ -1,6 +1,6 @@
 package com.apeiron.insight.job;
 
-import com.apeiron.insight.service.NotificationService;
+import com.apeiron.insight.service.impl.NotificationProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 public class EmailNotificationJob {
 
     @Autowired
-    private NotificationService notificationService;
+    private NotificationProcessor notificationProcessor;
 
     @Async
-    @Scheduled(fixedRate = 20000000)
+    @Scheduled(fixedRate = 100000)
     public void scheduleFixedRateTaskAsync() {
 
-        notificationService.processHolidayNotification();
+        notificationProcessor.processHolidayNotification();
     }
 
 }

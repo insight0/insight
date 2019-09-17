@@ -13,10 +13,16 @@ import * as Stomp from 'webstomp-client';
 export class JhiTrackerService {
   stompClient = null;
   subscriber = null;
+  userNotifSubscriber = null;
   connection: Promise<any>;
   connectedPromise: any;
+
   listener: Observable<any>;
   listenerObserver: Observer<any>;
+
+  userNotifListener: Observable<any>;
+  userNotifListenerObserver: Observer<any>;
+
   alreadyConnectedOnce = false;
   private subscription: Subscription;
 
@@ -29,6 +35,7 @@ export class JhiTrackerService {
   ) {
     this.connection = this.createConnection();
     this.listener = this.createListener();
+    this.userNotifListener = this.createUserNotifListener();
   }
 
   connect() {
@@ -76,6 +83,10 @@ export class JhiTrackerService {
     return this.listener;
   }
 
+  receiveUserNotification() {
+    return this.userNotifListener;
+  }
+
   sendActivity() {
     if (this.stompClient !== null && this.stompClient.connected) {
       this.stompClient.send(
@@ -94,6 +105,23 @@ export class JhiTrackerService {
     });
   }
 
+  subscribeToUserNotification() {
+    this.connection.then(() => {
+      this.userNotifSubscriber = this.stompClient.subscribe('/topic/user-notification', data => {
+        console.log('DATAAAAAAAAAAAA');
+        console.log(data);
+        this.userNotifListenerObserver.next(JSON.parse(data.body));
+      });
+    });
+  }
+
+  unsubscribeUserNotification() {
+    if (this.userNotifSubscriber !== null) {
+      this.userNotifSubscriber.unsubscribe();
+    }
+    this.listener = this.createListener();
+  }
+
   unsubscribe() {
     if (this.subscriber !== null) {
       this.subscriber.unsubscribe();
@@ -104,6 +132,12 @@ export class JhiTrackerService {
   private createListener(): Observable<any> {
     return new Observable(observer => {
       this.listenerObserver = observer;
+    });
+  }
+
+  private createUserNotifListener(): Observable<any> {
+    return new Observable(observer => {
+      this.userNotifListenerObserver = observer;
     });
   }
 

@@ -33,6 +33,13 @@ export class NotificationService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  markAsSeen(notification: INotification[]): Observable<EntityResponseType> {
+    const copy = this.convertDateArrayFromClient(notification);
+    return this.http
+      .put<INotification>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   find(id: string): Observable<EntityResponseType> {
     return this.http
       .get<INotification>(`${this.resourceUrl}/${id}`, { observe: 'response' })
@@ -43,6 +50,13 @@ export class NotificationService {
     const options = createRequestOption(req);
     return this.http
       .get<INotification[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  latest(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INotification[]>(this.resourceUrl + '/latest', { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
@@ -62,6 +76,14 @@ export class NotificationService {
       date: notification.date != null && notification.date.isValid() ? notification.date.toJSON() : null
     });
     return copy;
+  }
+
+  protected convertDateArrayFromClient(notifications: INotification[]): INotification[] {
+    notifications.forEach((notification: INotification) => {
+      notification.date = notification.date != null ? moment(notification.date) : null;
+    });
+
+    return notifications;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {

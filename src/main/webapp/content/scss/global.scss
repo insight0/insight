@@ -219,3 +219,9 @@ hr {
 .example-button-row a {
   margin-right: 8px;
 }
+
+.not-seen {
+  background-color: #e7e8fb;
+  opacity: 1;
+  transition: opacity 0.3s;
+}

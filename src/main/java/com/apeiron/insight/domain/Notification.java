@@ -7,6 +7,8 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A Notification.
@@ -37,6 +39,9 @@ public class Notification implements Serializable {
     @NotNull
     @Field("date")
     private Instant date;
+
+    @Field("user_view")
+    private Set<String> views;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -112,6 +117,15 @@ public class Notification implements Serializable {
         this.date = date;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+
+    public Set<String> getViews() {
+        return views;
+    }
+
+    public void setViews(Set<String> views) {
+        this.views = views;
+    }
 
     @Override
     public boolean equals(Object o) {

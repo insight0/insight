@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -71,7 +72,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String functionalRoleId;
 
     @Field("contract")
-    private Contract contract;
+    private List<Contract> contract;
 
     @Field("address")
     private Address address;
@@ -212,11 +213,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.functionalRoleId = functionalRoleId;
     }
 
-    public Contract getContract() {
+    public List<Contract> getContract() {
         return contract;
     }
 
-    public void setContract(Contract contract) {
+    public void setContract(List<Contract> contract) {
         this.contract = contract;
     }
 

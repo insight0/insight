@@ -41,8 +41,8 @@ public class Contract implements Serializable {
     private String description;
 
     @NotNull
-    @Field("day_off_namber")
-    private Float dayOffNamber;
+    @Field("day_off_number")
+    private Float dayOffNumber;
 
     @Field("digital_copy")
     private DocumentPlaceholder digitalCopy;
@@ -125,17 +125,17 @@ public class Contract implements Serializable {
         this.description = description;
     }
 
-    public Float getDayOffNamber() {
-        return dayOffNamber;
+    public Float getDayOffNumber() {
+        return dayOffNumber;
     }
 
-    public Contract dayOffNamber(Float dayOffNamber) {
-        this.dayOffNamber = dayOffNamber;
+    public Contract dayOffNumber(Float dayOffNamber) {
+        this.dayOffNumber = dayOffNamber;
         return this;
     }
 
     public void setDayOffNamber(Float dayOffNamber) {
-        this.dayOffNamber = dayOffNamber;
+        this.dayOffNumber = dayOffNamber;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -163,7 +163,7 @@ public class Contract implements Serializable {
             ", employeeSignatureDate='" + getEmployeeSignatureDate() + "'" +
             ", directionSignatureDate='" + getDirectionSignatureDate() + "'" +
             ", description='" + getDescription() + "'" +
-            ", dayOffNamber=" + getDayOffNamber() +
+            ", dayOffNamber=" + getDayOffNumber() +
             "}";
     }
 }

@@ -3,6 +3,8 @@ package com.apeiron.insight.service.dto;
 import com.apeiron.insight.config.Constants;
 
 import com.apeiron.insight.domain.Authority;
+import com.apeiron.insight.domain.Contract;
+import com.apeiron.insight.domain.SalaryPackage;
 import com.apeiron.insight.domain.User;
 
 import javax.validation.constraints.Email;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,6 +55,12 @@ public class UserDTO {
     private Instant lastModifiedDate;
 
     private Set<String> authorities;
+
+    private FunctionalRoleDTO functionalRole;
+
+    private List<ContractDTO> contract;
+
+    private SalaryPackageDTO salaryPackage;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -177,6 +186,30 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public SalaryPackageDTO getSalaryPackage() {
+        return salaryPackage;
+    }
+
+    public void setSalaryPackage(SalaryPackageDTO salaryPackage) {
+        this.salaryPackage = salaryPackage;
+    }
+
+    public FunctionalRoleDTO getFunctionalRole() {
+        return functionalRole;
+    }
+
+    public void setFunctionalRole(FunctionalRoleDTO functionalRole) {
+        this.functionalRole = functionalRole;
+    }
+
+    public List<ContractDTO> getContract() {
+        return contract;
+    }
+
+    public void setContract(List<ContractDTO> contract) {
+        this.contract = contract;
     }
 
     @Override

@@ -3,6 +3,12 @@ package com.apeiron.insight.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -126,6 +132,53 @@ public class HolidayDTO implements Serializable {
         this.duration = duration;
     }
 
+
+    public String getFrenchFormattedDate() {
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                .withLocale(Locale.FRANCE)
+                .withZone(ZoneId.systemDefault());
+
+        String formatedDate = "le " + formatter.format(date);
+
+        if(duration > 1){
+
+            for (int i = 1; i< duration; i++) {
+
+                Instant instant = date.plus(i , ChronoUnit.DAYS);
+                formatedDate = formatedDate + " et le" + formatter.format(instant);
+            }
+
+        }
+
+
+        return formatedDate;
+    }
+
+
+    public String getFrenchFormattedNextDate() {
+
+        Instant instant = date.plus(this.duration, ChronoUnit.DAYS);
+
+        ZoneId z = ZoneId.of("Africa/Tunis");
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, z);
+
+        if(zdt.getDayOfWeek().getValue() == 6){
+            instant = date.plus(3, ChronoUnit.DAYS);
+        }
+
+        if(zdt.getDayOfWeek().getValue() == 7){
+            instant = date.plus(2, ChronoUnit.DAYS);
+        }
+
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                .withLocale(Locale.FRANCE)
+                .withZone(ZoneId.systemDefault());
+
+        return formatter.format(instant);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -149,15 +202,13 @@ public class HolidayDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "HolidayDTO{" +
-            "id=" + getId() +
+        return
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", year=" + getYear() +
             ", dayOfYear=" + getDayOfYear() +
             ", weekOfYear=" + getWeekOfYear() +
             ", dayOfWeek=" + getDayOfWeek() +
-            ", paid='" + isPaid() + "'" +
-            "}";
+            ", paid='" + isPaid() + "'";
     }
 }

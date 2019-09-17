@@ -82,6 +82,13 @@ public class NotificationResource {
             .body(result);
     }
 
+
+    @PutMapping("/notifications/mark-as-seen")
+    public void markAsSeen(@Valid @RequestBody List<NotificationDTO> notifications) throws URISyntaxException {
+
+        notificationService.markAsSeen(notifications);
+    }
+
     /**
      * {@code GET  /notifications} : get all the notifications.
      *
@@ -92,6 +99,13 @@ public class NotificationResource {
     public List<NotificationDTO> getAllNotifications() {
         log.debug("REST request to get all Notifications");
         return notificationService.findAll();
+    }
+
+
+    @GetMapping("/notifications/latest")
+    public List<NotificationDTO> getLatestNotifications() {
+        log.debug("REST request to get all Notifications");
+        return notificationService.findLatest();
     }
 
     /**

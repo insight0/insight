@@ -3,6 +3,7 @@ package com.apeiron.insight.domain;
 import com.apeiron.insight.config.Constants;
 
 import com.apeiron.insight.domain.enumeration.ContractType;
+import com.apeiron.insight.domain.enumeration.Seniority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
@@ -16,10 +17,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A user.
@@ -68,11 +66,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("image_url")
     private String imageUrl;
 
-    @Field("functional_role")
-    private String functionalRoleId;
+    @Field("functional_role_ids")
+    private Set<String> functionalRoleIds = new HashSet<>();
 
     @Field("contract")
-    private List<Contract> contract;
+    private List<Contract> contract = new ArrayList<>();
 
     @Field("address")
     private Address address;
@@ -93,6 +91,45 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("reset_date")
     private Instant resetDate = null;
 
+    @Field("phone_number")
+    private String phoneNumber;
+
+    @Field("title")
+    private String title;
+
+    @Field("parent_phone_number")
+    private String parentPhoneNumber;
+
+    @Field("parent_phone_owner")
+    private String parentPhoneOwner;
+
+    @Field("management_seniority")
+    private Seniority managementSeniority;
+
+    @Field("leadership_seniority")
+    private Seniority leadershipSeniority;
+
+    @Field("technical_seniority")
+    private Seniority technicalSeniority;
+
+    @Field("years_of_experience")
+    private Integer yearsOfExperience;
+
+    @Field("degrees")
+    private List<Degree> degrees = new ArrayList<>();
+
+    @Field("id_card")
+    private DocumentPlaceholder idCard;
+
+    @Field("payslips")
+    private List<DocumentPlaceholder> payslips = new ArrayList<>();
+
+    @Field("certifications")
+    private List<Certification> certifications = new ArrayList<>();
+
+    @Field("skill_ids")
+    private Set<String> skillIds = new HashSet<>();
+
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
 
@@ -106,6 +143,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     // Lowercase the login before saving it in database
@@ -205,12 +250,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return activated;
     }
 
-    public String getFunctionalRoleId() {
-        return functionalRoleId;
+    public Set<String> getFunctionalRoleIds() {
+        return functionalRoleIds;
     }
 
-    public void setFunctionalRoleId(String functionalRoleId) {
-        this.functionalRoleId = functionalRoleId;
+    public void setFunctionalRoleIds(Set<String> functionalRoleIds) {
+        this.functionalRoleIds = functionalRoleIds;
     }
 
     public List<Contract> getContract() {
@@ -233,8 +278,105 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return address;
     }
 
+    public Set<String> getSkillIds() {
+        return skillIds;
+    }
+
+    public void setSkillIds(Set<String> skillIds) {
+        this.skillIds = skillIds;
+    }
+
+    public Integer getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(Integer yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public List<Certification> getCertifications() {
+        return certifications;
+    }
+
+    public void setCertifications(List<Certification> certifications) {
+        this.certifications = certifications;
+    }
+
+    public Seniority getManagementSeniority() {
+        return managementSeniority;
+    }
+
+    public void setManagementSeniority(Seniority managementSeniority) {
+        this.managementSeniority = managementSeniority;
+    }
+
+    public Seniority getLeadershipSeniority() {
+        return leadershipSeniority;
+    }
+
+    public void setLeadershipSeniority(Seniority leadershipSeniority) {
+        this.leadershipSeniority = leadershipSeniority;
+    }
+
+    public Seniority getTechnicalSeniority() {
+        return technicalSeniority;
+    }
+
+    public void setTechnicalSeniority(Seniority technicalSeniority) {
+        this.technicalSeniority = technicalSeniority;
+    }
+
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getParentPhoneNumber() {
+        return parentPhoneNumber;
+    }
+
+    public void setParentPhoneNumber(String parentPhoneNumber) {
+        this.parentPhoneNumber = parentPhoneNumber;
+    }
+
+    public String getParentPhoneOwner() {
+        return parentPhoneOwner;
+    }
+
+    public void setParentPhoneOwner(String parentPhoneOwner) {
+        this.parentPhoneOwner = parentPhoneOwner;
+    }
+
+
+    public List<Degree> getDegrees() {
+        return degrees;
+    }
+
+    public void setDegrees(List<Degree> degrees) {
+        this.degrees = degrees;
+    }
+
+    public DocumentPlaceholder getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(DocumentPlaceholder idCard) {
+        this.idCard = idCard;
+    }
+
+    public List<DocumentPlaceholder> getPayslips() {
+        return payslips;
+    }
+
+    public void setPayslips(List<DocumentPlaceholder> payslips) {
+        this.payslips = payslips;
     }
 
     @Override

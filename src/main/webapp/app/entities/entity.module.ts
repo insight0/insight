@@ -55,6 +55,18 @@ import { RouterModule } from '@angular/router';
       {
         path: 'notification',
         loadChildren: () => import('./notification/notification.module').then(m => m.InsightNotificationModule)
+      },
+      {
+        path: 'degree',
+        loadChildren: () => import('./degree/degree.module').then(m => m.InsightDegreeModule)
+      },
+      {
+        path: 'certification',
+        loadChildren: () => import('./certification/certification.module').then(m => m.InsightCertificationModule)
+      },
+      {
+        path: 'skill',
+        loadChildren: () => import('./skill/skill.module').then(m => m.InsightSkillModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

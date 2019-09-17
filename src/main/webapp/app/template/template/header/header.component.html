@@ -45,7 +45,8 @@
                 </ul>
             </li>
             <li ngbDropdown class="notifications dropdown">
-                <span class="counter" *ngIf="notifNbr > 0">{{notifNbr}}</span>
+                <span class="counter" *ngIf="notifNbr > 0 && notifNbr < 5">{{notifNbr}}</span>
+                <span class="counter" *ngIf="notifNbr > 4">{{notifNbr}}+</span>
                 <a  ngbDropdownToggle (click)="updateNotifView()" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="ti-bell"></i>
                 </a>

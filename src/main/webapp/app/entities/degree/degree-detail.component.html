@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="degree">
+            <h2><span jhiTranslate="insightApp.degree.detail.title">Degree</span> {{degree.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="insightApp.degree.name">Name</span></dt>
+                <dd>
+                    <span>{{degree.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.degree.year">Year</span></dt>
+                <dd>
+                    <span>{{degree.year}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.degree.duration">Duration</span></dt>
+                <dd>
+                    <span>{{degree.duration}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.degree.school">School</span></dt>
+                <dd>
+                    <span>{{degree.school}}</span>
+                </dd>
+                <dt><span jhiTranslate="insightApp.degree.filePath">File Path</span></dt>
+                <dd>
+                    <span>{{degree.filePath}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/degree', degree.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

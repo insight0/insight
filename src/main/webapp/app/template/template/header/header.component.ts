@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TemplateService } from '../../shared/services/template.service';
+
 import { JhiTrackerService } from 'app/core';
 import { INotification } from 'app/shared/model/notification.model';
 import { NotificationService } from 'app/entities/notification';
@@ -48,6 +49,7 @@ export class HeaderComponent {
   }
 
   showActivity(notif: INotification) {
+    this.playAudio();
     this.notifNbr++;
     this.notifications.unshift(notif);
   }
@@ -83,8 +85,13 @@ export class HeaderComponent {
   }
 
   updateNotifView() {
-    this.notifNbr = 0;
-    this.notificationService.markAsSeen(this.notifications);
+    if (this.notifications) {
+      this.notificationService.markAsSeen(this.notifications);
+    }
+
+    setTimeout(() => {
+      this.notifNbr = 0;
+    }, 2000);
 
     setTimeout(() => {
       if (this.notifications) {
@@ -93,5 +100,12 @@ export class HeaderComponent {
         }
       }
     }, 5000);
+  }
+
+  playAudio() {
+    let audio = new Audio();
+    audio.src = '../../../../content/sound/open-ended.mp3';
+    audio.load();
+    audio.play();
   }
 }

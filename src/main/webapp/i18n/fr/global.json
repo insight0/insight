@@ -20,6 +20,9 @@
         "config": "Config",
         "emailTemplate": "Email Template",
         "notification": "Notification",
+        "degree": "Degree",
+        "certification": "Certification",
+        "skill": "Skill",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

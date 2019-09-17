@@ -1,0 +1,26 @@
+{
+  "insightApp": {
+    "certification": {
+      "home": {
+        "title": "Certifications",
+        "createLabel": "Créer un nouveau Certification",
+        "createOrEditLabel": "Créer ou éditer un Certification",
+        "search": "Recherche pour Certification",
+        "notFound": "Aucun Certification trouvé"
+      },
+      "created": "Un nouveau Certification a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Certification avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Certification avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Certification {{ id }} ?"
+      },
+      "detail": {
+        "title": "Certification"
+      },
+      "name": "Name",
+      "year": "Year",
+      "organization": "Organization",
+      "filePath": "File Path"
+    }
+  }
+}

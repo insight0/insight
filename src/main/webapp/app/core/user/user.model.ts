@@ -1,3 +1,7 @@
+import { IContract } from 'app/shared/model/contract.model';
+import { ISalaryPackage } from 'app/shared/model/salary-package.model';
+import { IFunctionalRole } from 'app/shared/model/functional-role.model';
+
 export interface IUser {
   id?: any;
   login?: string;
@@ -7,6 +11,9 @@ export interface IUser {
   activated?: boolean;
   langKey?: string;
   authorities?: any[];
+  contract?: IContract[];
+  salaryPackage?: ISalaryPackage;
+  functionalRoles?: IFunctionalRole[];
   createdBy?: string;
   createdDate?: Date;
   lastModifiedBy?: string;
@@ -28,7 +35,10 @@ export class User implements IUser {
     public createdDate?: Date,
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
-    public password?: string
+    public password?: string,
+    public contract?: IContract[],
+    public salaryPackage?: ISalaryPackage,
+    public functionalRoles?: IFunctionalRole[]
   ) {
     this.id = id ? id : null;
     this.login = login ? login : null;
@@ -43,5 +53,8 @@ export class User implements IUser {
     this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
     this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
     this.password = password ? password : null;
+    this.contract = contract ? contract : null;
+    this.salaryPackage = salaryPackage ? salaryPackage : null;
+    this.functionalRoles = functionalRoles ? functionalRoles : null;
   }
 }

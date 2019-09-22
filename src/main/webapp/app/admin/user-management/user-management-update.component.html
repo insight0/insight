@@ -1,113 +1,625 @@
-<div class="row justify-content-center">
-    <div class="col-8">
+<div class="row div-padding">
+    <div class="col-12">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">
-                Create or edit a User
+            <h2 id="myUserLabel">
+                Ajouter / Modifier Compte Utilisateur
             </h2>
-            <div>
+            <div class="row div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!user.id">
-                    <label jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" name="id" formControlName="id" readonly>
-                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="userManagement.login">Login</label>
-                    <input type="text" class="form-control" name="login"
-                           formControlName="login">
+                    <div class="row">
+                        <div class="col-12 section-padding">
+                            <h3>Informations générales</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="firstName" id="field_firstName"
+                                           formControlName="firstName"
+                                           placeholder="Prénom">
+                                    <mat-error
+                                        *ngIf="editForm.get('firstName').invalid && (editForm.get('firstName').dirty || editForm.get('firstName').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="lastName" id="field_lastName" formControlName="lastName"
+                                           placeholder="Nom">
+                                    <mat-error
+                                        *ngIf="editForm.get('lastName').invalid && (editForm.get('lastName').dirty || editForm.get('lastName').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="title" id="field_title" formControlName="title"
+                                           placeholder="Titre">
+                                    <mat-icon matSuffix>work</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Années d'expérience</mat-label>
+                                    <mat-select name="yearsOfExperience" id="field_yearsOfExperience" formControlName="yearsOfExperience">
+                                        <mat-option *ngFor="let item of [].constructor(10); let i = index"
+                                                    [value]="i">{{i}} ans
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="editForm.get('yearsOfExperience').invalid && (editForm.get('yearsOfExperience').dirty || editForm.get('yearsOfExperience').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-                    <div *ngIf="editForm.get('login').invalid && (editForm.get('login').dirty || editForm.get('login').touched)">
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [matDatepicker]="picker3" name="birthDate" id="field_birthDate" formControlName="birthDate"
+                                           placeholder="Date de naissance">
+                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker3></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="editForm.get('birthDate').invalid && (editForm.get('birthDate').dirty || editForm.get('birthDate').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.maxlength" jhiTranslate="entity.validation.maxlength"
-                        [translateValues]="{max: 50}">
-                            This field cannot be longer than 50 characters.
-                        </small>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="cnssAffiliateNumber" id="field_cnssAffiliateNumber" formControlName="cnssAffiliateNumber"
+                                           placeholder="Matricule CNSS">
+                                    <mat-icon matSuffix>work</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('cnssAffiliateNumber').invalid && (editForm.get('cnssAffiliateNumber').dirty || editForm.get('cnssAffiliateNumber').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.pattern" jhiTranslate="entity.validation.patternLogin">
-                            This field can only contain letters, digits and e-mail addresses.
-                        </small>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Sexe</mat-label>
+                                    <mat-select name="gender" id="field_gender" formControlName="Sexe">
+                                        <mat-option value="MALE">Homme</mat-option>
+                                        <mat-option value="FEMALE">Femme</mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="editForm.get('gender').invalid && (editForm.get('gender').dirty || editForm.get('gender').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="idCardNumber" id="field_idCardNumber" formControlName="idCardNumber"
+                                           placeholder="Numéro CIN">
+                                    <mat-icon matSuffix>work</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('idCardNumber').invalid && (editForm.get('idCardNumber').dirty || editForm.get('idCardNumber').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="login" id="field_login" formControlName="login"
+                                           placeholder="Login">
+                                    <span matSuffix>@apeiron-tech.com</span>
+                                    <mat-error
+                                        *ngIf="editForm.get('login').invalid && (editForm.get('login').dirty || editForm.get('login').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 section-padding">
+                            <h3>Contrat</h3>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Type du contrat</mat-label>
+                                    <mat-select name="contractType" id="field_contractType" formControlName="contractType">
+                                        <mat-option value="SIVP">SIVP</mat-option>
+                                        <mat-option value="KARAMA">KARAMA</mat-option>
+                                        <mat-option value="CDI">CDI</mat-option>
+                                        <mat-option value="CDD">CDD</mat-option>
+                                        <mat-option value="SUMMER_TRAINEESHIP">Stage d'été</mat-option>
+                                        <mat-option value="FINAL_YEAR_TRAINEESHIP">Stage PFE</mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="editForm.get('contractType').invalid && (editForm.get('contractType').dirty || editForm.get('contractType').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker1" placeholder="Date de début" name="contractDateDebut" formControlName="contractDateDebut">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                <mat-error
+                                    *ngIf="editForm.get('contractDateDebut').invalid && (editForm.get('contractDateDebut').dirty || editForm.get('contractDateDebut').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker2" placeholder="Date de fin" name="contractDateFin" formControlName="contractDateFin">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                                <mat-error
+                                    *ngIf="editForm.get('contractDateFin').invalid && (editForm.get('contractDateFin').dirty || editForm.get('contractDateFin').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <mat-form-field class="example-full-width">
+                                <textarea matInput placeholder="Note" name="contractDescription" id="field_contractDescription" formControlName="contractDescription"></textarea>
+                                <mat-error
+                                    *ngIf="editForm.get('contractDescription').invalid && (editForm.get('contractDescription').dirty || editForm.get('contractDescription').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 section-padding" style="padding-top: 30px;">
+                            <h3>Package salarial</h3>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryRaw" id="field_salaryRaw" formControlName="salaryRaw"
+                                           placeholder="Salaire Brut">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryRaw').invalid && (editForm.get('salaryRaw').dirty || editForm.get('salaryRaw').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryNet" id="field_salaryNet" formControlName="salaryNet"
+                                           placeholder="Salaire Net">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryNet').invalid && (editForm.get('salaryNet').dirty || editForm.get('salaryNet').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryCNSS" id="field_salaryCNSS" formControlName="salaryCNSS"
+                                           placeholder="Cotisation CNSS">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryCNSS').invalid && (editForm.get('salaryCNSS').dirty || editForm.get('salaryCNSS').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryRestoTicket" id="field_salaryRestoTicket" formControlName="salaryRestoTicket"
+                                           placeholder="Tickets Resto">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryRestoTicket').invalid && (editForm.get('salaryRestoTicket').dirty || editForm.get('salaryRestoTicket').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryAssurance" id="field_salaryAssurance" formControlName="salaryAssurance"
+                                           placeholder="Assurance">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryAssurance').invalid && (editForm.get('salaryAssurance').dirty || editForm.get('salaryAssurance').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="salaryTax" id="salaryTax" formControlName="salaryTax"
+                                           placeholder="Taxes">
+                                    <mat-error
+                                        *ngIf="editForm.get('salaryTax').invalid && (editForm.get('salaryTax').dirty || editForm.get('salaryTax').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="col-12 section-padding">
+                                <h3>Rôles</h3>
+                            </div>
+                            <mat-selection-list name="functionalRoles" id="field_functionalRoles"
+                                                formControlName="functionalRoles">
+                                <mat-list-option *ngFor="let role of functionalRoles" [value]="role.id">
+                                    {{role.name}}
+                                </mat-list-option>
+                            </mat-selection-list>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12 section-padding">
+                                <h3>Privilèges</h3>
+                            </div>
+                            <mat-selection-list name="authorities" id="field_authorities"
+                                                formControlName="authorities">
+                                <mat-list-option *ngFor="let authority of authorities" [value]="authority">
+                                    {{authority}}
+                                </mat-list-option>
+                            </mat-selection-list>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="userManagement.firstName">First Name</label>
-                    <input type="text" class="form-control" name="firstName"
-                           formControlName="firstName">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="row">
+                        <div class="col-12 section-padding" style="margin-bottom: 20px;">
+                            <h3>Niveau & Compétences</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <p>Niveau Management :
+                                    <span class="badge badge-warning badge-expt"
+                                          *ngIf="editForm.getRawValue().managementSeniority <= 20">Débutant</span>
+                                    <span class="badge badge-primary badge-expt"
+                                          *ngIf="editForm.getRawValue().managementSeniority > 20 && editForm.getRawValue().managementSeniority <= 40">Junior</span>
+                                    <span class="badge badge-success badge-expt"
+                                          *ngIf="editForm.getRawValue().managementSeniority > 40 && editForm.getRawValue().managementSeniority <= 60">Confirmé</span>
+                                    <span class="badge badge-info badge-expt"
+                                          *ngIf="editForm.getRawValue().managementSeniority > 60 && editForm.getRawValue().managementSeniority <= 80">Sénior</span>
+                                    <span class="badge badge-dark badge-expt"
+                                          *ngIf="editForm.getRawValue().managementSeniority > 80">Expert</span>
+                                </p>
 
-                    <div *ngIf="editForm.get('firstName').invalid && (editForm.get('firstName').dirty || editForm.get('firstName').touched)">
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('firstName').errors.maxlength" jhiTranslate="entity.validation.maxlength"
-                        [translateValues]="{max: 50}">
-                            This field cannot be longer than 50 characters.
-                        </small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <mat-slider class="example-full-width" style="width: 300px;" name="managementSeniority"
+                                        id="field_managementSeniority" formControlName="managementSeniority"
+                                        thumbLabel
+                                        [displayWith]="formatLabel"
+                                        tickInterval="20"
+                                        min="0"
+                                        max="100"></mat-slider>
+                        </div>
+                        <div class="col-6"><p>Niveau Leadership :
+                            <span class="badge badge-warning badge-expt" style="margin-left: 13px;"
+                                  *ngIf="editForm.getRawValue().leadershipSeniority <= 20">Débutant</span>
+                            <span class="badge badge-primary badge-expt" style="margin-left: 13px;"
+                                  *ngIf="editForm.getRawValue().leadershipSeniority > 20 && editForm.getRawValue().leadershipSeniority <= 40">Junior</span>
+                            <span class="badge badge-success badge-expt" style="margin-left: 13px;"
+                                  *ngIf="editForm.getRawValue().leadershipSeniority > 40 && editForm.getRawValue().leadershipSeniority <= 60">Confirmé</span>
+                            <span class="badge badge-info badge-expt" style="margin-left: 13px;"
+                                  *ngIf="editForm.getRawValue().leadershipSeniority > 60 && editForm.getRawValue().leadershipSeniority <= 80">Sénior</span>
+                            <span class="badge badge-dark badge-expt" style="margin-left: 13px;"
+                                  *ngIf="editForm.getRawValue().leadershipSeniority > 80">Expert</span>
+                        </p></div>
+                        <div class="col-6">
+                            <mat-slider class="example-full-width" style="width: 300px;" name="leadershipSeniority"
+                                        id="field_leadershipSeniority" formControlName="leadershipSeniority"
+                                        thumbLabel
+                                        [displayWith]="formatLabel"
+                                        tickInterval="20"
+                                        min="0"
+                                        max="100"></mat-slider>
+                        </div>
+                        <div class="col-6"><p>Niveau Technique :
+                            <span class="badge badge-warning badge-expt" style="margin-left: 17px;"
+                                  *ngIf="editForm.getRawValue().technicalSeniority <= 20">Débutant</span>
+                            <span class="badge badge-primary badge-expt" style="margin-left: 17px;"
+                                  *ngIf="editForm.getRawValue().technicalSeniority > 20 && editForm.getRawValue().technicalSeniority <= 40">Junior</span>
+                            <span class="badge badge-success badge-expt" style="margin-left: 17px;"
+                                  *ngIf="editForm.getRawValue().technicalSeniority > 40 && editForm.getRawValue().technicalSeniority <= 60">Confirmé</span>
+                            <span class="badge badge-info badge-expt" style="margin-left: 17px;"
+                                  *ngIf="editForm.getRawValue().technicalSeniority > 60 && editForm.getRawValue().technicalSeniority <= 80">Sénior</span>
+                            <span class="badge badge-dark badge-expt" style="margin-left: 17px;"
+                                  *ngIf="editForm.getRawValue().technicalSeniority > 80">Expert</span>
+                        </p>
+                        </div>
+                        <div class="col-6">
+                            <mat-slider class="example-full-width" style="width: 300px;" name="technicalSeniority"
+                                        id="field_technicalSeniority" formControlName="technicalSeniority"
+                                        thumbLabel
+                                        [displayWith]="formatLabel"
+                                        tickInterval="20"
+                                        min="0"
+                                        max="100"></mat-slider>
+                        </div>
+                        <div class="col-12" style="margin-top: 20px;margin-bottom: 20px;">
+                            <mat-form-field class="example-chip-list example-full-width">
+                                <mat-chip-list #chipList aria-label="Fruit selection">
+                                    <mat-chip
+                                        *ngFor="let skill of skills"
+                                        [selectable]="selectable"
+                                        [removable]="removable"
+                                        (removed)="remove(skill)">
+                                        {{skill}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                    <input
+
+                                        name="skills"
+                                        formControlName="skills"
+
+                                        placeholder="Compétences technique..."
+                                        #skillInput
+                                        [formControl]="skillCtrl"
+                                        [matAutocomplete]="auto"
+                                        [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        [matChipInputAddOnBlur]="addOnBlur"
+                                        (matChipInputTokenEnd)="add($event)">
+                                </mat-chip-list>
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                    <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+                                        {{skill}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="userManagement.lastName">Last Name</label>
-                    <input type="text" class="form-control" name="lastName"
-                        formControlName="lastName">
-
-                    <div *ngIf="editForm.get('lastName').invalid && (editForm.get('lastName').dirty || editForm.get('lastName').touched)">
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('lastName').errors.maxlength" jhiTranslate="entity.validation.maxlength"
-                        [translateValues]="{max: 50}">
-                            This field cannot be longer than 50 characters.
-                        </small>
+                    <div class="row">
+                        <div class="col-12 section-padding">
+                            <h3>Informations de contact</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="phoneNumber" id="field_phoneNumber"
+                                           formControlName="phoneNumber"
+                                           placeholder="Numéro Téléphone">
+                                    <mat-icon matSuffix>phone</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('phoneNumber').invalid && (editForm.get('phoneNumber').dirty || editForm.get('phoneNumber').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="email" id="field_email"
+                                           formControlName="email"
+                                           placeholder="Email personnel">
+                                    <mat-icon matSuffix>email</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput name="addressLine1" id="field_addressLine1"
+                                              formControlName="addressLine1" placeholder="Adresse ligne 1"></textarea>
+                                    <mat-error
+                                        *ngIf="editForm.get('addressLine1').invalid && (editForm.get('addressLine1').dirty || editForm.get('addressLine1').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput name="addressLine2" id="field_addressLine2"
+                                              formControlName="addressLine2" placeholder="Adresse ligne 2"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Ville" name="addressCity" id="field_City"
+                                       formControlName="addressCity">
+                                <mat-error
+                                    *ngIf="editForm.get('addressCity').invalid && (editForm.get('addressCity').dirty || editForm.get('addressCity').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput #postalCode maxlength="5" placeholder="Code postale" name="addressCode" id="field_Code"
+                                       formControlName="addressCode">
+                                <mat-hint align="end">{{postalCode.value.length}} / 4</mat-hint>
+                                <mat-error
+                                    *ngIf="editForm.get('addressCode').invalid && (editForm.get('addressCode').dirty || editForm.get('addressCode').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="userManagement.email">Email</label>
-                    <input type="email" class="form-control" name="email" formControlName="email">
-
-                    <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.maxlength" jhiTranslate="entity.validation.maxlength"
-                        [translateValues]="{max: 100}">
-                            This field cannot be longer than 100 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.minlength" jhiTranslate="entity.validation.minlength"
-                        [translateValues]="{min: 5}">
-                            This field is required to be at least 5 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.email" jhiTranslate="global.messages.validate.email.invalid">
-                            Your email is invalid.
-                        </small>
+                    <div class="row">
+                        <div class="col-12 section-padding" style="padding-top: 30px;">
+                            <h3>Personne de contact</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="parentPhoneOwner" id="field_parentPhoneOwner"
+                                           formControlName="parentPhoneOwner"
+                                           placeholder="Nom du parent">
+                                    <mat-error
+                                        *ngIf="editForm.get('parentPhoneOwner').invalid && (editForm.get('parentPhoneOwner').dirty || editForm.get('parentPhoneOwner').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="parentPhoneNumber" id="field_parentPhoneNumber"
+                                           formControlName="parentPhoneNumber"
+                                           placeholder="Numéro Téléphone Parent">
+                                    <mat-icon matSuffix>phone</mat-icon>
+                                    <mat-error
+                                        *ngIf="editForm.get('parentPhoneNumber').invalid && (editForm.get('parentPhoneNumber').dirty || editForm.get('parentPhoneNumber').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="activated">
-                        <input class="form-check-input" [disabled]="user.id === null" type="checkbox" id="activated" name="activated"  formControlName="activated">
-                        <span jhiTranslate="userManagement.activated">Activated</span>
-                    </label>
-                </div>
-
-                <div class="form-group" *ngIf="languages && languages.length > 0">
-                    <label jhiTranslate="userManagement.langKey">Lang Key</label>
-                    <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
-                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="userManagement.profiles">Profiles</label>
-                    <select class="form-control" multiple name="authority" formControlName="authorities">
-                        <option *ngFor="let authority of authorities" [value]="authority">{{authority}}</option>
-                    </select>
                 </div>
             </div>
+
+
+
+            <!--
+
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="userManagement.login">Login</label>
+                <input type="text" class="form-control" name="login"
+                       formControlName="login">
+
+                <div *ngIf="editForm.get('login').invalid && (editForm.get('login').dirty || editForm.get('login').touched)">
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('login').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('login').errors.maxlength" jhiTranslate="entity.validation.maxlength"
+                    [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('login').errors.pattern" jhiTranslate="entity.validation.patternLogin">
+                        This field can only contain letters, digits and e-mail addresses.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="userManagement.firstName">First Name</label>
+                <input type="text" class="form-control" name="firstName"
+                       formControlName="firstName">
+
+                <div *ngIf="editForm.get('firstName').invalid && (editForm.get('firstName').dirty || editForm.get('firstName').touched)">
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('firstName').errors.maxlength" jhiTranslate="entity.validation.maxlength"
+                    [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label jhiTranslate="userManagement.lastName">Last Name</label>
+                <input type="text" class="form-control" name="lastName"
+                    formControlName="lastName">
+
+                <div *ngIf="editForm.get('lastName').invalid && (editForm.get('lastName').dirty || editForm.get('lastName').touched)">
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('lastName').errors.maxlength" jhiTranslate="entity.validation.maxlength"
+                    [translateValues]="{max: 50}">
+                        This field cannot be longer than 50 characters.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="userManagement.email">Email</label>
+                <input type="email" class="form-control" name="email" formControlName="email">
+
+                <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('email').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('email').errors.maxlength" jhiTranslate="entity.validation.maxlength"
+                    [translateValues]="{max: 100}">
+                        This field cannot be longer than 100 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('email').errors.minlength" jhiTranslate="entity.validation.minlength"
+                    [translateValues]="{min: 5}">
+                        This field is required to be at least 5 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                    *ngIf="editForm.get('email').errors.email" jhiTranslate="global.messages.validate.email.invalid">
+                        Your email is invalid.
+                    </small>
+                </div>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="activated">
+                    <input class="form-check-input" [disabled]="user.id === null" type="checkbox" id="activated" name="activated"  formControlName="activated">
+                    <span jhiTranslate="userManagement.activated">Activated</span>
+                </label>
+            </div>
+
+            <div class="form-group" *ngIf="languages && languages.length > 0">
+                <label jhiTranslate="userManagement.langKey">Lang Key</label>
+                <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
+                    <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label jhiTranslate="userManagement.profiles">Profiles</label>
+                <select class="form-control" multiple name="authority" formControlName="authorities">
+                    <option *ngFor="let authority of authorities" [value]="authority">{{authority}}</option>
+                </select>
+            </div>
+
+            -->
+
             <div>
                 <button type="button" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span

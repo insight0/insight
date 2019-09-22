@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
 import { TemplateService } from '../../shared/services/template.service';
 
-import { JhiTrackerService } from 'app/core';
+import { AccountService, JhiLanguageHelper, JhiTrackerService, LoginModalService, LoginService } from 'app/core';
 import { INotification } from 'app/shared/model/notification.model';
 import { NotificationService } from 'app/entities/notification';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiLanguageService } from 'ng-jhipster';
+import { SessionStorageService } from 'ngx-webstorage';
+import { ProfileService } from 'app/layouts';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgSwitch } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.scss']
 })
 export class HeaderComponent {
   searchModel: string;
@@ -19,13 +25,28 @@ export class HeaderComponent {
   searchActived: boolean = false;
   notifications: INotification[];
 
+  inProduction: boolean;
+  isNavbarCollapsed: boolean;
+  languages: any[];
+  swaggerEnabled: boolean;
+  modalRef: NgbModalRef;
+  version: string;
+
   notifNbr = 0;
 
   constructor(
     private tplSvc: TemplateService,
     protected jhiAlertService: JhiAlertService,
     private trackerService: JhiTrackerService,
-    protected notificationService: NotificationService
+    protected notificationService: NotificationService,
+    private loginService: LoginService,
+    private languageService: JhiLanguageService,
+    private languageHelper: JhiLanguageHelper,
+    private sessionStorage: SessionStorageService,
+    private accountService: AccountService,
+    private loginModalService: LoginModalService,
+    private profileService: ProfileService,
+    private router: Router
   ) {}
 
   loadAll() {
@@ -63,6 +84,11 @@ export class HeaderComponent {
 
     this.tplSvc.isSideNavCollapseChanges.subscribe(isCollapse => (this.isCollapse = isCollapse));
     this.tplSvc.isSidePanelOpenChanges.subscribe(isOpen => (this.isOpen = isOpen));
+
+    this.profileService.getProfileInfo().then(profileInfo => {
+      this.inProduction = profileInfo.inProduction;
+      this.swaggerEnabled = profileInfo.swaggerEnabled;
+    });
   }
 
   toggleSideNavCollapse() {
@@ -107,5 +133,36 @@ export class HeaderComponent {
     audio.src = '../../../../content/sound/open-ended.mp3';
     audio.load();
     audio.play();
+  }
+
+  changeLanguage(languageKey: string) {
+    this.sessionStorage.store('locale', languageKey);
+    this.languageService.changeLanguage(languageKey);
+  }
+
+  collapseNavbar() {
+    this.isNavbarCollapsed = true;
+  }
+
+  isAuthenticated() {
+    return this.accountService.isAuthenticated();
+  }
+
+  login() {
+    this.modalRef = this.loginModalService.open();
+  }
+
+  logout() {
+    this.collapseNavbar();
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
+  toggleNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  getImageUrl() {
+    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
   }
 }

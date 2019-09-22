@@ -1,37 +1,43 @@
-<div class="row justify-content-center">
+<div class="row div-padding">
     <div class="col-8">
         <div *ngIf="functionalRole">
-            <h2><span jhiTranslate="insightApp.functionalRole.detail.title">Functional Role</span> {{functionalRole.id}}</h2>
+            <h2><span>Rôles fonctionnels</span> {{functionalRole.name}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="insightApp.functionalRole.name">Name</span></dt>
+            <dl class="row-md jh-entity-details div-form-padding">
+                <dt><span>Nom</span></dt>
                 <dd>
                     <span>{{functionalRole.name}}</span>
                 </dd>
-                <dt><span jhiTranslate="insightApp.functionalRole.description">Description</span></dt>
+                <dt><span>Description</span></dt>
                 <dd>
                     <span>{{functionalRole.description}}</span>
                 </dd>
-                <dt><span jhiTranslate="insightApp.functionalRole.maxHolidays">Max Holidays</span></dt>
+                <dt><span>Jours Congé</span></dt>
                 <dd>
                     <span>{{functionalRole.maxHolidays}}</span>
                 </dd>
-                <dt><span jhiTranslate="insightApp.functionalRole.workingHours">Working Hours</span></dt>
+                <dt><span>Heures de travail</span></dt>
                 <dd>
                     <span>{{functionalRole.workingHours}}</span>
                 </dd>
+                <dt><span>Opérations</span></dt>
+                <dd>
+                    <mat-chip-list>
+                        <mat-chip color="primary" selected *ngIf="functionalRole.operations">Oui</mat-chip>
+                        <mat-chip color="accent" selected *ngIf="!functionalRole.operations">non</mat-chip>
+                    </mat-chip-list>
+                </dd>
             </dl>
-
             <button type="submit"
                     (click)="previousState()"
-                    class="btn btn-info">
+                    mat-raised-button>
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/functional-role', functionalRole.id, 'edit']"
-                    class="btn btn-primary">
+                    mat-raised-button>
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
             </button>
         </div>

@@ -20,12 +20,16 @@ import {
   JhiDocsComponent,
   JhiTrackerComponent
 } from './';
+import { MaterialModule } from 'app/material-module';
+import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 @NgModule({
   imports: [
     InsightSharedModule,
+    MaterialModule,
     /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
-    RouterModule.forChild(adminState)
+    RouterModule.forChild(adminState),
+    SelectAutocompleteModule
   ],
   declarations: [
     AuditsComponent,

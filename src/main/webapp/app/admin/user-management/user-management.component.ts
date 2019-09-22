@@ -1,21 +1,38 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE } from 'app/shared';
 import { AccountService, UserService, User } from 'app/core';
 import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+  description: string;
+}
 
 @Component({
   selector: 'jhi-user-mgmt',
-  templateUrl: './user-management.component.html'
+  templateUrl: './user-management.component.html',
+  styleUrls: ['./user-management.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
+  ]
 })
 export class UserMgmtComponent implements OnInit, OnDestroy {
   currentAccount: any;
-  users: User[];
+  users: User[] = new Array();
   error: any;
   success: any;
   routeData: any;
@@ -26,6 +43,15 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  activeUser: boolean;
+
+  dataSource: MatTableDataSource<User>;
+  expandedElement: PeriodicElement | null;
+
+  displayedColumns: string[] = ['full-name', 'title', 'login', 'status', 'privilege', 'last-modification', 'actions'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private userService: UserService,
@@ -37,7 +63,6 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     private eventManager: JhiEventManager,
     private modalService: NgbModal
   ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
       this.page = data['pagingParams'].page;
       this.previousPage = data['pagingParams'].page;
@@ -79,24 +104,12 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
   loadAll() {
     this.userService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
+      .query({})
       .subscribe((res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers), (res: HttpResponse<any>) => this.onError(res.body));
   }
 
   trackIdentity(index, item: User) {
     return item.id;
-  }
-
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
   }
 
   loadPage(page: number) {
@@ -108,10 +121,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
   transition() {
     this.router.navigate(['/admin/user-management'], {
-      queryParams: {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
+      queryParams: {}
     });
     this.loadAll();
   }
@@ -129,13 +139,34 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     );
   }
 
+  filterCurrent() {
+    if (this.activeUser) {
+      this.users = this.users.filter(user => user.activated);
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } else {
+      this.loadAll();
+    }
+  }
+
   private onSuccess(data, headers) {
-    this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = headers.get('X-Total-Count');
     this.users = data;
+    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   private onError(error) {
     this.alertService.error(error.error, error.message, null);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

@@ -7,7 +7,255 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav-right">
+        <ul class="nav-right" [ngSwitch]="isAuthenticated()">
+
+
+            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+                    <span>
+                        <fa-icon icon="th-list"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.main">
+                            Entities
+                        </span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+                    <li>
+                        <a class="dropdown-item" routerLink="day-off" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.dayOff">Day Off</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="change-log" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.changeLog">Change Log</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="holiday" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.holiday">Holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="contact" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.contact">Contact</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="functional-role" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.functionalRole">Functional Role</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="address" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.address">Address</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="salary-package" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.salaryPackage">Salary Package</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="organisation" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.organisation">Organisation</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="contract" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.contract">Contract</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="document-placeholder" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.documentPlaceholder">Document Placeholder</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="config" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.config">Config</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="email-template" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.emailTemplate">Email Template</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="notification" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.notification">Notification</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="degree" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.degree">Degree</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="certification" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.certification">Certification</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="skill" routerLinkActive="active"
+                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.skill">Skill</span>
+                        </a>
+                    </li>
+                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                </ul>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
+                    <span>
+                        <fa-icon icon="user-plus"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.main">Administration</span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/jhi-tracker" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="eye" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.tracker">User tracker</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/jhi-metrics" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/jhi-health" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="heart" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.health">Health</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/jhi-configuration" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="list" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="bell" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.audits">Audits</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="tasks" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                        </a>
+                    </li>
+                    <li *ngIf="swaggerEnabled">
+                        <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="book" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.admin.apidocs">API</span>
+                        </a>
+                    </li>
+                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                </ul>
+            </li>
+            <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+                  <span *ngIf="!getImageUrl()">
+                    <fa-icon icon="user"></fa-icon>
+                    <span jhiTranslate="global.menu.account.main">
+                      Account
+                    </span>
+                  </span>
+                    <span *ngIf="getImageUrl()">
+                      <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
+                  </span>
+                </a>
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="settings" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.settings">Settings</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="password" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="lock" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.password">Password</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" (click)="logout()" id="logout">
+                            <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item" (click)="login()" id="login">
+                            <fa-icon icon="sign-in-alt" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.login">Sign in</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item" routerLink="register" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            <fa-icon icon="user-plus" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.account.register">Register</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
             <li class="user-profile dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                     <img class="profile-img img-fluid" src="../../../../content/images/user.jpg">
@@ -47,7 +295,7 @@
             <li ngbDropdown class="notifications dropdown">
                 <span class="counter" *ngIf="notifNbr > 0 && notifNbr < 5">{{notifNbr}}</span>
                 <span class="counter" *ngIf="notifNbr > 4">{{notifNbr}}+</span>
-                <a  ngbDropdownToggle (click)="updateNotifView()" class="dropdown-toggle" data-toggle="dropdown">
+                <a ngbDropdownToggle (click)="updateNotifView()" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="ti-bell"></i>
                 </a>
                 <ul class="dropdown-menu " ngbDropdownMenu>
@@ -59,12 +307,15 @@
 
                         <li *ngFor="let notif of notifications" [ngClass]="{'not-seen target': !notif.seen}">
                             <a href="">
-                                <img *ngIf="notif.userName === 'system'" class="thumb-img" src="../../../../content/images/logo/system.png" alt="">
-                                <img *ngIf="notif.userName != 'system'" class="thumb-img" [src]="notif.userPictureUrl" alt="">
+                                <img *ngIf="notif.userName === 'system'" class="thumb-img"
+                                     src="../../../../content/images/logo/system.png" alt="">
+                                <img *ngIf="notif.userName != 'system'" class="thumb-img" [src]="notif.userPictureUrl"
+                                     alt="">
                                 <div class="info">
                                     <span class="title">
                                         <span *ngIf="notif.userName === 'system'" class="font-size-14 text-semibold">Apeiron Team</span>
-                                        <span *ngIf="notif.userName != 'system'" class="font-size-14 text-semibold">{{notif.userName}}</span>
+                                        <span *ngIf="notif.userName != 'system'"
+                                              class="font-size-14 text-semibold">{{notif.userName}}</span>
                                         <span class="text-gray">{{notif.text}}</span>
                                     </span>
                                     <span class="sub-title">{{notif.date | date:'medium'}}</span>
@@ -75,7 +326,8 @@
                     </ul>
                     <li class="notice-footer">
                         <span>
-                            <a href="" class="text-gray">Check all notifications <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
+                            <a href="" class="text-gray">Check all notifications <i
+                                class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
                         </span>
                     </li>
                 </ul>

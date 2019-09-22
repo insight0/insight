@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,10 +10,13 @@ import { AccountService } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { FunctionalRoleService } from './functional-role.service';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { IHoliday } from 'app/shared/model/holiday.model';
 
 @Component({
   selector: 'jhi-functional-role',
-  templateUrl: './functional-role.component.html'
+  templateUrl: './functional-role.component.html',
+  styleUrls: ['./functional-role.scss']
 })
 export class FunctionalRoleComponent implements OnInit, OnDestroy {
   functionalRoles: IFunctionalRole[];
@@ -27,6 +30,14 @@ export class FunctionalRoleComponent implements OnInit, OnDestroy {
   totalItems: number;
   currentSearch: string;
 
+  operation: boolean;
+
+  displayedColumns: string[] = ['name', 'description', 'maxHolidays', 'workingHours', 'operations', 'actions'];
+  dataSource: MatTableDataSource<IFunctionalRole>;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   constructor(
     protected functionalRoleService: FunctionalRoleService,
     protected jhiAlertService: JhiAlertService,
@@ -36,26 +47,22 @@ export class FunctionalRoleComponent implements OnInit, OnDestroy {
     protected accountService: AccountService
   ) {
     this.functionalRoles = [];
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.page = 0;
-    this.links = {
-      last: 0
-    };
-    this.predicate = 'id';
-    this.reverse = true;
+
+    this.initSource();
     this.currentSearch =
       this.activatedRoute.snapshot && this.activatedRoute.snapshot.params['search'] ? this.activatedRoute.snapshot.params['search'] : '';
+  }
+
+  initSource() {
+    this.dataSource = new MatTableDataSource(this.functionalRoles);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   loadAll() {
     if (this.currentSearch) {
       this.functionalRoleService
-        .search({
-          query: this.currentSearch,
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.sort()
-        })
+        .search({})
         .subscribe(
           (res: HttpResponse<IFunctionalRole[]>) => this.paginateFunctionalRoles(res.body, res.headers),
           (res: HttpErrorResponse) => this.onError(res.message)
@@ -63,11 +70,7 @@ export class FunctionalRoleComponent implements OnInit, OnDestroy {
       return;
     }
     this.functionalRoleService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
+      .query({})
       .subscribe(
         (res: HttpResponse<IFunctionalRole[]>) => this.paginateFunctionalRoles(res.body, res.headers),
         (res: HttpErrorResponse) => this.onError(res.message)
@@ -132,23 +135,32 @@ export class FunctionalRoleComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('functionalRoleListModification', response => this.reset());
   }
 
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
-  }
-
   protected paginateFunctionalRoles(data: IFunctionalRole[], headers: HttpHeaders) {
-    this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     for (let i = 0; i < data.length; i++) {
       this.functionalRoles.push(data[i]);
     }
+
+    this.initSource();
   }
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  filterCurrent() {
+    if (this.operation) {
+      this.functionalRoles = this.functionalRoles.filter((role: IFunctionalRole) => role.operations);
+      this.dataSource = new MatTableDataSource(this.functionalRoles);
+    } else {
+      this.loadAll();
+    }
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

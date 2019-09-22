@@ -1,0 +1,86 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.mat-slider-thumb {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  box-sizing: border-box;
+  width: 60px;
+  height: 20px;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  transform: scale(0.7);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.badge-expt {
+  font-size: 80% !important;
+  min-width: 80px !important;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+  min-width: auto;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.form-group {
+  padding-right: 20px;
+}
+
+.section-padding {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

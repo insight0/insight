@@ -6,6 +6,7 @@ export interface ISalaryPackage {
   privateInsurancePerMonth?: number;
   mealVoucherPerMonth?: number;
   bonusPerYear?: number;
+  rawSalaryPerMonth?: number;
 }
 
 export class SalaryPackage implements ISalaryPackage {
@@ -16,6 +17,7 @@ export class SalaryPackage implements ISalaryPackage {
     public taxPerMonth?: number,
     public privateInsurancePerMonth?: number,
     public mealVoucherPerMonth?: number,
-    public bonusPerYear?: number
+    public bonusPerYear?: number,
+    public rawSalaryPerMonth?: number
   ) {}
 }

@@ -1,25 +1,29 @@
-<div>
+<div class="div-padding">
     <h2 id="page-heading">
-        <span jhiTranslate="insightApp.functionalRole.home.title">Functional Roles</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-functional-role" [routerLink]="['/functional-role/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span class="hidden-sm-down"  jhiTranslate="insightApp.functionalRole.home.createLabel">
-            Create a new Functional Role
-            </span>
+        <span>Rôles fonctionnels</span>
+        <button mat-button aria-label="Example icon-button with a heart icon"
+                class="float-right jh-create-entity create-holiday" [routerLink]="['/functional-role/new']">
+            <mat-icon>add</mat-icon>
+            Nouveau
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
         <div class="col-sm-12">
+            <br>
+            <mat-checkbox [(ngModel)]="operation" (change)="filterCurrent()">Opérations</mat-checkbox>
+        </div>
+        <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'insightApp.functionalRole.home.search' | translate }}">
-                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
-                        <fa-icon [icon]="'search'"></fa-icon>
-                    </button>
-                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
-                        <fa-icon [icon]="'trash-alt'"></fa-icon>
-                    </button>
+                        <span
+                            style="padding-top: 20px;">Nombre de rôles fonctionnels : <strong>{{functionalRoles.length}}</strong></span>
+
+                    <mat-form-field class="search-input">
+                        <input type="tel" matInput placeholder="Filtrer" (keyup)="applyFilter($event.target.value)"
+                               id="currentSearch" name="currentSearch">
+                        <mat-icon matSuffix class="pointer">search</mat-icon>
+                    </mat-form-field>
                 </div>
             </form>
         </div>
@@ -28,51 +32,78 @@
     <div class="alert alert-warning" *ngIf="functionalRoles?.length === 0">
         <span jhiTranslate="insightApp.functionalRole.home.notFound">No functionalRoles found</span>
     </div>
-    <div class="table-responsive" *ngIf="functionalRoles?.length > 0">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="name"><span jhiTranslate="insightApp.functionalRole.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="description"><span jhiTranslate="insightApp.functionalRole.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="maxHolidays"><span jhiTranslate="insightApp.functionalRole.maxHolidays">Max Holidays</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="workingHours"><span jhiTranslate="insightApp.functionalRole.workingHours">Working Hours</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let functionalRole of functionalRoles ;trackBy: trackId">
-                <td><a [routerLink]="['/functional-role', functionalRole.id, 'view' ]">{{functionalRole.id}}</a></td>
-                <td>{{functionalRole.name}}</td>
-                <td>{{functionalRole.description}}</td>
-                <td>{{functionalRole.maxHolidays}}</td>
-                <td>{{functionalRole.workingHours}}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/functional-role', functionalRole.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+    <div class="table-responsive">
+
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom</th>
+                    <td mat-cell *matCellDef="let row"><a
+                        [routerLink]="['/functional-role', row.id, 'view' ]"> {{row.name}} </a></td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description</th>
+                    <td mat-cell *matCellDef="let row">{{row.description}}</td>
+                </ng-container>
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="operations">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Opérations</th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-chip-list>
+                            <mat-chip color="primary" selected *ngIf="row.operations">Oui</mat-chip>
+                            <mat-chip color="accent" selected *ngIf="!row.operations">non</mat-chip>
+                        </mat-chip-list>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="workingHours">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Heures de travail</th>
+                    <td mat-cell *matCellDef="let row">{{row.workingHours}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="maxHolidays">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Jours congé</th>
+                    <td mat-cell *matCellDef="let row">{{row.maxHolidays}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
+
+                    <td mat-cell style="min-width: 180px;" *matCellDef="let row">
+                        <button mat-icon-button
+                                [routerLink]="['/functional-role', row.id, 'view' ]">
+                            <mat-icon>remove_red_eye</mat-icon>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/functional-role', functionalRole.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        <button mat-icon-button
+                                [routerLink]="['/functional-role', row.id, 'edit']">
+                            <mat-icon>edit</mat-icon>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/functional-role', { outlets: { popup: functionalRole.id + '/delete'} }]"
+                        <button mat-icon-button
+                                [routerLink]="['/functional-role', { outlets: { popup: row.id + '/delete'} }]"
                                 replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                queryParamsHandling="merge">
+                            <mat-icon>delete</mat-icon>
                         </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+
     </div>
 </div>

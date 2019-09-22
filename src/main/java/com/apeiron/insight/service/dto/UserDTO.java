@@ -3,6 +3,7 @@ package com.apeiron.insight.service.dto;
 import com.apeiron.insight.config.Constants;
 
 import com.apeiron.insight.domain.*;
+import com.apeiron.insight.domain.enumeration.Gender;
 import com.apeiron.insight.domain.enumeration.Seniority;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -11,10 +12,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,11 +69,19 @@ public class UserDTO {
 
     private String parentPhoneOwner;
 
-    private Seniority managementSeniority;
+    private Integer managementSeniority;
 
-    private Seniority leadershipSeniority;
+    private Integer leadershipSeniority;
 
-    private Seniority technicalSeniority;
+    private Integer technicalSeniority;
+
+    private String cnssAffiliateNumber;
+
+    private Gender gender;
+
+    private Date birthDate;
+
+    private String idCardNumber;
 
     private String title;
 
@@ -114,7 +120,6 @@ public class UserDTO {
         this.phoneNumber = user.getPhoneNumber();
         this.parentPhoneNumber = user.getParentPhoneNumber();
         this.parentPhoneOwner = user.getParentPhoneOwner();
-
         this.managementSeniority = user.getManagementSeniority();
         this.leadershipSeniority = user.getLeadershipSeniority();
         this.technicalSeniority = user.getTechnicalSeniority();
@@ -122,6 +127,10 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.birthDate = user.getBirthDate();
+        this.cnssAffiliateNumber = user.getCnssAffiliateNumber();
+        this.gender = user.getGender();
+        this.idCardNumber = user.getIdCardNumber();
     }
 
     public String getId() {
@@ -245,27 +254,27 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
-    public Seniority getManagementSeniority() {
+    public Integer getManagementSeniority() {
         return managementSeniority;
     }
 
-    public void setManagementSeniority(Seniority managementSeniority) {
+    public void setManagementSeniority(Integer managementSeniority) {
         this.managementSeniority = managementSeniority;
     }
 
-    public Seniority getLeadershipSeniority() {
+    public Integer getLeadershipSeniority() {
         return leadershipSeniority;
     }
 
-    public void setLeadershipSeniority(Seniority leadershipSeniority) {
+    public void setLeadershipSeniority(Integer leadershipSeniority) {
         this.leadershipSeniority = leadershipSeniority;
     }
 
-    public Seniority getTechnicalSeniority() {
+    public Integer getTechnicalSeniority() {
         return technicalSeniority;
     }
 
-    public void setTechnicalSeniority(Seniority technicalSeniority) {
+    public void setTechnicalSeniority(Integer technicalSeniority) {
         this.technicalSeniority = technicalSeniority;
     }
 
@@ -333,6 +342,13 @@ public class UserDTO {
         this.certifications = certifications;
     }
 
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
+    }
 
     public DocumentPlaceholderDTO getIdCard() {
         return idCard;
@@ -364,6 +380,30 @@ public class UserDTO {
 
     public void setContract(List<ContractDTO> contract) {
         this.contract = contract;
+    }
+
+    public String getCnssAffiliateNumber() {
+        return cnssAffiliateNumber;
+    }
+
+    public void setCnssAffiliateNumber(String cnssAffiliateNumber) {
+        this.cnssAffiliateNumber = cnssAffiliateNumber;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

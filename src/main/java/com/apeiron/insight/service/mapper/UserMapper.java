@@ -122,7 +122,11 @@ public class UserMapper {
             user.setLeadershipSeniority(userDTO.getLeadershipSeniority());
             user.setTechnicalSeniority(userDTO.getTechnicalSeniority());
             user.setTitle(userDTO.getTitle());
+            user.setBirthDate(userDTO.getBirthDate());
+            user.setCnssAffiliateNumber(userDTO.getCnssAffiliateNumber());
+            user.setGender(userDTO.getGender());
             user.setContract(contractMapper.toEntity(userDTO.getContract()));
+            user.setIdCardNumber(userDTO.getIdCardNumber());
 
             user.setSalaryPackage(salaryPackageMapper.toEntity(userDTO.getSalaryPackage()));
 
@@ -136,7 +140,8 @@ public class UserMapper {
             if (userDTO.getSkills() != null) {
                 for (SkillDTO skillDTO : userDTO.getSkills()
                 ) {
-                    user.getSkillIds().add(skillDTO.getId());
+                    SkillDTO skill = skillService.save(skillDTO);
+                    user.getSkillIds().add(skill.getId());
                 }
             }
 
@@ -145,7 +150,6 @@ public class UserMapper {
             user.setDegrees(degreeMapper.toEntity(userDTO.getDegrees()));
             user.setPayslips(documentPlaceholderMapper.toEntity(userDTO.getPayslips()));
             user.setCertifications(certificationMapper.toEntity(userDTO.getCertifications()));
-
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
             user.setAuthorities(authorities);
             return user;

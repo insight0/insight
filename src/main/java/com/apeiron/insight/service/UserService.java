@@ -9,6 +9,7 @@ import com.apeiron.insight.repository.search.UserSearchRepository;
 import com.apeiron.insight.security.AuthoritiesConstants;
 import com.apeiron.insight.security.SecurityUtils;
 import com.apeiron.insight.service.dto.UserDTO;
+import com.apeiron.insight.service.mapper.UserMapper;
 import com.apeiron.insight.service.util.RandomUtil;
 import com.apeiron.insight.web.rest.errors.*;
 
@@ -35,7 +36,7 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
-
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     private final UserSearchRepository userSearchRepository;
@@ -44,12 +45,13 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userSearchRepository = userSearchRepository;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userMapper = userMapper;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -130,9 +132,9 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser){
+    private boolean removeNonActivatedUser(User existingUser) {
         if (existingUser.getActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         this.clearUserCaches(existingUser);
@@ -140,7 +142,7 @@ public class UserService {
     }
 
     public User createUser(UserDTO userDTO) {
-        User user = new User();
+        User user = userMapper.userDTOToUser(userDTO);
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -207,8 +209,13 @@ public class UserService {
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
             .map(Optional::get)
-            .map(user -> {
-                this.clearUserCaches(user);
+            .map(userObject -> {
+                this.clearUserCaches(userObject);
+                User user = userMapper.userDTOToUser(userDTO);
+                user.setPassword(userObject.getPassword());
+                user.setResetKey(userObject.getResetKey());
+                user.setResetDate(userObject.getResetDate());
+                user.setActivationKey(userObject.getActivationKey());
                 user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
@@ -258,7 +265,8 @@ public class UserService {
     }
 
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+
+        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(userMapper::userToUserDTO);
     }
 
     public List<User> getAllAdminUsers() {
@@ -270,21 +278,25 @@ public class UserService {
         Authority adminAuthority = new Authority();
         adminAuthority.setName(AuthoritiesConstants.ADMIN);
 
-        for (User user: users
-             ) {
+        for (User user : users
+        ) {
 
-            if(user.getAuthorities().contains(adminAuthority)){
+            if (user.getAuthorities().contains(adminAuthority)) {
                 admins.add(user);
             }
 
         }
-
         return admins;
     }
 
 
-    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneByLogin(login);
+    public Optional<UserDTO> getUserWithAuthoritiesByLogin(String login) {
+        Optional<User> user = userRepository.findOneByLogin(login);
+        if (user.isPresent()) {
+            return Optional.of(userMapper.userToUserDTO(user.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public Optional<User> getUserWithAuthorities(String id) {
@@ -314,6 +326,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {

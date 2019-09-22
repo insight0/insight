@@ -3,6 +3,7 @@ package com.apeiron.insight.domain;
 import com.apeiron.insight.config.Constants;
 
 import com.apeiron.insight.domain.enumeration.ContractType;
+import com.apeiron.insight.domain.enumeration.Gender;
 import com.apeiron.insight.domain.enumeration.Seniority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
@@ -11,10 +12,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.*;
@@ -78,6 +76,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("salary_package")
     private SalaryPackage salaryPackage;
 
+    @Field("cnss_affiliate_number")
+    private String cnssAffiliateNumber;
+
+    @Field("gender")
+    private Gender gender;
+
+    @Field("birth_date")
+    private Date birthDate;
+
     @Size(max = 20)
     @Field("activation_key")
     @JsonIgnore
@@ -103,14 +110,23 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("parent_phone_owner")
     private String parentPhoneOwner;
 
+    @Field("id_card_number")
+    private String idCardNumber;
+
+    @Max(100)
+    @Min(0)
     @Field("management_seniority")
-    private Seniority managementSeniority;
+    private Integer managementSeniority;
 
+    @Max(100)
+    @Min(0)
     @Field("leadership_seniority")
-    private Seniority leadershipSeniority;
+    private Integer leadershipSeniority;
 
+    @Max(100)
+    @Min(0)
     @Field("technical_seniority")
-    private Seniority technicalSeniority;
+    private Integer technicalSeniority;
 
     @Field("years_of_experience")
     private Integer yearsOfExperience;
@@ -302,27 +318,27 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.certifications = certifications;
     }
 
-    public Seniority getManagementSeniority() {
+    public Integer getManagementSeniority() {
         return managementSeniority;
     }
 
-    public void setManagementSeniority(Seniority managementSeniority) {
+    public void setManagementSeniority(Integer managementSeniority) {
         this.managementSeniority = managementSeniority;
     }
 
-    public Seniority getLeadershipSeniority() {
+    public Integer getLeadershipSeniority() {
         return leadershipSeniority;
     }
 
-    public void setLeadershipSeniority(Seniority leadershipSeniority) {
+    public void setLeadershipSeniority(Integer leadershipSeniority) {
         this.leadershipSeniority = leadershipSeniority;
     }
 
-    public Seniority getTechnicalSeniority() {
+    public Integer getTechnicalSeniority() {
         return technicalSeniority;
     }
 
-    public void setTechnicalSeniority(Seniority technicalSeniority) {
+    public void setTechnicalSeniority(Integer technicalSeniority) {
         this.technicalSeniority = technicalSeniority;
     }
 
@@ -377,6 +393,38 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPayslips(List<DocumentPlaceholder> payslips) {
         this.payslips = payslips;
+    }
+
+    public String getCnssAffiliateNumber() {
+        return cnssAffiliateNumber;
+    }
+
+    public void setCnssAffiliateNumber(String cnssAffiliateNumber) {
+        this.cnssAffiliateNumber = cnssAffiliateNumber;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
     }
 
     @Override

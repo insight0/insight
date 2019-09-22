@@ -47,10 +47,26 @@ public class SkillService {
     public SkillDTO save(SkillDTO skillDTO) {
         log.debug("Request to save Skill : {}", skillDTO);
         Skill skill = skillMapper.toEntity(skillDTO);
+        if(skill.getName() != null){
+            skill.setName(skill.getName().toLowerCase().trim());
+        }
+
+        Skill old = findByName(skill.getName());
+
+        if(old != null){
+            skillDTO.setId(old.getId());
+            return skillDTO;
+        }
+
         skill = skillRepository.save(skill);
         SkillDTO result = skillMapper.toDto(skill);
         skillSearchRepository.save(skill);
         return result;
+    }
+
+    public Skill findByName(String name) {
+        log.debug("Request to get Skill : {}", name);
+        return skillRepository.findByName(name);
     }
 
     /**

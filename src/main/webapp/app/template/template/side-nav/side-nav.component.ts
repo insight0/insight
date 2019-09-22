@@ -4,7 +4,8 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
-  templateUrl: './side-nav.component.html'
+  templateUrl: './side-nav.component.html',
+  styleUrls: ['./sidenav.scss']
 })
 export class SideNavComponent {
   isCollapse: boolean;

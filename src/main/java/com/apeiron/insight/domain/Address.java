@@ -10,15 +10,10 @@ import java.io.Serializable;
 /**
  * A Address.
  */
-@Document(collection = "address")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "address")
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
-    private String id;
 
     @NotNull
     @Field("line_1")
@@ -44,15 +39,6 @@ public class Address implements Serializable {
 
     @Field("lgt")
     private Integer lgt;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getLine1() {
         return line1;
@@ -144,18 +130,7 @@ public class Address implements Serializable {
     public void setLgt(Integer lgt) {
         this.lgt = lgt;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Address)) {
-            return false;
-        }
-        return id != null && id.equals(((Address) o).id);
-    }
 
     @Override
     public int hashCode() {
@@ -165,7 +140,6 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "Address{" +
-            "id=" + getId() +
             ", line1='" + getLine1() + "'" +
             ", line2='" + getLine2() + "'" +
             ", city='" + getCity() + "'" +

@@ -1,7 +1,7 @@
 <div class="side-nav" sideBar>
     <div class="side-nav-inner">
         <div class="side-nav-logo">
-            <a href="" [routerLink]="['/dashboard']">
+            <a href="" [routerLink]="['/']">
                 <div class="logo logo-dark" style="background-image: url('content/images/logo/logo.png')"></div>
                 <div class="logo logo-white" style="background-image: url('content/images/logo/logo-white.png')"></div>
             </a>
@@ -13,7 +13,7 @@
         </div>
         <ul class="side-nav-menu scrollable" [perfectScrollbar]>
             <li clas="nav-item" routerLinkActive="active">
-                <a class="mrg-top-30" href="" [routerLink]="['/dashboard']">
+                <a class="mrg-top-30" href="" [routerLink]="['/']">
                     <span class="icon-holder">
                         <i class="ti-home"></i>
                     </span>
@@ -25,17 +25,14 @@
                     <span class="icon-holder">
                         <i class="ti-layout-media-overlay"></i>
                     </span>
-                    <span class="title">Dropdown</span>
+                    <span class="title">Resources Humaines</span>
                     <span class="arrow">
                         <i class="ti-angle-right"></i>
                     </span>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="">item 1</a>
-                    </li>
-                    <li>
-                        <a href="">item 2</a>
+                        <a routerLink="admin/user-management">Equipe</a>
                     </li>
                 </ul>
             </li>
@@ -44,43 +41,20 @@
                     <span class="icon-holder">
                         <i class="ti-view-list-alt"></i>
                     </span>
-                    <span class="title">Multi Level</span>
+                    <span class="title">Paramétrage</span>
                     <span class="arrow">
                         <i class="ti-angle-right"></i>
                     </span>
                 </a>
                 <ul class="dropdown-menu">
+
+
                     <li class="nav-item dropdown">
-                        <a href="javascript:void(0);">
-                            <span>Level 1.2</span>
+                        <a href="javascript:void(0);" routerLink="functional-role">
+                            <span>Rôles fonctionnels</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="javascript:void(0);">
-                            <span>Level 1.1</span>
-                            <span class="arrow">
-                                <i class="ti-angle-right"></i>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="javascript:void(0);">Level 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
-                    <span class="icon-holder">
-                        <i class="ti-view-list-alt"></i>
-                    </span>
-                    <span class="title">Configuration</span>
-                    <span class="arrow">
-                        <i class="ti-angle-right"></i>
-                    </span>
-                </a>
-                <ul class="dropdown-menu">
+
                     <li class="nav-item dropdown">
                         <a href="javascript:void(0);" routerLink="holiday">
                             <span>Jours fériés</span>

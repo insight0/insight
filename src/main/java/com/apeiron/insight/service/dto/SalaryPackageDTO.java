@@ -33,6 +33,8 @@ public class SalaryPackageDTO implements Serializable {
     @NotNull
     private Float bonusPerYear;
 
+    @NotNull
+    private Float rawSalaryPerMonth;
 
     public String getId() {
         return id;
@@ -88,6 +90,14 @@ public class SalaryPackageDTO implements Serializable {
 
     public void setBonusPerYear(Float bonusPerYear) {
         this.bonusPerYear = bonusPerYear;
+    }
+
+    public Float getRawSalaryPerMonth() {
+        return rawSalaryPerMonth;
+    }
+
+    public void setRawSalaryPerMonth(Float rawSalaryPerMonth) {
+        this.rawSalaryPerMonth = rawSalaryPerMonth;
     }
 
     @Override

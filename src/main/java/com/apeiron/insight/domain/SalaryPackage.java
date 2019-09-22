@@ -26,6 +26,11 @@ public class SalaryPackage implements Serializable {
     @Field("net_salary_per_month")
     private Float netSalaryPerMonth;
 
+
+    @NotNull
+    @Field("raw_salary_per_month")
+    private Float rawSalaryPerMonth;
+
     @NotNull
     @Field("national_insurance_per_month")
     private Float nationalInsurancePerMonth;
@@ -133,6 +138,13 @@ public class SalaryPackage implements Serializable {
         this.bonusPerYear = bonusPerYear;
     }
 
+    public Float getRawSalaryPerMonth() {
+        return rawSalaryPerMonth;
+    }
+
+    public void setRawSalaryPerMonth(Float rawSalaryPerMonth) {
+        this.rawSalaryPerMonth = rawSalaryPerMonth;
+    }
 
     @Override
     public int hashCode() {

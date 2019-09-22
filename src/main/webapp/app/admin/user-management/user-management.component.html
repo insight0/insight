@@ -1,79 +1,200 @@
-<div>
+<div class="div-padding">
     <h2>
         <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
-        <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
-            <fa-icon [icon]="'plus'"></fa-icon> <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
+        <button mat-button aria-label="Example icon-button with a heart icon"
+                class="float-right jh-create-entity create-holiday" [routerLink]="['./new']">
+            <mat-icon>add</mat-icon>
+            Nouveau
         </button>
     </h2>
     <jhi-alert></jhi-alert>
-    <div class="table-responsive" *ngIf="users">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th></th>
-                <th jhiSortBy="langKey"> <span jhiTranslate="userManagement.langKey">Lang Key</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th><span jhiTranslate="userManagement.profiles">Profiles</span></th>
-                <th jhiSortBy="createdDate"><span jhiTranslate="userManagement.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="lastModifiedBy"><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="lastModifiedDate"><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody *ngIf ="users">
-            <tr *ngFor="let user of users; trackBy: trackIdentity">
-                <td><a [routerLink]="['./', user.login, 'view']">{{user.id}}</a></td>
-                <td>{{user.login}}</td>
-                <td>{{user.email}}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
-                            jhiTranslate="userManagement.deactivated">Deactivated</button>
-                    <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
-                            [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
-                </td>
-                <td>{{user.langKey}}</td>
-                <td>
-                    <div *ngFor="let authority of user.authorities">
-                        <span class="badge badge-info">{{ authority }}</span>
-                    </div>
-                </td>
-                <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
-                <td>{{user.lastModifiedBy}}</td>
-                <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['./', user.login, 'view']"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['./', user.login, 'edit']"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="button" (click)="deleteUser(user)"
-                                class="btn btn-danger btn-sm" [disabled]="currentAccount.login === user.login">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <br>
+            <mat-checkbox [(ngModel)]="activeUser" (change)="filterCurrent()">Afficher uniquement les comptes activés
+            </mat-checkbox>
+        </div>
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                        <span
+                            style="padding-top: 20px;">Nombre utilisateurs : <strong>{{totalItems}}</strong></span>
+
+                    <mat-form-field class="search-input">
+                        <input type="tel" matInput placeholder="Filtrer" (keyup)="applyFilter($event.target.value)"
+                               id="currentSearch" name="currentSearch">
+                        <mat-icon matSuffix class="pointer">search</mat-icon>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
     </div>
-    <div *ngIf="users">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    <br/>
+
+    <div class="table-responsive">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+                <ng-container matColumnDef="full-name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+                    <td mat-cell *matCellDef="let row">
+                        <a> {{row.firstName}}&nbsp;{{row.lastName}} </a></td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Titre</th>
+                    <td mat-cell *matCellDef="let row">{{row.title}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="login">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                    <td mat-cell *matCellDef="let row">{{row.email}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                    <td mat-cell *matCellDef="let row">
+
+                        <span *ngIf="row.activated" class="badge badge-success">Activé</span>
+                        <span *ngIf="!row.activated" class="badge badge-danger">Désactivé</span>
+
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="privilege">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Privilege</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div *ngFor="let authority of row.authorities">
+                            <span class="badge badge-info">{{ authority }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="last-modification">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>last-modification</th>
+                    <td mat-cell *matCellDef="let row">{{row.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>actions</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button
+                                [routerLink]="['./', row.login, 'view' ]">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                [routerLink]="['./', row.login, 'edit']">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button
+                                (click)="deleteUser(row)"
+                                [disabled]="currentAccount.login === row.login">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="example-element-detail" style="background-color: #faebd7a6;"
+                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="example-element-description" style="width: 100%;">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="width: 25%;vertical-align: baseline;">
+                                            <h4>Roles</h4>
+                                            <mat-chip-list aria-label="Fish selection">
+                                                <mat-chip color="primary"
+                                                          *ngFor="let role of element.functionalRoles">{{role.name}}</mat-chip>
+                                            </mat-chip-list>
+                                            <br>
+                                            <p style="margin-bottom: 2px;"><b>Management :</b>
+                                                <span class="badge badge-warning badge-expt"
+                                                      *ngIf="element.managementSeniority <= 20">Débutant</span>
+                                                <span class="badge badge-primary badge-expt"
+                                                      *ngIf="element.managementSeniority > 20 && element.managementSeniority <= 40">Junior</span>
+                                                <span class="badge badge-success badge-expt"
+                                                      *ngIf="element.managementSeniority > 40 && element.managementSeniority <= 60">Confirmé</span>
+                                                <span class="badge badge-info badge-expt"
+                                                      *ngIf="element.managementSeniority > 60 && element.managementSeniority <= 80">Sénior</span>
+                                                <span class="badge badge-dark badge-expt"
+                                                      *ngIf="element.managementSeniority > 80">Expert</span>
+                                            </p>
+                                            <p style="margin-bottom: 2px;"><b>Leadership :</b>
+                                                <span class="badge badge-warning badge-expt" style="margin-left: 13px;"
+                                                      *ngIf="element.leadershipSeniority <= 20">Débutant</span>
+                                                <span class="badge badge-primary badge-expt" style="margin-left: 13px;"
+                                                      *ngIf="element.leadershipSeniority > 20 && element.leadershipSeniority <= 40">Junior</span>
+                                                <span class="badge badge-success badge-expt" style="margin-left: 13px;"
+                                                      *ngIf="element.leadershipSeniority > 40 && element.leadershipSeniority <= 60">Confirmé</span>
+                                                <span class="badge badge-info badge-expt" style="margin-left: 13px;"
+                                                      *ngIf="element.leadershipSeniority > 60 && element.leadershipSeniority <= 80">Sénior</span>
+                                                <span class="badge badge-dark badge-expt" style="margin-left: 13px;"
+                                                      *ngIf="element.leadershipSeniority > 80">Expert</span>
+                                            </p>
+                                            <p style="margin-bottom: 2px;"><b>Technique :</b>
+                                                <span class="badge badge-warning badge-expt" style="margin-left: 17px;"
+                                                      *ngIf="element.technicalSeniority <= 20">Débutant</span>
+                                                <span class="badge badge-primary badge-expt" style="margin-left: 17px;"
+                                                      *ngIf="element.technicalSeniority > 20 && element.technicalSeniority <= 40">Junior</span>
+                                                <span class="badge badge-success badge-expt" style="margin-left: 17px;"
+                                                      *ngIf="element.technicalSeniority > 40 && element.technicalSeniority <= 60">Confirmé</span>
+                                                <span class="badge badge-info badge-expt" style="margin-left: 17px;"
+                                                      *ngIf="element.technicalSeniority > 60 && element.technicalSeniority <= 80">Sénior</span>
+                                                <span class="badge badge-dark badge-expt" style="margin-left: 17px;"
+                                                      *ngIf="element.technicalSeniority > 80">Expert</span>
+                                        </td>
+                                        <td style="width: 25%; vertical-align: baseline;">
+                                            <h4>Contrat</h4>
+                                            <ul>
+                                                <li *ngIf="element.contract && element.contract[0]"><b>Type :</b> <span class="badge badge-secondary">{{element.contract[0].type}}</span></li>
+                                                <li *ngIf="element.contract && element.contract[0]"><b>Date début :</b> {{element.contract[0].startDate | date:'dd/MM/yyyy'}}</li>
+                                                <li *ngIf="element.contract && element.contract[0]"><b>date fin :</b> {{element.contract[0].endDate | date:'dd/MM/yyyy'}}</li>
+                                                <li *ngIf="element.salaryPackage"><b>Salaire brut :</b> {{element.salaryPackage.rawSalaryPerMonth}} DT</li>
+                                            </ul>
+                                        </td>
+                                        <td style="width: 25%;vertical-align: baseline;">
+                                            <h4>Informations</h4>
+                                            <ul>
+                                                <li><b>Sexe :</b> {{element.gender}}</li>
+                                                <li><b>Date de naissance :</b> {{element.birthDate}}</li>
+                                                <li><b>CIN :</b> {{element.idCardNumber}}</li>
+                                                <li><b>№ CNSS :</b> {{element.cnssAffiliateNumber}}</li>
+                                            </ul>
+                                        </td>
+                                        <td style="width: 25%;vertical-align: baseline;">
+                                            <h4>Contact</h4>
+                                            <ul>
+                                                <li><b>Numéro tel :</b> {{element.phoneNumber}}</li>
+                                                <li><b>Email :</b> {{element.email}}</li>
+                                                <li *ngIf="element.address"><b>Cité :</b> {{element.address.city}}</li>
+                                                <li *ngIf="element.address"><b>Code postale :</b> {{element.address.postalCode}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                    class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
+
     </div>
 </div>

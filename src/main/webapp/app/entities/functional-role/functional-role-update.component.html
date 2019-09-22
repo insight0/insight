@@ -1,73 +1,64 @@
-<div class="row justify-content-center">
+<div class="row div-padding">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-functional-role-heading" jhiTranslate="insightApp.functionalRole.home.createOrEditLabel">Create or edit a Functional Role</h2>
-            <div>
+            <h2 id="jhi-functional-role-heading">Ajouter / Modifier Rôle fonctionnels</h2>
+            <div class="div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
+
+                <div class="form-group">
+
+                    <mat-form-field class="example-full-width">
+                        <input matInput name="name" id="field_name" formControlName="name" placeholder="Nom">
+                        <mat-error
+                            *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.functionalRole.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
-                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput name="description" id="field_description" formControlName="description"
+                                  placeholder="Description"></textarea>
+                        <mat-error
+                            *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.functionalRole.description" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           formControlName="description"/>
-                    <div *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('description').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
+
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="number" name="maxHolidays" id="field_maxHolidays" formControlName="maxHolidays"
+                               placeholder="Jours Congé">
+                        <mat-error
+                            *ngIf="editForm.get('maxHolidays').invalid && (editForm.get('maxHolidays').dirty || editForm.get('maxHolidays').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.functionalRole.maxHolidays" for="field_maxHolidays">Max Holidays</label>
-                    <input type="number" class="form-control" name="maxHolidays" id="field_maxHolidays"
-                           formControlName="maxHolidays"/>
-                    <div *ngIf="editForm.get('maxHolidays').invalid && (editForm.get('maxHolidays').dirty || editForm.get('maxHolidays').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('maxHolidays').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('maxHolidays')?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
-                    </div>
+
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="number" name="workingHours" id="field_workingHours" formControlName="workingHours"
+                               placeholder="Heures de travail">
+                        <mat-error
+                            *ngIf="editForm.get('workingHours').invalid && (editForm.get('workingHours').dirty || editForm.get('workingHours').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
                 </div>
+
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.functionalRole.workingHours" for="field_workingHours">Working Hours</label>
-                    <input type="number" class="form-control" name="workingHours" id="field_workingHours"
-                           formControlName="workingHours"/>
-                    <div *ngIf="editForm.get('workingHours').invalid && (editForm.get('workingHours').dirty || editForm.get('workingHours').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('workingHours').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('workingHours')?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
-                    </div>
+                    <mat-slide-toggle name="operations" id="field_operations" formControlName="operations">Opérations</mat-slide-toggle>
                 </div>
 
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button type="button" id="cancel-save" mat-raised-button  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" mat-raised-button>
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

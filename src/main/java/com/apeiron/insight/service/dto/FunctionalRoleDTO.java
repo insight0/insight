@@ -22,6 +22,9 @@ public class FunctionalRoleDTO implements Serializable {
     @NotNull
     private Integer workingHours;
 
+    @NotNull
+    private boolean operations;
+
 
     public String getId() {
         return id;
@@ -61,6 +64,14 @@ public class FunctionalRoleDTO implements Serializable {
 
     public void setWorkingHours(Integer workingHours) {
         this.workingHours = workingHours;
+    }
+
+    public boolean isOperations() {
+        return operations;
+    }
+
+    public void setOperations(boolean operations) {
+        this.operations = operations;
     }
 
     @Override

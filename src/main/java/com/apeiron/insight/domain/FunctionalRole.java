@@ -36,6 +36,10 @@ public class FunctionalRole implements Serializable {
     @Field("working_hours")
     private Integer workingHours;
 
+    @NotNull
+    @Field("operations")
+    private boolean operations;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -91,6 +95,14 @@ public class FunctionalRole implements Serializable {
     public FunctionalRole workingHours(Integer workingHours) {
         this.workingHours = workingHours;
         return this;
+    }
+
+    public boolean isOperations() {
+        return operations;
+    }
+
+    public void setOperations(boolean operations) {
+        this.operations = operations;
     }
 
     public void setWorkingHours(Integer workingHours) {

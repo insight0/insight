@@ -13,11 +13,12 @@ import {
   functionalRoleRoute,
   functionalRolePopupRoute
 } from './';
+import { MaterialModule } from 'app/material-module';
 
 const ENTITY_STATES = [...functionalRoleRoute, ...functionalRolePopupRoute];
 
 @NgModule({
-  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [InsightSharedModule, MaterialModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     FunctionalRoleComponent,
     FunctionalRoleDetailComponent,

@@ -18,4 +18,6 @@ public interface HolidayRepository extends MongoRepository<Holiday, String> {
 
     List<Holiday> findByDateGreaterThanOrderByDateAsc(Instant date);
 
+    List<Holiday> findByDateGreaterThanEqualAndDateLessThanEqual(Instant startDate, Instant endDate);
+
 }

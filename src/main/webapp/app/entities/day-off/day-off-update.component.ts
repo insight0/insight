@@ -7,13 +7,28 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { IDayOff, DayOff } from 'app/shared/model/day-off.model';
 import { DayOffService } from './day-off.service';
+import { User, UserService } from 'app/core';
+import { JhiAlertService } from 'ng-jhipster';
+import { IUserDayOff } from 'app/core/user/user-dayoff';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'jhi-day-off-update',
-  templateUrl: './day-off-update.component.html'
+  templateUrl: './day-off-update.component.html',
+  styleUrls: ['./dayoff.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [style({ transform: 'translateY(-100%)' }), animate('200ms ease-in', style({ transform: 'translateY(0%)' }))]),
+      transition(':leave', [animate('200ms ease-in', style({ transform: 'translateY(-100%)' }))])
+    ])
+  ]
 })
 export class DayOffUpdateComponent implements OnInit {
   isSaving: boolean;
+  users: User[] = new Array();
+  userDayOffs: IUserDayOff;
+  loading: boolean;
+  hidden = true;
 
   editForm = this.fb.group({
     id: [],
@@ -27,9 +42,18 @@ export class DayOffUpdateComponent implements OnInit {
     days: [null, [Validators.required]]
   });
 
-  constructor(protected dayOffService: DayOffService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected dayOffService: DayOffService,
+    private alertService: JhiAlertService,
+    private userService: UserService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.loading = false;
+  }
 
   ngOnInit() {
+    this.loadAll();
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ dayOff }) => {
       this.updateForm(dayOff);
@@ -48,6 +72,8 @@ export class DayOffUpdateComponent implements OnInit {
       validatorId: dayOff.validatorId,
       days: dayOff.days
     });
+
+    this.setUser();
   }
 
   previousState() {
@@ -84,6 +110,16 @@ export class DayOffUpdateComponent implements OnInit {
     result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
+  setUser() {
+    if (this.editForm.getRawValue().employeId) {
+      this.loading = true;
+      this.userService.findDayOffs(this.editForm.getRawValue().employeId).subscribe(res => {
+        this.userDayOffs = res.body;
+        this.loading = false;
+      });
+    }
+  }
+
   protected onSaveSuccess() {
     this.isSaving = false;
     this.previousState();
@@ -91,5 +127,23 @@ export class DayOffUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
+  }
+
+  toggleDayOff() {
+    this.hidden = !this.hidden;
+  }
+
+  loadAll() {
+    this.userService
+      .query({})
+      .subscribe((res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers), (res: HttpResponse<any>) => this.onError(res.body));
+  }
+
+  private onSuccess(data, headers) {
+    this.users = data;
+  }
+
+  private onError(error) {
+    this.alertService.error(error.error, error.message, null);
   }
 }

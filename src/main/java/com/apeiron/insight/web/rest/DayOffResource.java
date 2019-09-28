@@ -91,9 +91,7 @@ public class DayOffResource {
     /**
      * {@code GET  /day-offs} : get all the dayOffs.
      *
-
      * @param pageable the pagination information.
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of dayOffs in body.
      */
     @GetMapping("/day-offs")
@@ -103,6 +101,15 @@ public class DayOffResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @GetMapping("/day-offs/non-closed")
+    public ResponseEntity<List<DayOffDTO>> getAllNonClosed() {
+        log.debug("REST request to get a page of DayOffs");
+        List<DayOffDTO> list = dayOffService.findNonClosed();
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), null);
+        return ResponseEntity.ok().headers(headers).body(list);
+    }
+
 
     /**
      * {@code GET  /day-offs/:id} : get the "id" dayOff.
@@ -134,7 +141,7 @@ public class DayOffResource {
      * {@code SEARCH  /_search/day-offs?query=:query} : search for the dayOff corresponding
      * to the query.
      *
-     * @param query the query of the dayOff search.
+     * @param query    the query of the dayOff search.
      * @param pageable the pagination information.
      * @return the result of the search.
      */

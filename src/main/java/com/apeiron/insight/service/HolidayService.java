@@ -5,6 +5,7 @@ import com.apeiron.insight.service.dto.HolidayDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ import java.util.Optional;
  * Service Interface for managing {@link com.apeiron.insight.domain.Holiday}.
  */
 public interface HolidayService {
+
+    List<HolidayDTO> findBetween(Instant startDate, Instant endDate);
 
     /**
      * Save a holiday.
@@ -48,8 +51,7 @@ public interface HolidayService {
     /**
      * Search for the holiday corresponding to the query.
      *
-     * @param query the query of the search.
-     * 
+     * @param query    the query of the search.
      * @param pageable the pagination information.
      * @return the list of entities.
      */

@@ -1,120 +1,196 @@
-<div class="row justify-content-center">
-    <div class="col-8">
+<div class="row div-padding">
+    <div class="col-12">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-day-off-heading" jhiTranslate="insightApp.dayOff.home.createOrEditLabel">Create or edit a Day Off</h2>
-            <div>
+            <h2 id="jhi-day-off-heading">Ajouter / Modifier Demande de congé</h2>
+            <div class="row div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.startDate" for="field_startDate">Start Date</label>
-                    <div class="d-flex">
-                        <input id="field_startDate" type="datetime-local" class="form-control" name="startDate" formControlName="startDate" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                    <div *ngIf="editForm.get('startDate').invalid && (editForm.get('startDate').dirty || editForm.get('startDate').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('startDate').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('startDate').errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.endDate" for="field_endDate">End Date</label>
-                    <div class="d-flex">
-                        <input id="field_endDate" type="datetime-local" class="form-control" name="endDate" formControlName="endDate" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                    <div *ngIf="editForm.get('endDate').invalid && (editForm.get('endDate').dirty || editForm.get('endDate').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('endDate').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('endDate').errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.dayOffObject" for="field_dayOffObject">Day Off Object</label>
-                    <input type="text" class="form-control" name="dayOffObject" id="field_dayOffObject"
-                           formControlName="dayOffObject"/>
-                    <div *ngIf="editForm.get('dayOffObject').invalid && (editForm.get('dayOffObject').dirty || editForm.get('dayOffObject').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('dayOffObject').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="NEW">{{'insightApp.DayOffStatus.NEW' | translate}}</option>
-                        <option value="DECLINED">{{'insightApp.DayOffStatus.DECLINED' | translate}}</option>
-                        <option value="APPROVED">{{'insightApp.DayOffStatus.APPROVED' | translate}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.forced" for="field_forced">Forced</label>
-                    <input type="checkbox" class="form-control" name="forced" id="field_forced"
-                           formControlName="forced"/>
-                    <div *ngIf="editForm.get('forced').invalid && (editForm.get('forced').dirty || editForm.get('forced').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('forced').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.employeId" for="field_employeId">Employe Id</label>
-                    <input type="text" class="form-control" name="employeId" id="field_employeId"
-                           formControlName="employeId"/>
-                    <div *ngIf="editForm.get('employeId').invalid && (editForm.get('employeId').dirty || editForm.get('employeId').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('employeId').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.validatorId" for="field_validatorId">Validator Id</label>
-                    <input type="text" class="form-control" name="validatorId" id="field_validatorId"
-                           formControlName="validatorId"/>
-                    <div *ngIf="editForm.get('validatorId').invalid && (editForm.get('validatorId').dirty || editForm.get('validatorId').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('validatorId').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="insightApp.dayOff.days" for="field_days">Days</label>
-                    <input type="number" class="form-control" name="days" id="field_days"
-                           formControlName="days"/>
-                    <div *ngIf="editForm.get('days').invalid && (editForm.get('days').dirty || editForm.get('days').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('days').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('days')?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
+
+
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Collaborateur</mat-label>
+                                    <mat-select name="employeId" id="field_employeId" formControlName="employeId"
+                                                (selectionChange)="setUser()">
+                                        <mat-option *ngFor="let user of users; let i = index"
+                                                    [value]="user.login">{{user.firstName}}&nbsp;{{user.lastName}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="editForm.get('employeId').invalid && (editForm.get('employeId').dirty || editForm.get('employeId').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                            <textarea matInput placeholder="Motif" name="dayOffObject" id="field_dayOffObject"
+                                      formControlName="dayOffObject"></textarea>
+                                    <mat-error
+                                        *ngIf="editForm.get('dayOffObject').invalid && (editForm.get('dayOffObject').dirty || editForm.get('dayOffObject').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [matDatepicker]="picker1" placeholder="Date de début"
+                                           name="startDate" formControlName="startDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="editForm.get('startDate').invalid && (editForm.get('startDate').dirty || editForm.get('startDate').touched)">
+                                        This field is required.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width">
+                                <input matInput [matDatepicker]="picker2" placeholder="Date de fin" name="endDate"
+                                       formControlName="endDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                                <mat-error
+                                    *ngIf="editForm.get('endDate').invalid && (editForm.get('endDate').dirty || editForm.get('endDate').touched)">
+                                    This field is required.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <mat-radio-group aria-label="Statut">
+
+                                </mat-radio-group>
+                                <label id="example-radio-group-label">Pick your favorite season</label>
+                                <mat-radio-group
+                                    aria-labelledby="example-radio-group-label"
+                                    class="example-radio-group">
+
+                                    <mat-radio-button class="example-radio-button" value="NEW">En attente
+                                    </mat-radio-button>
+                                    <mat-radio-button class="example-radio-button" value="APPROVED">Approuvé
+                                    </mat-radio-button>
+                                    <mat-radio-button class="example-radio-button" value="DECLINED">Refusé
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+
+                <div class="col-6">
+
+
+                    <div class="card" *ngIf="userDayOffs">
+                        <div class="pdd-horizon-20 pdd-vertical-5">
+                            <div class="list-info" style="    margin-top: 20px;">
+                                <img alt="" *ngIf="!userDayOffs.user.imageUrl" style="height: 40px;width: 40px;"
+                                     class="thumb-img" src="../../../content/images/avatars/user-avatar.png">
+                                <img alt="" *ngIf="userDayOffs.user.imageUrl" style="height: 40px;width: 40px;"
+                                     class="thumb-img"
+                                     [src]="userDayOffs.user.imageUrl">
+                                <div class="info">
+                            <span
+                                class="title">{{userDayOffs.user.firstName}}&nbsp;{{userDayOffs.user.lastName}}</span>
+                                    <span class="sub-title">{{userDayOffs.user.title}}</span>
+
+                                </div>
+                            </div>
+                            <div>
+
+                                <div class="mrg-top-30">
+                                    <p class="mrg-btm-5">Congés annuel: <span
+                                        class="text-dark text-semibold">7/10</span>
+                                    </p>
+                                    <div class="progress progress-info">
+                                        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                    </div>
+                                </div>
+
+                                <div class="mrg-top-30">
+                                    <p class="mrg-btm-5">Congés maladie: <span
+                                        class="text-dark text-semibold">7/10</span>
+                                    </p>
+                                    <div class="progress progress-info">
+                                        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                    </div>
+                                </div>
+
+                                <div class=" mrg-top-30">
+                                <span>Congés sans solde : <span
+                                    class="text-warning text-semibold">{{userDayOffs.sicknessDayOffConsumed}}
+                                    jours</span></span>
+                                </div>
+
+
+                            </div>
+                            <div *ngIf="userDayOffs.dayOffs && userDayOffs.dayOffs.length > 0">
+                                <div class="card-heading">
+                                    <h5 class="card-title inline-block pdd-top-5">Dérniéres demandes de congés</h5>
+                                    <p class="pull-right no-mrg">Total: <span
+                                        class="badge badge-pill badge-secondary">{{userDayOffs.dayOffs.length}}</span>
+                                    </p>
+                                </div>
+                                <table class="table table-lg table-hover">
+                                    <tbody>
+                                    <tr *ngFor="let dayOff of userDayOffs.dayOffs; let i = index">
+                                        <td *ngIf="!(hidden && i < 3)" [@slideInOut]>
+                                            <span class="title">Du {{dayOff.startDate | date:'dd/MM/yyyy'}}</span>
+                                        </td>
+                                        <td *ngIf="!(hidden && i < 3)" [@slideInOut]>
+                                            <span class="sub-title">{{dayOff.days}} Jours</span>
+                                        </td>
+                                        <td *ngIf="!(hidden && i < 3)" [@slideInOut]>
+                                            <div class="mrg-top-10">
+                                                <span>{{dayOff.type}}</span>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="!(hidden && i < 3)" [@slideInOut]>
+                                            <div *ngIf="dayOff.status == 'NEW'" class="relative mrg-top-10">
+                                                <span class="status away"> </span>
+                                                <span class="pdd-left-20">En attente</span>
+                                            </div>
+                                            <div *ngIf="dayOff.status == 'APPROVED'" class="relative mrg-top-10">
+                                                <span class="status online"> </span>
+                                                <span class="pdd-left-20">Approuvé</span>
+                                            </div>
+                                            <div *ngIf="dayOff.status == 'DECLINED'" class="relative mrg-top-10">
+                                                <span class="status no-disturb"> </span>
+                                                <span class="pdd-left-20">Refusé</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <a style="width: 100%" *ngIf="userDayOffs.dayOffs && userDayOffs.dayOffs.length > 3" (click)="toggleDayOff()" mat-button>
+                                    <mat-icon *ngIf="hidden">keyboard_arrow_down</mat-icon>
+                                    <mat-icon *ngIf="!hidden">keyboard_arrow_up</mat-icon>
+                                    <span *ngIf="hidden">Voir toutes les demandes</span>
+                                    <span *ngIf="!hidden">Voir les 3 dérniers seulement</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button type="button" id="cancel-save" mat-raised-button (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        mat-raised-button>
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

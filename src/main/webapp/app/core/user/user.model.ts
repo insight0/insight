@@ -33,6 +33,7 @@ export interface IUser {
   salaryPackage?: ISalaryPackage;
   functionalRoles?: IFunctionalRole[];
   createdBy?: string;
+  imageUrl?: string;
   createdDate?: Date;
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
@@ -95,7 +96,8 @@ export class User implements IUser {
     public birthDate?: Date,
     public cnssAffiliateNumber?: string,
     public gender?: Gender,
-    public idCardNumber?: string
+    public idCardNumber?: string,
+    public imageUrl?: string
   ) {
     this.id = id ? id : null;
     this.login = login ? login : null;

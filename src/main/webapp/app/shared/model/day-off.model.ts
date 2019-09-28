@@ -1,9 +1,15 @@
 import { Moment } from 'moment';
+import { IUser } from 'app/core';
 
 export const enum DayOffStatus {
   NEW = 'NEW',
   DECLINED = 'DECLINED',
   APPROVED = 'APPROVED'
+}
+
+export const enum DayOffType {
+  ANNUAL = 'ANNUAL',
+  SICKNESS = 'SICKNESS'
 }
 
 export interface IDayOff {
@@ -16,6 +22,12 @@ export interface IDayOff {
   employeId?: string;
   validatorId?: string;
   days?: number;
+  user?: IUser;
+  type?: DayOffType;
+  generatedApprovalFilePath?: string;
+  approvalFilePath?: string;
+  medicalCertificateFilePath?: string;
+  note?: string;
 }
 
 export class DayOff implements IDayOff {
@@ -28,7 +40,13 @@ export class DayOff implements IDayOff {
     public forced?: boolean,
     public employeId?: string,
     public validatorId?: string,
-    public days?: number
+    public days?: number,
+    public user?: IUser,
+    public type?: DayOffType,
+    public generatedApprovalFilePath?: string,
+    public approvalFilePath?: string,
+    public medicalCertificateFilePath?: string,
+    public note?: string
   ) {
     this.forced = this.forced || false;
   }

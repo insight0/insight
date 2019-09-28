@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IUser } from './user.model';
+import { IDayOff } from 'app/shared/model/day-off.model';
+import { map } from 'rxjs/operators';
+import { IUserDayOff } from 'app/core/user/user-dayoff';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -35,5 +38,9 @@ export class UserService {
 
   authorities(): Observable<string[]> {
     return this.http.get<string[]>(SERVER_API_URL + 'api/users/authorities');
+  }
+
+  findDayOffs(login: any): Observable<HttpResponse<IUserDayOff>> {
+    return this.http.get<IUserDayOff>(this.resourceUrl + '/day-off/' + login, { observe: 'response' });
   }
 }

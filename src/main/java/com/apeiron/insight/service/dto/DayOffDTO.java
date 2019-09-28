@@ -4,6 +4,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.apeiron.insight.domain.enumeration.DayOffStatus;
+import com.apeiron.insight.domain.enumeration.DayOffType;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A DTO for the {@link com.apeiron.insight.domain.DayOff} entity.
@@ -34,6 +36,15 @@ public class DayOffDTO implements Serializable {
 
     @NotNull
     private Float days;
+
+    private UserDTO user;
+    private UserDTO validator;
+
+    private DayOffType type;
+    private String generatedApprovalFilePath;
+    private String approvalFilePath;
+    private String medicalCertificateFilePath;
+    private String note;
 
 
     public String getId() {
@@ -106,6 +117,66 @@ public class DayOffDTO implements Serializable {
 
     public void setDays(Float days) {
         this.days = days;
+    }
+
+    public Boolean getForced() {
+        return forced;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public DayOffType getType() {
+        return type;
+    }
+
+    public void setType(DayOffType type) {
+        this.type = type;
+    }
+
+    public String getGeneratedApprovalFilePath() {
+        return generatedApprovalFilePath;
+    }
+
+    public void setGeneratedApprovalFilePath(String generatedApprovalFilePath) {
+        this.generatedApprovalFilePath = generatedApprovalFilePath;
+    }
+
+    public String getApprovalFilePath() {
+        return approvalFilePath;
+    }
+
+    public void setApprovalFilePath(String approvalFilePath) {
+        this.approvalFilePath = approvalFilePath;
+    }
+
+    public String getMedicalCertificateFilePath() {
+        return medicalCertificateFilePath;
+    }
+
+    public void setMedicalCertificateFilePath(String medicalCertificateFilePath) {
+        this.medicalCertificateFilePath = medicalCertificateFilePath;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public UserDTO getValidator() {
+        return validator;
+    }
+
+    public void setValidator(UserDTO validator) {
+        this.validator = validator;
     }
 
     @Override

@@ -1,4 +1,5 @@
 package com.apeiron.insight.domain;
+import com.apeiron.insight.domain.enumeration.DayOffType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,8 +36,25 @@ public class DayOff implements Serializable {
     @Field("day_off_object")
     private String dayOffObject;
 
+    @NotNull
     @Field("status")
     private DayOffStatus status;
+
+    @NotNull
+    @Field("type")
+    private DayOffType type;
+
+    @Field("generated_approval_file_path")
+    private String generatedApprovalFilePath;
+
+    @Field("approval_filepath")
+    private String approvalFilePath;
+
+    @Field("medical_certificate_file_path")
+    private String medicalCertificateFilePath;
+
+    @Field("note")
+    private String note;
 
     @NotNull
     @Field("forced")
@@ -161,6 +179,50 @@ public class DayOff implements Serializable {
     public DayOff days(Float days) {
         this.days = days;
         return this;
+    }
+
+    public DayOffType getType() {
+        return type;
+    }
+
+    public void setType(DayOffType type) {
+        this.type = type;
+    }
+
+    public String getGeneratedApprovalFilePath() {
+        return generatedApprovalFilePath;
+    }
+
+    public void setGeneratedApprovalFilePath(String generatedApprovalFilePath) {
+        this.generatedApprovalFilePath = generatedApprovalFilePath;
+    }
+
+    public String getApprovalFilePath() {
+        return approvalFilePath;
+    }
+
+    public void setApprovalFilePath(String approvalFilePath) {
+        this.approvalFilePath = approvalFilePath;
+    }
+
+    public String getMedicalCertificateFilePath() {
+        return medicalCertificateFilePath;
+    }
+
+    public void setMedicalCertificateFilePath(String medicalCertificateFilePath) {
+        this.medicalCertificateFilePath = medicalCertificateFilePath;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Boolean getForced() {
+        return forced;
     }
 
     public void setDays(Float days) {

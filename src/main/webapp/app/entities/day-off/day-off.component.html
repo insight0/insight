@@ -1,25 +1,32 @@
-<div>
+<div class="div-padding">
+
     <h2 id="page-heading">
-        <span jhiTranslate="insightApp.dayOff.home.title">Day Offs</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-day-off" [routerLink]="['/day-off/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span class="hidden-sm-down"  jhiTranslate="insightApp.dayOff.home.createLabel">
-            Create a new Day Off
-            </span>
+        <span>Congés</span>
+        <button mat-button aria-label="Example icon-button with a heart icon"
+                class="float-right jh-create-entity create-holiday" [routerLink]="['/day-off/new']">
+            <mat-icon>add</mat-icon>
+            Nouveau
         </button>
     </h2>
+
     <jhi-alert></jhi-alert>
     <div class="row">
         <div class="col-sm-12">
+            <br>
+            <mat-checkbox [(ngModel)]="notClosed" (change)="filterCurrent()">Congés non cloturés
+            </mat-checkbox>
+        </div>
+        <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'insightApp.dayOff.home.search' | translate }}">
-                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
-                        <fa-icon [icon]="'search'"></fa-icon>
-                    </button>
-                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
-                        <fa-icon [icon]="'trash-alt'"></fa-icon>
-                    </button>
+                        <span
+                            style="padding-top: 20px;">Total demande de congé : <strong>{{dayOffs.length}}</strong></span>
+
+                    <mat-form-field class="search-input">
+                        <input type="tel" matInput placeholder="Filtrer" (keyup)="applyFilter($event.target.value)"
+                               id="currentSearch" name="currentSearch">
+                        <mat-icon matSuffix class="pointer">search</mat-icon>
+                    </mat-form-field>
                 </div>
             </form>
         </div>
@@ -28,59 +35,101 @@
     <div class="alert alert-warning" *ngIf="dayOffs?.length === 0">
         <span jhiTranslate="insightApp.dayOff.home.notFound">No dayOffs found</span>
     </div>
-    <div class="table-responsive" *ngIf="dayOffs?.length > 0">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="startDate"><span jhiTranslate="insightApp.dayOff.startDate">Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="endDate"><span jhiTranslate="insightApp.dayOff.endDate">End Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="dayOffObject"><span jhiTranslate="insightApp.dayOff.dayOffObject">Day Off Object</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="status"><span jhiTranslate="insightApp.dayOff.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="forced"><span jhiTranslate="insightApp.dayOff.forced">Forced</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="employeId"><span jhiTranslate="insightApp.dayOff.employeId">Employe Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="validatorId"><span jhiTranslate="insightApp.dayOff.validatorId">Validator Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="days"><span jhiTranslate="insightApp.dayOff.days">Days</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let dayOff of dayOffs ;trackBy: trackId">
-                <td><a [routerLink]="['/day-off', dayOff.id, 'view' ]">{{dayOff.id}}</a></td>
-                <td>{{dayOff.startDate | date:'medium'}}</td>
-                <td>{{dayOff.endDate | date:'medium'}}</td>
-                <td>{{dayOff.dayOffObject}}</td>
-                <td jhiTranslate="{{'insightApp.DayOffStatus.' + dayOff.status}}">{{dayOff.status}}</td>
-                <td>{{dayOff.forced}}</td>
-                <td>{{dayOff.employeId}}</td>
-                <td>{{dayOff.validatorId}}</td>
-                <td>{{dayOff.days}}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/day-off', dayOff.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/day-off', dayOff.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/day-off', { outlets: { popup: dayOff.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
+
+
+
+    <div class="table-responsive">
+
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="picture">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Collaborateur
+                </th>
+                <td mat-cell *matCellDef="let row" style="padding-top: 5px;padding-bottom: 5px;width: 25%">
+                    <table>
+                        <tr>
+                            <td style="width: 60px !important;">
+                                <img class="profile-img" *ngIf="row.user && row.user.imageUrl" [src]="row.user.imageUrl"/>
+                                <img class="profile-img" *ngIf="!row.user || !row.user.imageUrl" src="../../../content/images/avatars/user-avatar.png"/>
+                            </td>
+                            <td style="width: auto !important;">
+                                <span *ngIf="row.user"><strong>{{row.user.firstName}}&nbsp;{{row.user.lastName}}</strong></span><br>
+                                <span class="text-subtitle" *ngIf="row.user"> {{row.user.title}}&nbsp;{{row.user.title}}</span>
+                            </td>
+                        </tr>
+                    </table>
+               </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date début</th>
+                <td mat-cell *matCellDef="let row">{{row.startDate | date:'dd/MM/yyyy'}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date fin</th>
+                <td mat-cell *matCellDef="let row">{{row.endDate | date:'dd/MM/yyyy'}}</td>
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Durée</th>
+                <td mat-cell *matCellDef="let row">{{row.days}} Jour(s)</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                <td mat-cell *matCellDef="let row">
+
+                    <div *ngIf="row.status == 'NEW'" class="relative mrg-top-10">
+                        <span class="status away"> </span>
+                        <span class="pdd-left-20">En attente</span>
                     </div>
+
+                    <div *ngIf="row.status == 'APPROVED'" class="relative mrg-top-10">
+                        <span class="status online"> </span>
+                        <span class="pdd-left-20">Approuvé</span>
+                    </div>
+
+                    <div *ngIf="row.status == 'DECLINED'" class="relative mrg-top-10">
+                        <span class="status no-disturb"> </span>
+                        <span class="pdd-left-20">Refusé</span>
+                    </div>
+
                 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
+
+                <td mat-cell style="min-width: 180px;" *matCellDef="let row">
+                    <button mat-icon-button
+                            [routerLink]="['/day-off', row.id, 'view' ]">
+                        <mat-icon>remove_red_eye</mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            [routerLink]="['/day-off', row.id, 'edit']">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button
+                            [routerLink]="['/day-off', { outlets: { popup: row.id + '/delete'} }]"
+                            replaceUrl="true"
+                            queryParamsHandling="merge">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
             </tr>
-            </tbody>
         </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
     </div>
 </div>

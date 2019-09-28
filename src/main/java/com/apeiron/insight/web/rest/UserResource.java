@@ -2,12 +2,15 @@ package com.apeiron.insight.web.rest;
 
 import com.apeiron.insight.config.Constants;
 import com.apeiron.insight.domain.User;
+import com.apeiron.insight.facade.UserFacade;
 import com.apeiron.insight.repository.UserRepository;
 import com.apeiron.insight.repository.search.UserSearchRepository;
 import com.apeiron.insight.security.AuthoritiesConstants;
 import com.apeiron.insight.service.MailService;
 import com.apeiron.insight.service.UserService;
+import com.apeiron.insight.service.dto.DayOffDTO;
 import com.apeiron.insight.service.dto.UserDTO;
+import com.apeiron.insight.service.dto.UserDayOffDTO;
 import com.apeiron.insight.web.rest.errors.BadRequestAlertException;
 import com.apeiron.insight.web.rest.errors.EmailAlreadyUsedException;
 import com.apeiron.insight.web.rest.errors.LoginAlreadyUsedException;
@@ -18,6 +21,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,6 +74,9 @@ public class UserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    @Autowired
+    private UserFacade userFacade;
+
     private final UserService userService;
 
     private final UserRepository userRepository;
@@ -95,7 +102,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -114,9 +121,17 @@ public class UserResource {
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
+    }
+
+    @GetMapping("/users/day-off/{login}")
+    public ResponseEntity<UserDayOffDTO> getAllByUser(@PathVariable String login) {
+
+        Optional<UserDayOffDTO> userDayOffDTO = userFacade.getUserDayOffs(login);
+
+        return ResponseUtil.wrapOrNotFound(userDayOffDTO);
     }
 
     /**
@@ -160,6 +175,7 @@ public class UserResource {
 
     /**
      * Gets a list of all roles.
+     *
      * @return a string list of all roles.
      */
     @GetMapping("/users/authorities")
@@ -194,7 +210,7 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName,  "userManagement.deleted", login)).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
     }
 
     /**

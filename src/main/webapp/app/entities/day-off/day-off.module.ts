@@ -13,11 +13,12 @@ import {
   dayOffRoute,
   dayOffPopupRoute
 } from './';
+import { MaterialModule } from 'app/material-module';
 
 const ENTITY_STATES = [...dayOffRoute, ...dayOffPopupRoute];
 
 @NgModule({
-  imports: [InsightSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [InsightSharedModule, MaterialModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [DayOffComponent, DayOffDetailComponent, DayOffUpdateComponent, DayOffDeleteDialogComponent, DayOffDeletePopupComponent],
   entryComponents: [DayOffComponent, DayOffUpdateComponent, DayOffDeleteDialogComponent, DayOffDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],

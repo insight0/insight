@@ -1,0 +1,34 @@
+.search-input {
+  min-width: 250px;
+  margin-left: auto;
+  width: 20%;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 20%;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.example-full-width {
+  min-width: 100%;
+}
+
+.card .card-heading {
+  padding: 15px 0px;
+  margin-top: 10px;
+  position: relative;
+}

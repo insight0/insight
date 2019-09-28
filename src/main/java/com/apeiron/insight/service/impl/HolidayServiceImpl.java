@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -82,6 +83,13 @@ public class HolidayServiceImpl implements HolidayService {
     public List<HolidayDTO> findNextHoliday() {
         log.debug("Request to get all Holidays");
         List<Holiday> holidays = holidayRepository.findByDateGreaterThanOrderByDateAsc(new Date().toInstant());
+        return holidayMapper.toDto(holidays);
+    }
+
+    @Override
+    public List<HolidayDTO> findBetween(Instant startDate, Instant endDate) {
+        log.debug("Request to get all Holidays");
+        List<Holiday> holidays = holidayRepository.findByDateGreaterThanEqualAndDateLessThanEqual(startDate, endDate);
         return holidayMapper.toDto(holidays);
     }
 

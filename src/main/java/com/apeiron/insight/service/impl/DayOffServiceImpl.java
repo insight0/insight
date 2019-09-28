@@ -1,5 +1,6 @@
 package com.apeiron.insight.service.impl;
 
+import com.apeiron.insight.domain.enumeration.DayOffStatus;
 import com.apeiron.insight.service.DayOffService;
 import com.apeiron.insight.domain.DayOff;
 import com.apeiron.insight.repository.DayOffRepository;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -66,6 +69,17 @@ public class DayOffServiceImpl implements DayOffService {
             .map(dayOffMapper::toDto);
     }
 
+    /**
+     * Get all the dayOffs.
+     *
+     * @return the list of entities.
+     */
+    @Override
+    public List<DayOffDTO> findNonClosed() {
+        log.debug("Request to get all DayOffs");
+        List<DayOff> dayOffList = dayOffRepository.findDayOffByStatus(DayOffStatus.NEW);
+        return dayOffMapper.toDto(dayOffList);
+    }
 
     /**
      * Get one dayOff by id.
@@ -78,6 +92,14 @@ public class DayOffServiceImpl implements DayOffService {
         log.debug("Request to get DayOff : {}", id);
         return dayOffRepository.findById(id)
             .map(dayOffMapper::toDto);
+    }
+
+    public List<DayOffDTO> findByUserLogin(String login) {
+        log.debug("Request to get DayOff by user login : {}", login);
+        List<DayOff> dayOffByEmployeId = dayOffRepository.findDayOffByEmployeId(login);
+
+        return dayOffMapper.toDto(dayOffByEmployeId);
+
     }
 
     /**
@@ -95,7 +117,7 @@ public class DayOffServiceImpl implements DayOffService {
     /**
      * Search for the dayOff corresponding to the query.
      *
-     * @param query the query of the search.
+     * @param query    the query of the search.
      * @param pageable the pagination information.
      * @return the list of entities.
      */

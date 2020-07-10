@@ -5,6 +5,7 @@ import com.apeiron.insight.service.dto.FunctionalRoleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,4 +45,9 @@ public interface FunctionalRoleService {
      */
     void delete(String id);
 
+    /**
+     * Get the functionalRole's titles list.
+     * @return the list.
+     */
+    List<String> findRoleTitles();
 }

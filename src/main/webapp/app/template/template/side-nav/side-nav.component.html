@@ -2,8 +2,8 @@
     <div class="side-nav-inner">
         <div class="side-nav-logo">
             <a href="" [routerLink]="['/']">
-                <div class="logo logo-dark" style="background-image: url('content/images/logo/logo.png')"></div>
-                <div class="logo logo-white" style="background-image: url('content/images/logo/logo-white.png')"></div>
+                <div class="logo logo-dark" style="background-image: url('content/images/logo/side-nav-logo.png')"></div>
+                <div class="logo logo-white" style="background-color: #ffcc00"></div>
             </a>
             <div class="mobile-toggle side-nav-toggle">
                 <a (click)="toggleSideNavCollapse()" href="javascript:void(0);">
@@ -67,6 +67,10 @@
                         <a href="javascript:void(0);" routerLink="holiday">
                             <span>Jours fériés</span>
                         </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="formations">Formations</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="javascript:void(0);" routerLink="config/view">

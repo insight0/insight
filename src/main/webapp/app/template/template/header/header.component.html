@@ -308,7 +308,7 @@
                         <li *ngFor="let notif of notifications" [ngClass]="{'not-seen target': !notif.seen}">
                             <a href="">
                                 <img *ngIf="notif.userName === 'system'" class="thumb-img"
-                                     src="../../../../content/images/logo/system.png" alt="">
+                                     src="../../../../content/images/logo/logo-sm.png" alt="">
                                 <img *ngIf="notif.userName != 'system'" class="thumb-img" [src]="notif.userPictureUrl"
                                      alt="">
                                 <div class="info">

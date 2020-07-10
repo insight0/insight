@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -85,6 +87,18 @@ public class FunctionalRoleServiceImpl implements FunctionalRoleService {
     public void delete(String id) {
         log.debug("Request to delete FunctionalRole : {}", id);
         functionalRoleRepository.deleteById(id);
+    }
+
+
+    @Override
+    public List<String> findRoleTitles() {
+        List<FunctionalRole> roles = functionalRoleRepository.findAll();
+        List<String> titles = new ArrayList<>();
+        for (FunctionalRole role : roles
+        ) {
+            titles.add(role.getName());
+        }
+        return titles;
     }
 
 }

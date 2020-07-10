@@ -11,7 +11,6 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { ProfileService } from 'app/layouts';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NgSwitch } from '@angular/common';
 
 @Component({
   selector: 'app-header',

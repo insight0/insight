@@ -1,0 +1,68 @@
+<div class="row div-padding">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-formations-heading">Ajouter une formation cible </h2>
+            <div class="div-form-padding">
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput name="title" id="field_title" formControlName="title" placeholder="Titre">
+                        <mat-error
+                            *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field class="example-full-width" >
+                        <input matInput  name="society" id="field_society" formControlName="society" placeholder="Société où corporation ">
+                        <mat-error
+                            *ngIf="editForm.get('society').invalid && (editForm.get('society').dirty || editForm.get('society').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field class="example-full-width" >
+                        <mat-select  name="concerned" id="field_concerned" formControlName="concerned"  placeholder="Profils concernés">
+                            <mat-option *ngFor="let title of rolesTitles" [value]="title">
+                                {{title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput   name="location"  formControlName="location" placeholder="Lieu où se déroulera l'examen ">
+                        <mat-error
+                            *ngIf="editForm.get('society').invalid && (editForm.get('society').dirty || editForm.get('society').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field class="example-full-width" >
+                        <textarea matInput  name="description" id="field_description" formControlName="description"  placeholder=" Description "></textarea>
+                        <mat-error
+                            *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched)">
+                            This field is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button type="button" id="cancel-save" mat-raised-button (click)="previousState()">
+                        &nbsp;<mat-icon>cancel</mat-icon> Cancel
+                    </button>
+                    <button type="submit" id="save-entity" [disabled]="isSaving" mat-raised-button>
+                        <mat-icon>save</mat-icon> Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

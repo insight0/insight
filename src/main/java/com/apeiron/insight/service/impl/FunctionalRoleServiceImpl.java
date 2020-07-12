@@ -89,6 +89,11 @@ public class FunctionalRoleServiceImpl implements FunctionalRoleService {
         functionalRoleRepository.deleteById(id);
     }
 
+    /**
+     * Get functionalRole's titles by id.
+     *
+     * @return the List of titles .
+     */
 
     @Override
     public List<String> findRoleTitles() {

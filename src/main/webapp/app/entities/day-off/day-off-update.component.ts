@@ -36,10 +36,10 @@ export class DayOffUpdateComponent implements OnInit {
     endDate: [null, [Validators.required]],
     dayOffObject: [null, [Validators.required]],
     status: [],
-    forced: [null, [Validators.required]],
-    employeId: [null, [Validators.required]],
-    validatorId: [null, [Validators.required]],
-    days: [null, [Validators.required]]
+    forced: [null],
+    employeId: [null],
+    validatorId: [null],
+    days: [null]
   });
 
   constructor(

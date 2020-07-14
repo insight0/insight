@@ -10,10 +10,10 @@
 </div>
 
 <div>
-    <mat-table class="formations-table mat-elevation-z8" [dataSource]="dataSource">
+    <mat-table class="formations-table mat-elevation-z8" [dataSource]="dataSource" >
         <ng-container matColumnDef="title">
             <mat-header-cell *matHeaderCellDef> Title</mat-header-cell>
-            <mat-cell *matCellDef="let formation"> {{formation.title}} </mat-cell>
+            <mat-cell *matCellDef="let formation"><a [routerLink]="['/formations', formation.id, 'view' ]">  {{formation.title}}</a> </mat-cell>
         </ng-container>
         <ng-container matColumnDef="society">
             <mat-header-cell *matHeaderCellDef>Society</mat-header-cell>

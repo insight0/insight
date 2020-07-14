@@ -5,10 +5,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
 
 @Document(collection = "workshop")
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "workshop")
 public class Workshop {
 
     @Id

@@ -1,9 +1,7 @@
 package com.apeiron.insight.service;
 
 import com.apeiron.insight.domain.Workshop;
-import com.apeiron.insight.service.dto.FunctionalRoleDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -11,42 +9,41 @@ import java.util.Optional;
 public interface WorkshopService {
 
     /**
-     * Save a workshop.
+     * Get all Workshops .
      *
-     * @param workshop the entity to save.
-     * @return the persisted entity.
+     * @return All workshops
+     */
+    List<Workshop> findAll();
+
+    /**
+     * Get workshop by its id
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    Optional<Workshop> findById(String id);
+
+    /**
+     * SAVE a workshop
+     *
+     * @param workshop the entity to save
+     * @return the persisted entity
      */
     Workshop save(Workshop workshop);
 
-
     /**
-     * Update a workshop.
+     * UPDATE workshop
      *
-     * @param workshop the entity to save.
-     * @return the persisted entity.
+     * @param workshop the entity to update
+     * @return the updated entity
      */
     Workshop update(Workshop workshop);
 
     /**
-     * Get all the workshops.
+     * DELETE workshop
      *
-     * @return the list of entities.
-     */
-    List<Workshop> findAll();
-
-
-    /**
-     * Get the "id" workshop.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<Workshop> findOne(String id);
-
-    /**
-     * Delete the "id" workshop.
-     *
-     * @param id the id of the entity.
+     * @param id the entity's id to delete
+     * @return void
      */
     void delete(String id);
 

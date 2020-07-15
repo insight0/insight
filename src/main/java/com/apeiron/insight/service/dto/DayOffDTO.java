@@ -1,11 +1,12 @@
 package com.apeiron.insight.service.dto;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
 import com.apeiron.insight.domain.enumeration.DayOffStatus;
 import com.apeiron.insight.domain.enumeration.DayOffType;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A DTO for the {@link com.apeiron.insight.domain.DayOff} entity.
@@ -25,16 +26,16 @@ public class DayOffDTO implements Serializable {
 
     private DayOffStatus status;
 
-    @NotNull
+    //@NotNull
     private Boolean forced;
 
-    @NotNull
+    //@NotNull
     private String employeId;
 
-    @NotNull
+    //@NotNull
     private String validatorId;
 
-    @NotNull
+    //@NotNull
     private Float days;
 
     private UserDTO user;

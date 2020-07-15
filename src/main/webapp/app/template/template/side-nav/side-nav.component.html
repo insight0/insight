@@ -1,9 +1,9 @@
 <div class="side-nav" sideBar>
     <div class="side-nav-inner">
-        <div class="side-nav-logo">
+        <div class="side-nav-logo" style="background-image: url('content/images/logo/side-nav-logo.png');position: absolute">
             <a href="" [routerLink]="['/']">
-                <div class="logo logo-dark" style="background-image: url('content/images/logo/logo.png')"></div>
-                <div class="logo logo-white" style="background-image: url('content/images/logo/logo-white.png')"></div>
+                <div class="logo logo-dark" ></div>
+                <div class="logo logo-white" ></div>
             </a>
             <div class="mobile-toggle side-nav-toggle">
                 <a (click)="toggleSideNavCollapse()" href="javascript:void(0);">
@@ -18,14 +18,6 @@
                         <i class="ti-home"></i>
                     </span>
                     <span class="title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);" routerLink="day-off">
-                    <span class="icon-holder">
-                        <i class="ti-layout-media-overlay"></i>
-                    </span>
-                    <span class="title">Congé</span>
                 </a>
             </li>
             <li class="nav-item dropdown">
@@ -56,6 +48,11 @@
                 </a>
                 <ul class="dropdown-menu">
 
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);" routerLink="day-off">
+                            <span class="title">Congé</span>
+                        </a>
+                    </li>
 
                     <li class="nav-item dropdown">
                         <a href="javascript:void(0);" routerLink="functional-role">
@@ -67,6 +64,9 @@
                         <a href="javascript:void(0);" routerLink="holiday">
                             <span>Jours fériés</span>
                         </a>
+                    </li>
+                    <li>
+                        <a routerLink="formations">Formations</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="javascript:void(0);" routerLink="config/view">

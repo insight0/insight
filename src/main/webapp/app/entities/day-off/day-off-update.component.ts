@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { IDayOff, DayOff } from 'app/shared/model/day-off.model';
+import { IDayOff, DayOff, DayOffStatus } from 'app/shared/model/day-off.model';
 import { DayOffService } from './day-off.service';
 import { User, UserService } from 'app/core';
 import { JhiAlertService } from 'ng-jhipster';
@@ -29,17 +29,18 @@ export class DayOffUpdateComponent implements OnInit {
   userDayOffs: IUserDayOff;
   loading: boolean;
   hidden = true;
+  dayOffStatuses: DayOffStatus;
 
   editForm = this.fb.group({
     id: [],
     startDate: [null, [Validators.required]],
     endDate: [null, [Validators.required]],
     dayOffObject: [null, [Validators.required]],
-    status: [],
-    forced: [null, [Validators.required]],
-    employeId: [null, [Validators.required]],
-    validatorId: [null, [Validators.required]],
-    days: [null, [Validators.required]]
+    status: [null, [Validators.required]],
+    forced: [null],
+    employeId: [null],
+    validatorId: [null],
+    days: [null]
   });
 
   constructor(
@@ -58,6 +59,22 @@ export class DayOffUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ dayOff }) => {
       this.updateForm(dayOff);
     });
+  }
+
+  private createFromForm(): IDayOff {
+    return {
+      ...new DayOff(),
+      id: this.editForm.get(['id']).value,
+      startDate:
+        this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
+      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
+      dayOffObject: this.editForm.get(['dayOffObject']).value,
+      status: this.editForm.get(['status']).value,
+      forced: this.editForm.get(['forced']).value,
+      employeId: this.editForm.get(['employeId']).value,
+      validatorId: this.editForm.get(['validatorId']).value,
+      days: this.editForm.get(['days']).value
+    };
   }
 
   updateForm(dayOff: IDayOff) {
@@ -81,6 +98,7 @@ export class DayOffUpdateComponent implements OnInit {
   }
 
   save() {
+    this.showMeValue();
     this.isSaving = true;
     const dayOff = this.createFromForm();
     if (dayOff.id !== undefined) {
@@ -88,22 +106,6 @@ export class DayOffUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.dayOffService.create(dayOff));
     }
-  }
-
-  private createFromForm(): IDayOff {
-    return {
-      ...new DayOff(),
-      id: this.editForm.get(['id']).value,
-      startDate:
-        this.editForm.get(['startDate']).value != null ? moment(this.editForm.get(['startDate']).value, DATE_TIME_FORMAT) : undefined,
-      endDate: this.editForm.get(['endDate']).value != null ? moment(this.editForm.get(['endDate']).value, DATE_TIME_FORMAT) : undefined,
-      dayOffObject: this.editForm.get(['dayOffObject']).value,
-      status: this.editForm.get(['status']).value,
-      forced: this.editForm.get(['forced']).value,
-      employeId: this.editForm.get(['employeId']).value,
-      validatorId: this.editForm.get(['validatorId']).value,
-      days: this.editForm.get(['days']).value
-    };
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDayOff>>) {
@@ -146,4 +148,6 @@ export class DayOffUpdateComponent implements OnInit {
   private onError(error) {
     this.alertService.error(error.error, error.message, null);
   }
+
+  showMeValue() {}
 }

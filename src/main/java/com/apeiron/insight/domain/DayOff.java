@@ -36,11 +36,11 @@ public class DayOff implements Serializable {
     @Field("day_off_object")
     private String dayOffObject;
 
-    @NotNull
+    //@NotNull
     @Field("status")
     private DayOffStatus status;
 
-    @NotNull
+    //@NotNull
     @Field("type")
     private DayOffType type;
 
@@ -56,19 +56,19 @@ public class DayOff implements Serializable {
     @Field("note")
     private String note;
 
-    @NotNull
+    //@NotNull
     @Field("forced")
     private Boolean forced;
 
-    @NotNull
+    //@NotNull
     @Field("employe_id")
     private String employeId;
 
-    @NotNull
+    //@NotNull
     @Field("validator_id")
     private String validatorId;
 
-    @NotNull
+    //@NotNull
     @Field("days")
     private Float days;
 

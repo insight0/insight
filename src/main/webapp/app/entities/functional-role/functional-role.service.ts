@@ -13,6 +13,7 @@ type EntityArrayResponseType = HttpResponse<IFunctionalRole[]>;
 export class FunctionalRoleService {
   public resourceUrl = SERVER_API_URL + 'api/functional-roles';
   public resourceSearchUrl = SERVER_API_URL + 'api/_search/functional-roles';
+  public resourceTitlesUrl = SERVER_API_URL + 'api/functional-roles/titles';
 
   constructor(protected http: HttpClient) {}
 
@@ -40,5 +41,9 @@ export class FunctionalRoleService {
   search(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IFunctionalRole[]>(this.resourceSearchUrl, { params: options, observe: 'response' });
+  }
+
+  getRolestitles(): Observable<string[]> {
+    return this.http.get<string[]>(this.resourceTitlesUrl);
   }
 }

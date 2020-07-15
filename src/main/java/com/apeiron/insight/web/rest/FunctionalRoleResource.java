@@ -131,4 +131,16 @@ public class FunctionalRoleResource {
     }
 
 
+    /**
+     * {@code GET  /functional-roles} : get all the functionalRoles.
+     ** @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of functionalRole's titles in body.
+     */
+    @GetMapping("/functional-roles/titles")
+    public ResponseEntity<List<String>> getRolesTitles() {
+        log.debug("REST request to get a page of FunctionalRole's titles");
+        List<String> titles  = functionalRoleService.findRoleTitles();
+        return new ResponseEntity<List<String>>(titles,HttpStatus.OK);
+    }
+
+
 }

@@ -1,16 +1,17 @@
 package com.apeiron.insight.service.mapper;
 
 import com.apeiron.insight.domain.*;
-import com.apeiron.insight.domain.enumeration.DayOffType;
 import com.apeiron.insight.service.UserService;
 import com.apeiron.insight.service.dto.DayOffDTO;
 
 import com.apeiron.insight.service.dto.UserDTO;
-import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,6 @@ public class DayOffMapper {
 
     @Autowired
     private UserService userService;
-
 
     public DayOff toEntity(DayOffDTO dto) {
         if (dto == null) {
@@ -49,6 +49,34 @@ public class DayOffMapper {
         return dayOff;
     }
 
+    public Float dayOffDays(DayOff dayOff) {
+
+        Long days = 0L;
+        Long weekends = 0L;
+
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        startCal.setTime(Date.from(dayOff.getStartDate()));
+        endCal.setTime(Date.from(dayOff.getEndDate()));
+
+        days = ChronoUnit.DAYS.between(dayOff.getStartDate(), dayOff.getEndDate())+1;
+
+        if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            weekends++;
+        }
+        do {
+            startCal.add(Calendar.DAY_OF_MONTH, 1);
+            if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                weekends++;
+            }
+        } while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
+        return days.floatValue()-weekends;
+    }
+
+    public Float dayOffCount(DayOff dayOff) {
+        return 1F;
+    }
+
 
     public DayOffDTO toDto(DayOff entity) {
         if (entity == null) {
@@ -65,7 +93,8 @@ public class DayOffMapper {
         dayOffDTO.setForced(entity.isForced());
         dayOffDTO.setEmployeId(entity.getEmployeId());
         dayOffDTO.setValidatorId(entity.getValidatorId());
-        dayOffDTO.setDays(entity.getDays());
+        // dayOffDays() : calculate total days excluding weekends
+        dayOffDTO.setDays(dayOffDays(entity));
         dayOffDTO.setType(entity.getType());
         dayOffDTO.setNote(entity.getNote());
         dayOffDTO.setApprovalFilePath(entity.getApprovalFilePath());
@@ -85,10 +114,8 @@ public class DayOffMapper {
                 dayOffDTO.setValidator(userWithAuthoritiesByLogin.get());
             }
         }
-
         return dayOffDTO;
     }
-
 
     public List<DayOff> toEntity(List<DayOffDTO> dtoList) {
         if (dtoList == null) {
@@ -115,7 +142,6 @@ public class DayOffMapper {
 
         return list;
     }
-
 
     private DayOff fromId(String id) {
         if (id == null) {

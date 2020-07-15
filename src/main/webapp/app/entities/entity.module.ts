@@ -9,6 +9,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./day-off/day-off.module').then(m => m.InsightDayOffModule)
       },
       {
+        path: 'formations',
+        loadChildren: () => import('./formation/formation.module').then(m => m.InsightFormationModule)
+      },
+      {
         path: 'change-log',
         loadChildren: () => import('./change-log/change-log.module').then(m => m.InsightChangeLogModule)
       },

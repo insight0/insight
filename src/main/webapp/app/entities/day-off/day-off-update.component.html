@@ -194,7 +194,7 @@
                 <button type="button" id="cancel-save" mat-raised-button (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button type="submit" id="save-entity"
                         mat-raised-button>
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
@@ -202,3 +202,6 @@
         </form>
     </div>
 </div>
+<!--
+[disabled]="editForm.invalid || isSaving"
+-->

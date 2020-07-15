@@ -71,6 +71,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'skill',
         loadChildren: () => import('./skill/skill.module').then(m => m.InsightSkillModule)
+      },
+      {
+        path: 'cv-store',
+        loadChildren: () => import('./cv-store/cv-store.module').then(m => m.InsightCvStoreModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

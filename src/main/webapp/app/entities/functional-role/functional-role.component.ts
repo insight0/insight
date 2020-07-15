@@ -2,16 +2,13 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { IFunctionalRole } from 'app/shared/model/functional-role.model';
 import { AccountService } from 'app/core';
 
-import { ITEMS_PER_PAGE } from 'app/shared';
 import { FunctionalRoleService } from './functional-role.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { IHoliday } from 'app/shared/model/holiday.model';
 
 @Component({
   selector: 'jhi-functional-role',

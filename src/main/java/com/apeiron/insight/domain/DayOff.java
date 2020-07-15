@@ -36,7 +36,7 @@ public class DayOff implements Serializable {
     @Field("day_off_object")
     private String dayOffObject;
 
-    @NotNull
+    //@NotNull
     @Field("status")
     private DayOffStatus status;
 

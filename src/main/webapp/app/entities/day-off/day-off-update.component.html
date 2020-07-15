@@ -1,10 +1,14 @@
 <div class="row div-padding">
     <div class="col-12">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-day-off-heading">Ajouter / Modifier Demande de congé</h2>
+            <h2 id="jhi-day-off-heading">Ajouter Demande de congé</h2>
+
+
+
+
+
             <div class="row div-form-padding">
                 <jhi-alert-error></jhi-alert-error>
-
 
                 <div class="col-6">
                     <div class="row">
@@ -62,20 +66,21 @@
                                     *ngIf="editForm.get('endDate').invalid && (editForm.get('endDate').dirty || editForm.get('endDate').touched)">
                                     This field is required.
                                 </mat-error>
+                                <mat-error
+                                    *ngIf="editForm.get('endDate').value - editForm.get('startDate').value > 0">
+                                    The Duration format must be from .. to !
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
-
                         <div class="col-12">
                             <div class="form-group">
-                                <mat-radio-group aria-label="Statut">
-
+                                <mat-radio-group aria-label="Statut" formControlName="status">
                                 </mat-radio-group>
-                                <label id="example-radio-group-label">Pick your favorite season</label>
+                                <label id="example-radio-group-label">Status</label>
                                 <mat-radio-group
                                     aria-labelledby="example-radio-group-label"
                                     class="example-radio-group">
-
                                     <mat-radio-button class="example-radio-button" value="NEW">En attente
                                     </mat-radio-button>
                                     <mat-radio-button class="example-radio-button" value="APPROVED">Approuvé
@@ -90,8 +95,6 @@
 
 
                 <div class="col-6">
-
-
                     <div class="card" *ngIf="userDayOffs">
                         <div class="pdd-horizon-20 pdd-vertical-5">
                             <div class="list-info" style="    margin-top: 20px;">
@@ -157,6 +160,7 @@
                                             </div>
                                         </td>
                                         <td *ngIf="!(hidden && i < 3)" [@slideInOut]>
+
                                             <div *ngIf="dayOff.status == 'NEW'" class="relative mrg-top-10">
                                                 <span class="status away"> </span>
                                                 <span class="pdd-left-20">En attente</span>
@@ -174,7 +178,8 @@
                                     </tbody>
                                 </table>
 
-                                <a style="width: 100%" *ngIf="userDayOffs.dayOffs && userDayOffs.dayOffs.length > 3" (click)="toggleDayOff()" mat-button>
+                                <a style="width: 100%" *ngIf="userDayOffs.dayOffs && userDayOffs.dayOffs.length > 3"
+                                   (click)="toggleDayOff()" mat-button>
                                     <mat-icon *ngIf="hidden">keyboard_arrow_down</mat-icon>
                                     <mat-icon *ngIf="!hidden">keyboard_arrow_up</mat-icon>
                                     <span *ngIf="hidden">Voir toutes les demandes</span>

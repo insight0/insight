@@ -1,8 +1,10 @@
 package com.apeiron.insight.service.dto;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
 import com.apeiron.insight.domain.enumeration.DayOffStatus;
 import com.apeiron.insight.domain.enumeration.DayOffType;
 
